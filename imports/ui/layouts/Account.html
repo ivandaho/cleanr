@@ -1,0 +1,20 @@
+<template name="Account">
+  <div class="account-countainer">
+    <h2>account page.</h2>
+    <!-- {{> quickForm collection=ud id='insertud' type='insert'}} -->
+    user_name:<br>
+    {{userdata.user_name}}<br>
+    user_email:<br>
+    {{userdata.user_email}} <button class="edit-email">edit</button><br>
+    user_tel:<br>
+    {{userdata.user_tel}} <button class="edit-tel">edit</button><br>
+    user_address:<br>
+    {{userdata.user_address.[0].street}}<br>
+    {{userdata.user_address.[0].city}}<br>
+    {{userdata.user_address.[0].state}}<br>
+    {{userdata.user_address.[0].zip}} <button class="edit-address">edit</button><br>
+
+  {{#if isAdmin}}
+  {{/if}}
+  </div>
+</template>

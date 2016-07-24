@@ -1,0 +1,12 @@
+<template name="Input">
+  <div class="new-session-container">
+    <form class='inputform'>
+      Date:<br>
+      <input name="date" class="input-date" type="Date">
+      <input name="package" class="input-package" type="number">
+      <button type="submit">Add</button>
+      </form>
+  {{#if isAdmin}}
+  {{/if}}
+  </div>
+</template>

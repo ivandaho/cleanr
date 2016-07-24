@@ -1,0 +1,48 @@
+<template name="Schedule">
+  <div class="container">
+    <h2>Table</h2>
+    <br>
+    <!-- {{> quickForm collection='weeks' id='insertweek' type='insert'}} -->
+    <p>Choose a time slot and a day</p>
+    <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Time Slots</th>
+          <th>Monday <br> {{weekdates 0}}</th>
+          <th>Tuesday <br> {{weekdates 1}}</th>
+          <th>Wednesday <br> {{weekdates 2}}</th>
+          <th>Thursday <br> {{weekdates 3}}</th>
+          <th>Friday <br> {{weekdates 4}}</th>
+          <th>Saturday <br> {{weekdates 5}}</th>
+          <th>Sunday <br> {{weekdates 6}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{>schedtable thisweekdata}}
+      </tbody>
+    </table>
+    </div>
+  </div>
+</template>
+
+<template name="schedtable">
+{{#each this}} <!-- will iterate over each timeslot -->
+    <tr>
+      <td>{{slot}}</td>
+      {{>eachslot days}}
+    </tr>
+  {{/each}}
+</template>
+
+<template name="eachslot">
+  {{#each item in this}}
+    <td>
+      {{#if item.free}}
+        <button class="btn btn-success bookbtn" id="{{item.d}} {{../slot}}">Book this slot</button>
+      {{else}}
+        <button class="btn btn-disabled" >Not Available</button>
+      {{/if}}
+    </td>
+  {{/each}}
+</template>

@@ -1,0 +1,39 @@
+<template name="SessionConfirmation">
+<h2>session confirmation area.<br></h2>
+  Your Package Info:<br>
+  {{#each found}}
+  Package #{{getJobPackage}}
+  <br>
+  <!-- {{> jobitem}} -->
+  <br>
+  <br>
+  Scheduling Details:<br>
+  ph-job-timewindow<br>
+  ph-job-day<br>
+  <br>
+  First Session On:<br>
+  {{getJobDate}}<br>
+  <br>
+  Total Price:<br>
+  ph-job-totalprice<br>
+  <br>
+  {{/each}}
+  <form class='ip'>
+  <button type="submit" class="cbtn-editpackage">Edit Package</button>
+  </form>
+  <br>
+  <br>
+  Customer Details:<br>
+  ph-cust-name<br>
+  ph-cust-phonenumber<br>
+  ph-cust-email<br>
+  <br>
+  Cleaning Location:<br>
+  ph-cust-address-street-line1<br>
+  ph-cust-address-street-line2<br>
+  ph-cust-address-zip<br>
+  ph-cust-address-state<br>
+  <button type="submit" class="cbtn-changeaddress">Change Address</button>
+  <br>
+  <br>
+</template>

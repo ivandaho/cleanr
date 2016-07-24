@@ -1,0 +1,327 @@
+<template name="session">
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>Cleanr.my - Vendor Dashboard</title>
+
+        <!-- Bootstrap Core CSS -->
+        <link href="../resources/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+        <!-- should always have agency theme, then followed by cleanr-<pagename> for page specific css rules -->
+        <link href="../res/css/agency.css" rel="stylesheet">
+        <link href="../res/css/cleanr-generic.css" rel="stylesheet"> 
+        <link href="../res/css/cleanr-session.css" rel="stylesheet">
+
+        <!-- Custom Fonts -->
+        <link href="../res/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+
+        <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+        
+        <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+
+
+        <!-- custom theme agency?? -->
+        <script src="../resources/js/agency.js"></script>
+
+ 	<style>
+		#modal-scroll{
+		    height:450px;
+  			overflow:auto;
+		}
+		.warner{
+			color:red;
+		}
+	</style>
+
+
+    </head>
+
+    <body id="page-top" class="index">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header page-scroll">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a href="/">
+                         <img src="../resources/img/navbar/cleanr-logo.png" class="navbar-brand-logo" alt="Cleanr.my">
+                    </a>
+                    <!--a class="navbar-brand page-scroll" href="#page-top">Cleanr.my</a-->
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav ">
+                        <li class="hidden">
+                            <a href="#page-top"></a>
+                        </li>
+                        <li>
+                            <a class="page-scroll" id="menuLogout" href="/Log/VendorOut">Logout</a>
+                        </li>
+                        <li>
+                            <a class="page-scroll" href="/Vendor/Dashboard">Help</a>
+                        </li>                    
+                        <li>
+                            <a class="page-scroll" href="/Vendor/Dashboard">Dashboard</a>
+                        </li>
+
+                    </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a class="page-scroll" href="#">B. Melayu</a></li>
+                        <!--<li> <a class="page-scroll" href="#contact">Book Now!</a></li> -->
+                        <!--li><button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+                          Book Now!
+                        </button></li-->
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container-fluid -->
+        </nav>
+
+        <!-- Header -->
+        <header>
+            <div class="container">
+                <div class="intro-text">
+                    <div class="intro-heading" id="vndrDashboardIntro">Welcome, .</div>
+                </div>
+            </div>
+        </header>
+
+        <section id="sess" class="bg-light-gray">
+            <div class="container">
+                <div class="row text-center">
+                    <div class="col-lg-12">
+                        <h2 class="quick-view-rpts-h2">Session</h2>
+                        <p class="quick-view-rpts-p">Session page</p>
+                    </div>
+                </div>
+                <div class="row bordered">
+                    <div class="row">
+                        <div class="col-md-12 text-center bighdr">
+                            Session Details
+                        </div>
+                    </div>
+                    <div class="row-same-height">
+                        <div class="col-md-4 col-sm-height">
+                            <div class="hdr">
+                                Time
+                            </div>
+                            <div class="value">
+                                1.00pm - 3.00pm
+                            </div>
+                            <div class="hdr">
+                                Team
+                            </div>
+                            <div class="value">
+                                Alpha
+                            </div>
+                            <div class="placeholderthing">
+                            </div>
+                            <div class="text-center">
+                                <div class="btndiv">
+                                    <button type="button" class="btn newbtn">Edit</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-height padded">
+                            <div class="hdr">
+                                Day
+                            </div>
+                            <div class="value">
+                                Mondays
+                            </div>
+                            <div class="hdr">
+                                Session Code
+                            </div>
+                            <div class="value">
+                                B1001-S1-20150401
+                            </div>
+                            <div class="placeholderthing">
+                            </div>
+                            <div class="text-center">
+                                <div class="btndiv">
+                                    <button type="button" class="btn newbtn">View History</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-height">
+                            <div class="hdr">
+                            Next session date
+                            </div>
+                            <div class="value">
+                                1/4/2015
+                            </div>
+                            <div class="placeholderthing">
+                            </div>
+                            <div clas="text-center">
+                                <div class="btndiv">
+                                    <button type="button" class="btn newbtn">Go to corresponding session</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row bordered">
+                    <div class="row">
+                        <div class="col-md-12 text-center bighdr">
+                            Package Details
+                        </div>
+                    </div>
+                    <div class="row-same-height">
+                        <div class="col-md-8 col-sm-height">
+                            <div class="hdr">
+                                Header if needed
+                            </div>
+                            <div class="value">
+                                Part Time Mainds: 2x per week
+                            </div>
+                            <div class="hdr">
+                                Another header if needed
+                            </div>
+                            <div class="value">
+                                Mattress Cleaning: 5 beds(Week 1)
+                            </div>
+                            <div class="placeholderthing">
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-height padded">
+                            <div class="hdr">
+                                Booking Code
+                            </div>
+                            <div class="value">
+                                B1001
+                            </div>
+                            <div class="hdr">
+                                Assigned Team
+                            </div>
+                            <div class="value">
+                                Alpha
+                                <button type="button" class="btn" style="margin-right:10px;position:relative;float:right;">Reassign</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row bordered">
+                    <div class="row">
+                        <div class="col-md-12 text-center bighdr">
+                            Customer Details
+                            <button type="button" class="btn" style="margin-left:10px">View Profile</button>
+                        </div>
+                    </div>
+                    <div class="row-same-height">
+                        <div class="col-md-4 col-sm-height">
+                            <div class="hdr">
+                                Name
+                            </div>
+                            <div class="value">
+                                Mr Wong
+                            </div>
+                            <div class="hdr">
+                                Mobile Number
+                            </div>
+                            <div class="value">
+                                +6012 3456789
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-height padded">
+                            <div class="hdr">
+                                Address
+                            </div>
+                            <div class="value">
+                                10 Jalan 15/39 <br>
+                                Petaling Jaya <br>
+                                Selangor <br>
+                                25500
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-height">
+                            <div class="hdr">
+                            Customer ID
+                            </div>
+                            <div class="value">
+                                C103294
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row bordered">
+                    <div class="row">
+                        <div class="col-md-12 text-center bighdr">
+                            Remarks
+                        </div>
+                    </div>
+                    <div class="row-same-height">
+                        <div class="col-md-8 col-sm-height">
+                            <div class="hdr">
+                                Remark Header if needed
+                            </div>
+                            <div class="value">
+                                1. Request to clean fans twice a month
+                            </div>
+                            <div class="value">
+                                2. Additional requests
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-height padded">
+                            <div class="text-center">
+                                <button type="button" class="btn newbtn2">Edit</button>
+                                <br>
+                                <button type="button" class="btn newbtn2">Add</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4">
+                        <span class="copyright">Copyright &copy; Your Website 2014</span>
+                    </div>
+                    <div class="col-md-4">
+                        <ul class="list-inline social-buttons">
+                            <li><a href="#"><i class="fa fa-twitter"></i></a>
+                            </li>
+                            <li><a href="#"><i class="fa fa-facebook"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <ul class="list-inline quicklinks">
+                            <li><a href="#">Privacy Policy</a>
+                            </li>
+                            <li><a href="#">Terms of Use</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Plugin JavaScript -->
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+        <script src="../resources/js/classie.js"></script>
+        <script src="../resources/js/cbpAnimatedHeader.js"></script>
+        
+
+    </body>
+</template>
+        
