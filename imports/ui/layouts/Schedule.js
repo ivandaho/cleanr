@@ -13,6 +13,10 @@ Template.Schedule.onCreated(function ScheduleOnCreated() {
     Meteor.subscribe('timeslots');
     Meteor.subscribe('weeks');
     window.weeks = Weeks;
+
+    var mdate = moment().startOf('week').add(1, 'days'); // monday
+    var jdate = mdate.toDate();
+    Session.set('currweek', jdate);
     //Meteor.subscribe('sessions');
 });
 
@@ -22,9 +26,8 @@ Template.Schedule.helpers({
     },
     thisweekdata() {
         // get this week's data
-        var mdate = moment().startOf('week').add(1, 'days'); // monday
-        var jdate = mdate.toDate();
-        var st = "uYNw5K2ZcTuWfxcXG";
+        var jdate = Session.get('currweek');
+
 
         var query = { mondayDate: jdate};
         tw = weeks.findOne(query);
@@ -59,6 +62,7 @@ Template.Schedule.helpers({
 Template.Schedule.events({
     'click .bookbtn' (event) {
         event.preventDefault();
+        console.log(Session.get("test"));
         /*
         var mdate = moment().startOf('week').add(1, 'days'); // monday
         var jdate = mdate.toDate();
@@ -73,7 +77,6 @@ Template.Schedule.events({
         var date = event.target.id.substring(0,10);
         var slot = event.target.id.substring(11,23);
         mdate = moment(date);
-        console.log(mdate);
         msg_day = mdate.format('dddd ');
         msg_date = mdate.format('MMMM D');
         var bb_msg = "You have selected the " + msg_day + slot + " time slot. Session will start on " + msg_date;
@@ -85,5 +88,24 @@ Template.Schedule.events({
         });
 
     },
+    'click .prevweekbtn' (event) {
+        event.preventDefault();
+        var tempjdate = Session.get('currweek');
+        var mdate = moment(tempjdate).subtract(1, 'week'); // monday
+        tempjdate = mdate.toDate();
+        console.log(tempjdate);
+        Session.set('currweek', tempjdate);
+
+    },
+    'click .nextweekbtn' (event) {
+        event.preventDefault();
+        var tempjdate = Session.get('currweek');
+        var mdate = moment(tempjdate).add(1, 'week'); // monday
+        tempjdate = mdate.toDate();
+        console.log(tempjdate);
+        Session.set('currweek', tempjdate);
+
+    },
+
 });
 

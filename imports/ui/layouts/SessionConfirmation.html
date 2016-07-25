@@ -19,21 +19,22 @@
   <br>
   {{/each}}
   <form class='ip'>
-  <button type="submit" class="cbtn-editpackage">Edit Package</button>
+  <button type="submit" class="btn btn-editpackage">Edit Package</button>
   </form>
   <br>
   <br>
   Customer Details:<br>
-  ph-cust-name<br>
-  ph-cust-phonenumber<br>
-  ph-cust-email<br>
+  {{userdata.user_name}}<br>
+  {{userdata.user_tel}}<br>
+  {{userdata.user_email}}<br>
   <br>
   Cleaning Location:<br>
-  ph-cust-address-street-line1<br>
-  ph-cust-address-street-line2<br>
-  ph-cust-address-zip<br>
-  ph-cust-address-state<br>
-  <button type="submit" class="cbtn-changeaddress">Change Address</button>
+  {{userdata.user_address.[0].street}}<br>
+  {{userdata.user_address.[0].city}}<br>
+  {{userdata.user_address.[0].state}}<br>
+  {{userdata.user_address.[0].zip}}
+  <button type="submit" class="btn btn-changeaddress">Change Address</button>
   <br>
   <br>
+  <button class="btn btn-proceedtopayment">Proceed to Payment</button>
 </template>
