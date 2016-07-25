@@ -1,0 +1,54 @@
+<template name="VendorRegistration">
+<h2>Interested in Becoming a partner?<br>
+    We would like to have a chat with you<br></h2>
+  Please choose your available slots.<br>
+  Note that you will be responsible for fulfilling all appointments.<br>
+  
+  <div class="container">
+    <h2>Table</h2>
+    <br>
+    <!-- {{> quickForm collection='weeks' id='insertweek' type='insert'}} -->
+    <p>Click to toggle individual time slots for each day.</p>
+    <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Time Slots</th>
+          <th>Monday</th>
+          <th>Tuesday</th>
+          <th>Wednesday</th>
+          <th>Thursday</th>
+          <th>Friday</th>
+          <th>Saturday</th>
+          <th>Sunday</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{>vschedtable tsdata}}
+      </tbody>
+    </table>
+    </div>
+  </div>
+  <br>
+  <br>
+
+  <button type="submit" class="btn btn-success btn-proceed">Proceed</button>
+</template>
+
+<template name="vschedtable">
+{{#each this}} <!-- will iterate over each timeslot -->
+    <tr>
+      <td>{{slot}}</td>
+      {{>veachslot days}}
+    </tr>
+  {{/each}}
+</template>
+
+<template name="veachslot">
+  {{#each item in this}}
+    <td>
+        <button class="btn btn-success selectbtn" id="{{item}} {{../slot}}">Toggle Selection</button>
+    </td>
+  {{/each}}
+</template>
+

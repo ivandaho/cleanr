@@ -3,9 +3,6 @@ import './Schedule.html';
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 
-import { Jobs } from '../../api/jobs/Jobs.js';
-import { Sessions } from '../../api/sessions/Sessions.js';
-import { Timeslots } from '../../api/timeslots/Timeslots.js';
 import { Weeks } from '../../api/weeks/Weeks.js';
     //Meteor.subscribe('recipes');
 
@@ -21,9 +18,6 @@ Template.Schedule.onCreated(function ScheduleOnCreated() {
 });
 
 Template.Schedule.helpers({
-    tsdata() {
-        return Timeslots.find({});
-    },
     thisweekdata() {
         // get this week's data
         var jdate = Session.get('currweek');
@@ -35,34 +29,16 @@ Template.Schedule.helpers({
             return tw.timeslots;
         }
     },
-    daydata() {
-        var mdate = moment().startOf('week').add(1, 'days'); // monday
-        var jdate = mdate.toDate();
-        var st = "uYNw5K2ZcTuWfxcXG";
-
-        var query = { mondayDate: jdate};
-        tw = weeks.findOne(query);
-
-        return tw.timeslots.days;
-    },
-
     weekdates(i) {
-        var mdate = moment().startOf('week').add(1, 'days'); // monday
+        var jdate = Session.get('currweek');
+        var mdate = moment(jdate);
         return mdate.add(i, 'days').format("DD-MM");
     },
-    injectid(slot) {
-        var mdate = moment().startOf('week').add(1, 'days'); // monday
-        var str = mdate.add(i, 'days').format("DD-MM");
-        return (slot + str);
-    }
-    
-
 });
 
 Template.Schedule.events({
     'click .bookbtn' (event) {
         event.preventDefault();
-        console.log(Session.get("test"));
         /*
         var mdate = moment().startOf('week').add(1, 'days'); // monday
         var jdate = mdate.toDate();
