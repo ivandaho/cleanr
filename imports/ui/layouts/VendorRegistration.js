@@ -4,10 +4,12 @@ import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 
 import { Timeslots } from '../../api/timeslots/Timeslots.js';
+import { Vendordata } from '../../api/vendordata/Vendordata.js';
     //Meteor.subscribe('recipes');
 
 Template.VendorRegistration.onCreated(function VendorRegistrationOnCreated() {
     Meteor.subscribe('timeslots');
+    Meteor.subscribe('vendordata');
     //Meteor.subscribe('weeks');
 });
 
@@ -41,11 +43,11 @@ Template.VendorRegistration.events({
             days.forEach(function(dayvar){
                 var ss = "vsched " + dayvar + " " + sl.slot;
                 if (Session.get(ss) == undefined || Session.get(ss) == true) {
-                    vendorSlots.push(ss.substring(6,99));
+                    vendorSlots.push(ss.substring(7,99));
                 }
             });
         });
-
+        Meteor.call('vendordata.updateSlots', vendorSlots);
     }
 
 });

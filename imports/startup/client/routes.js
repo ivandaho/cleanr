@@ -15,6 +15,8 @@ import '../../ui/layouts/Schedule.js';
 import '../../ui/layouts/SessionConfirmation.html';
 import '../../ui/layouts/SessionConfirmation.js';
 import '../../ui/layouts/Signup.html';
+import '../../ui/layouts/VendorCal.html';
+import '../../ui/layouts/VendorCal.js';
 import '../../ui/layouts/VendorRegistration.html';
 import '../../ui/layouts/VendorRegistration.js';
 // need to import the js file, for subscriptions
@@ -53,6 +55,13 @@ FlowRouter.route('/schedule', {
     name: 'schedule',
     action() {
         BlazeLayout.render('MainLayout', {main: 'Schedule'})
+    }
+});
+
+FlowRouter.route('/vendorcal', {
+    name: 'vendorcal',
+    action() {
+        BlazeLayout.render('MainLayout', {main: 'VendorCal'})
     }
 });
 

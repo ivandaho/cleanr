@@ -11,7 +11,7 @@ Template.Schedule.onCreated(function ScheduleOnCreated() {
     Meteor.subscribe('weeks');
     window.weeks = Weeks;
 
-    var mdate = moment().startOf('week').add(1, 'days'); // monday
+    var mdate = moment().startOf('week').add(1, 'days'); // this week's monday
     var jdate = mdate.toDate();
     Session.set('currweek', jdate);
     //Meteor.subscribe('sessions');
@@ -24,7 +24,7 @@ Template.Schedule.helpers({
 
 
         var query = { mondayDate: jdate};
-        tw = weeks.findOne(query);
+        tw = Weeks.findOne(query); // this week
         if (tw != undefined){
             return tw.timeslots;
         }

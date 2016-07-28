@@ -11,25 +11,10 @@ Weeks.allow({
 });
 
 DaySchema = new SimpleSchema({
-    mon: {
-        type: Number
+    d: {
+        type: String
     },
-    tue: {
-        type: Number
-    },
-    wed: {
-        type: Number
-    },
-    thu: {
-        type: Number
-    },
-    fri: {
-        type: Number
-    },
-    sat: {
-        type: Number
-    },
-    sun: {
+    free: {
         type: Number
     }
 });
@@ -38,7 +23,7 @@ TimeslotsSchema = new SimpleSchema({
         type: String
     },
     days: { 
-        type: DaySchema
+        type: [DaySchema]
     }
 });
 
