@@ -105,17 +105,25 @@ Template.Schedule.events({
     'click .prevweekbtn' (event) {
         event.preventDefault();
         var tempjdate = Session.get('currweek');
-        var mdate = moment(tempjdate).subtract(1, 'week'); // monday
+        var mdate = moment(tempjdate).subtract(1, 'weeks'); // monday
         tempjdate = mdate.toDate();
-        Session.set('currweek', tempjdate);
+        if (tempjdate < moment().subtract(1, 'weeks')) {
+            return;
+        } else {
+            Session.set('currweek', tempjdate);
+        }
 
     },
     'click .nextweekbtn' (event) {
         event.preventDefault();
         var tempjdate = Session.get('currweek');
-        var mdate = moment(tempjdate).add(1, 'week'); // monday
+        var mdate = moment(tempjdate).add(1, 'weeks'); // monday
         tempjdate = mdate.toDate();
-        Session.set('currweek', tempjdate);
+        if (tempjdate > moment().add(5, 'weeks')) {
+            return;
+        } else {
+            Session.set('currweek', tempjdate);
+        }
 
     },
 

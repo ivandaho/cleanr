@@ -1,4 +1,4 @@
-import './VendorCal.html';
+import './VendorCP.html';
 
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
@@ -6,12 +6,14 @@ import { Template } from 'meteor/templating';
 import { Timeslots } from '../../api/timeslots/Timeslots.js';
 import { Vendordata } from '../../api/vendordata/Vendordata.js';
 import { Vendorslots } from '../../api/vendorslots/Vendorslots.js';
+import { Generatedweeks } from '../../api/generatedweeks/Generatedweeks.js';
     //Meteor.subscribe('recipes');
 
-Template.VendorCal.onCreated(function VendorCalOnCreated() {
+Template.VendorCP.onCreated(function VendorCPOnCreated() {
     Meteor.subscribe('timeslots');
     Meteor.subscribe('vendordata');
     Meteor.subscribe('vendorslots');
+    Meteor.subscribe('generatedweeks');
     var mdate = moment().startOf('week').add(1, 'days');
     var jdate = mdate.toDate();
     Session.set('currweek', jdate);
@@ -21,7 +23,7 @@ Template.VendorCal.onCreated(function VendorCalOnCreated() {
 
 var tss;
 
-Template.VendorCal.helpers({
+Template.VendorCP.helpers({
     timeslots() {
         if (tss != undefined){
             return tss;
@@ -77,15 +79,20 @@ Template.vcaleachslot.helpers({
 });
 
 
-Template.VendorCal.events({
-    'click .slotopen' (event) {
+Template.VendorCP.events({
+    'click .slotincrease' (event) {
         event.preventDefault();
-        console.log('sdf');
+        str = event.target.id;
+        jdate = moment(str.substring(0,10)).toDate();
+        slot = str.substring(11,12);
+        Meteor.call('vendorslots.addSlot', jdate, slot);
     },
-    'click .newbtn' (event) {
+    'click .slotdecrease' (event) {
         event.preventDefault();
-        console.log('sdf');
-        Meteor.call('vendordata.updateSlots', data);
+        str = event.target.id;
+        jdate = moment(str.substring(0,10)).toDate();
+        slot = str.substring(11,12);
+        Meteor.call('vendorslots.removeSlot', jdate, slot);
     },
     'click .selectbtn' (event) {
         event.preventDefault();
@@ -119,17 +126,25 @@ Template.VendorCal.events({
     'click .prevweekbtn' (event) {
         event.preventDefault();
         var tempjdate = Session.get('currweek');
-        var mdate = moment(tempjdate).subtract(1, 'week'); // monday
+        var mdate = moment(tempjdate).subtract(1, 'weeks'); // monday
         tempjdate = mdate.toDate();
-        Session.set('currweek', tempjdate);
+        if (tempjdate < moment().subtract(1, 'weeks')) {
+            return;
+        } else {
+            Session.set('currweek', tempjdate);
+        }
 
     },
     'click .nextweekbtn' (event) {
         event.preventDefault();
         var tempjdate = Session.get('currweek');
-        var mdate = moment(tempjdate).add(1, 'week'); // monday
+        var mdate = moment(tempjdate).add(1, 'weeks'); // monday
         tempjdate = mdate.toDate();
-        Session.set('currweek', tempjdate);
+        if (tempjdate > moment().add(5, 'weeks')) {
+            return;
+        } else {
+            Session.set('currweek', tempjdate);
+        }
 
     },
     

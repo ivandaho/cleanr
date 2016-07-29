@@ -16,3 +16,25 @@ VendorslotsSchema = new SimpleSchema({
 });
 
 Vendorslots.attachSchema(VendorslotsSchema);
+
+Meteor.methods({
+    'vendorslots.addSlot' (date, slot) {
+        Vendorslots.insert({
+            d: date,
+            s: slot,
+            ownerID: Meteor.userId()
+        });
+    },
+    'vendorslots.removeSlot' (date, slot) {
+        var doc = Vendorslots.findOne({
+            d: date,
+            s: parseInt(slot),
+            ownerID: Meteor.userId()
+        })
+        if (doc) {
+            Vendorslots.remove(doc);
+            } else {
+                console.log('cant find, cant remove!');
+        }
+    },
+});

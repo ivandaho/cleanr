@@ -1,4 +1,4 @@
-<template name="VendorCal">
+<template name="VendorCP">
 <h2>Thank you for selecting your available slots.<br>
     We auto generate your schedule for the next y weeks<br>
     based on the information you have provided us.<br></h2>
@@ -12,7 +12,7 @@
     <button class="btn prevweekbtn">Previous Week</button>
     <button class="btn nextweekbtn">Next Week</button>
     
-    <p>Click to toggle individual time slots for each day.</p>
+    <p>Click to change the number of teams you have available for the individual time slots.</p>
     <div class="table-responsive">
     <table class="table">
       <thead>
@@ -51,7 +51,9 @@
 <template name="vcaleachslot">
   {{#each this}}
     <td>
-    <button class="btn btn-success slotopen" id="{{date}} {{n}}">{{hasopen date n}}</button>
+    <button class="btn btn-xs btn-danger slotdecrease" id="{{date}} {{n}}">-</button>
+    {{hasopen date n}}
+    <button class="btn btn-xs btn-success slotincrease" id="{{date}} {{n}}">+</button>
     <!-- <button class="btn btn-disabled slotclose" id="{{date}} {{n}}">Toggle this slot</button> -->
     </td>
   {{/each}}
