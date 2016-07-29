@@ -2,18 +2,76 @@ import { Meteor } from 'meteor/meteor';
 import '/imports/startup/server';
 
 import { Vendordata } from '/imports/api/vendordata/Vendordata.js';
-import { Weeks } from '/imports/api/weeks/Weeks.js';
+import { Vendorslots } from '/imports/api/vendorslots/Vendorslots.js';
 
 Meteor.startup(() => {
+    // return;
     //script to create weeks data. does not handle updates from vendors, only initial creations
 
-    vd = Vendordata.find({});
-    var sda = []; // slot day array. for vendor availability
-    vd.forEach(function (vendorinfo) {
-        //console.log('one vendordata entry');
+    //vd = Vendordata.find({});
+    vd = Vendordata.find({_id: "6WXGGorhWRTGvdEfW"});
+    var allevents = [];
+
+    var daystogenerate = 10;
+
+    for (var x = 0; x <= daystogenerate; x++) {
+        var currday = moment('2016-07-25').add(x, 'days');
+        vd.forEach(function(vend) {
+            vend.defaultSlots.forEach(function(slot) {
+                var daystring = slot.substring(0,3); // day
+                if (daystring == currday.format('ddd').toLowerCase()) {
+                    // its the wanted day of the week
+                    var slotstring = slot.substring(4,5);
+                    /*
+                    Vendorslots.insert({
+                        d: currday.toDate(),
+                        s: parseInt(slotstring),
+                        ownerID: vend.ownerID
+                    });
+                    */
+                };
+            }); // foreach slot
+        }); // foreach vend
+    }; // for each daytogenerate
+
+    return;
+    
+
+    vd.forEach(function (onevendor) {
+        console.log('one vendordata entry, id ' + onevendor._id);
         // parse the data, for week creation
+        
+        onevendor.defaultSlots.forEach(function(sl) {
+            var day = sl.substring(0,3);
+            var s = parseInt(sl.substring(4,5));
+            // Vendorslots: date, slot, ownerID
+        });
+
+        onevendor.vendorWeeks.forEach(function(week) {
+            //var str = moment(week.mondayDate).format('YYYY-MM-DD');
+            //str = str += week.timeslots[0].days.
+            week.timeslots.forEach(function(timeslot) {
+                var tsstr = timeslot.slot;
+                timeslot.days.forEach(function(day) {
+                    var date = day.d;
+                    var fs = day.free;
+                    var ps = date + ' ' + tsstr + ' ' + fs + ' ' + onevendor.ownerID;
+                    //console.log(ps);
+                    allevents.push(ps);
+                });
+            });
+
+        });
+    });
+    allevents.forEach(function (item) {
+        // this will insert all vendor slot info, without duplicates
+        Vendorslots.upsert({"vendorslot": item},{$set: {"vendorslot": item}});
+        // upsert doesn't work with simpleSchema or something but the above line is ok
+        //Vendorslots.update({"vendorslot": item},{"vendorslot": item},{upsert: true});
     });
 
+    var tallyslottime = function(date, slot){
+    }
     var y = 5; // weeks in advanced to generate
 
     var twm = moment().startOf('week').add(1, 'days'); // this week monday
@@ -49,7 +107,7 @@ Meteor.startup(() => {
                             days: [
                                 {
                                     d: mondate,
-                                    free: 1 //get vendor info, put into a var a
+                                    free: 1 // tallyslottime() //get vendor info, put into a var a
                                 },
                                 {
                                     d: tuedate,
@@ -239,10 +297,10 @@ Meteor.startup(() => {
                 var mondayf = moment(eachweek.mondayDate).format('YYYY-MM-DD');
 
                 if (twmf == mondayf) {
-                    console.log('comparing ' + twmf + ' with ' + mondayf + ' TRUE');
+                    //console.log('comparing ' + twmf + ' with ' + mondayf + ' TRUE');
                     found = true;
                 } else {
-                    console.log('comparing ' + twmf + ' with ' + mondayf + ' FALSE');
+                    //console.log('comparing ' + twmf + ' with ' + mondayf + ' FALSE');
                 }
             }
         });
@@ -256,6 +314,31 @@ Meteor.startup(() => {
     needtogenerate.forEach(function(uw) {
         // for each week requiring generation
         console.log('pushing one set for: ' + uw.format('YYYY-MM-DD'));
+        
+        // pull data from default vendor schedule
+
+        // check the array of slottime, if exist = free
+        var checkslot = function(day,slot) {
+            checkstr = day + ' ' + slot;
+            var x;
+            var found = false;
+            eachvendor.slotsAvailable.forEach(function(slottime) {
+                if (!found) {
+                    //var sl = slottime.substring(4,16);
+                    //var d = slottime.substring(0,4);
+                    if (checkstr == slottime) {
+                        x = 1;
+                        found = true;
+                        console.log('found a slot at ' + day + ' ' + slot);
+                    } else {
+                        x = 0;
+                    }
+                }
+            });
+            return x;
+        }
+
+
         var mondate = uw.clone().format('YYYY-MM-DD');
         var tuedate = uw.clone().add(1, 'day').format('YYYY-MM-DD');
         var weddate = uw.clone().add(2, 'day').format('YYYY-MM-DD');
@@ -263,6 +346,7 @@ Meteor.startup(() => {
         var fridate = uw.clone().add(4, 'day').format('YYYY-MM-DD');
         var satdate = uw.clone().add(5, 'day').format('YYYY-MM-DD');
         var sundate = uw.clone().add(6, 'day').format('YYYY-MM-DD');
+
 
         /*
         console.log('mondate: ' + mondate);
@@ -289,31 +373,31 @@ Meteor.startup(() => {
                                     "days": [
                                         {
                                             "d": mondate,
-                                            "free": 1
+                                            "free": checkslot('mon', '0800 to 1000')
                                         },
                                         {
                                             "d": tuedate,
-                                            "free": 1
+                                            "free": checkslot('tue', '0800 to 1000')
                                         },
                                         {
                                             "d": weddate,
-                                            "free": 1
+                                            "free": checkslot('wed', '0800 to 1000')
                                         },
                                         {
                                             "d": thudate,
-                                            "free": 1
+                                            "free": checkslot('thu', '0800 to 1000')
                                         },
                                         {
                                             "d": fridate,
-                                            "free": 1
+                                            "free": checkslot('fri', '0800 to 1000')
                                         },
                                         {
                                             "d": satdate,
-                                            "free": 1
+                                            "free": checkslot('sat', '0800 to 1000')
                                         },
                                         {
                                             "d": sundate,
-                                            "free": 1
+                                            "free": checkslot('sun', '0800 to 1000')
                                         },
                                     ]
                                 },
@@ -322,31 +406,31 @@ Meteor.startup(() => {
                                     "days": [
                                         {
                                             "d": mondate,
-                                            "free": 1
+                                            "free": checkslot('mon', '1000 to 1200')
                                         },
                                         {
                                             "d": tuedate,
-                                            "free": 1
+                                            "free": checkslot('tue', '1000 to 1200')
                                         },
                                         {
                                             "d": weddate,
-                                            "free": 1
+                                            "free": checkslot('wed', '1000 to 1200')
                                         },
                                         {
                                             "d": thudate,
-                                            "free": 1
+                                            "free": checkslot('thu', '1000 to 1200')
                                         },
                                         {
                                             "d": fridate,
-                                            "free": 1
+                                            "free": checkslot('fri', '1000 to 1200')
                                         },
                                         {
                                             "d": satdate,
-                                            "free": 1
+                                            "free": checkslot('sat', '1000 to 1200')
                                         },
                                         {
                                             "d": sundate,
-                                            "free": 1
+                                            "free": checkslot('sun', '1000 to 1200')
                                         },
                                     ]
                                 },
@@ -355,31 +439,31 @@ Meteor.startup(() => {
                                     "days": [
                                         {
                                             "d": mondate,
-                                            "free": 1
+                                            "free": checkslot('mon', '1200 to 1400')
                                         },
                                         {
                                             "d": tuedate,
-                                            "free": 1
+                                            "free": checkslot('tue', '1200 to 1400')
                                         },
                                         {
                                             "d": weddate,
-                                            "free": 1
+                                            "free": checkslot('wed', '1200 to 1400')
                                         },
                                         {
                                             "d": thudate,
-                                            "free": 1
+                                            "free": checkslot('thu', '1200 to 1400')
                                         },
                                         {
                                             "d": fridate,
-                                            "free": 1
+                                            "free": checkslot('fri', '1200 to 1400')
                                         },
                                         {
                                             "d": satdate,
-                                            "free": 1
+                                            "free": checkslot('sat', '1200 to 1400')
                                         },
                                         {
                                             "d": sundate,
-                                            "free": 1
+                                            "free": checkslot('sun', '1200 to 1400')
                                         },
                                     ]
                                 },
@@ -388,31 +472,31 @@ Meteor.startup(() => {
                                     "days": [
                                         {
                                             "d": mondate,
-                                            "free": 1
+                                            "free": checkslot('mon', '1400 to 1600')
                                         },
                                         {
                                             "d": tuedate,
-                                            "free": 1
+                                            "free": checkslot('tue', '1400 to 1600')
                                         },
                                         {
                                             "d": weddate,
-                                            "free": 1
+                                            "free": checkslot('wed', '1400 to 1600')
                                         },
                                         {
                                             "d": thudate,
-                                            "free": 1
+                                            "free": checkslot('thu', '1400 to 1600')
                                         },
                                         {
                                             "d": fridate,
-                                            "free": 1
+                                            "free": checkslot('fri', '1400 to 1600')
                                         },
                                         {
                                             "d": satdate,
-                                            "free": 1
+                                            "free": checkslot('sat', '1400 to 1600')
                                         },
                                         {
                                             "d": sundate,
-                                            "free": 1
+                                            "free": checkslot('sun', '1400 to 1600')
                                         },
                                     ]
                                 },
@@ -421,31 +505,31 @@ Meteor.startup(() => {
                                     "days": [
                                         {
                                             "d": mondate,
-                                            "free": 1
+                                            "free": checkslot('mon', '1600 to 1800')
                                         },
                                         {
                                             "d": tuedate,
-                                            "free": 1
+                                            "free": checkslot('tue', '1600 to 1800')
                                         },
                                         {
                                             "d": weddate,
-                                            "free": 1
+                                            "free": checkslot('wed', '1600 to 1800')
                                         },
                                         {
                                             "d": thudate,
-                                            "free": 1
+                                            "free": checkslot('thu', '1600 to 1800')
                                         },
                                         {
                                             "d": fridate,
-                                            "free": 1
+                                            "free": checkslot('fri', '1600 to 1800')
                                         },
                                         {
                                             "d": satdate,
-                                            "free": 1
+                                            "free": checkslot('sat', '1600 to 1800')
                                         },
                                         {
                                             "d": sundate,
-                                            "free": 1
+                                            "free": checkslot('sun', '1600 to 1800')
                                         },
                                     ]
                                 }

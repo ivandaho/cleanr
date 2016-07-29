@@ -1,9 +1,9 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 
-export const Weeks = new Mongo.Collection('weeks');
+export const Generatedweeks = new Mongo.Collection('generatedweeks');
 
-Weeks.allow({
+Generatedweeks.allow({
     // if userId exists, means we are signed in, and able to insert
     insert: function(userId, doc) {
         return !!userId;
@@ -28,14 +28,11 @@ TimeslotsSchema = new SimpleSchema({
 });
 
 
-WeeksSchema = new SimpleSchema({
+GeneratedweeksSchema = new SimpleSchema({
     mondayDate: {
         type: Date
-    },
-    timeslots: {
-        type: [TimeslotsSchema]
     }
 });
 
-Weeks.attachSchema(WeeksSchema);
+Generatedweeks.attachSchema(GeneratedweeksSchema);
 

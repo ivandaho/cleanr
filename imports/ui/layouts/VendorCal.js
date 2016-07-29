@@ -1,25 +1,27 @@
-import './Schedule.html';
+import './VendorCal.html';
 
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 
 import { Timeslots } from '../../api/timeslots/Timeslots.js';
+import { Vendordata } from '../../api/vendordata/Vendordata.js';
 import { Vendorslots } from '../../api/vendorslots/Vendorslots.js';
     //Meteor.subscribe('recipes');
 
-Template.Schedule.onCreated(function ScheduleOnCreated() {
+Template.VendorCal.onCreated(function VendorCalOnCreated() {
     Meteor.subscribe('timeslots');
+    Meteor.subscribe('vendordata');
     Meteor.subscribe('vendorslots');
-    var mdate = moment().startOf('week').add(1, 'days'); // this week's monday
+    var mdate = moment().startOf('week').add(1, 'days');
     var jdate = mdate.toDate();
     Session.set('currweek', jdate);
     tss = Timeslots.find({});
-    //Meteor.subscribe('sessions');
+    
 });
 
 var tss;
 
-Template.Schedule.helpers({
+Template.VendorCal.helpers({
     timeslots() {
         if (tss != undefined){
             return tss;
@@ -30,9 +32,10 @@ Template.Schedule.helpers({
         var mdate = moment(jdate);
         return mdate.add(i, 'days').format("DD-MM");
     },
+
 });
 
-Template.schedtable.helpers({
+Template.vcalschedtable.helpers({
     days(num) {
 
         var jdate = Session.get('currweek');
@@ -50,57 +53,68 @@ Template.schedtable.helpers({
     },
 });
 
-Template.eachslot.helpers({
+Template.vcaleachslot.helpers({
     hasopen(date, n) {
         var jdate = moment(date).toDate();
-
-        // console.log(date + ' ' + jdate);
-
-        //var ds = Vendorslots.find({d: new Date(jdate)});
         var ds = Vendorslots.find({
                                     $and: [
                                         {d: new Date(jdate)},
+                                        {ownerID: Meteor.userId()},
                                         {s: parseInt(n)}
                                     ]
                                 }); // find for that day
         var count = ds.count();
+        return count;
+        /*
         if (count > 0) {
             return true;
         } else {
             return false;
         }
+        */
 
     },
 });
-Template.Schedule.events({
-    'click .bookbtn' (event) {
+
+
+Template.VendorCal.events({
+    'click .slotopen' (event) {
         event.preventDefault();
+        console.log('sdf');
+    },
+    'click .newbtn' (event) {
+        event.preventDefault();
+        console.log('sdf');
+        Meteor.call('vendordata.updateSlots', data);
+    },
+    'click .selectbtn' (event) {
+        event.preventDefault();
+        str = "vsched " + event.target.id;
 
-        return;
-        /*
-        var mdate = moment().startOf('week').add(1, 'days'); // monday
-        var jdate = mdate.toDate();
-        var st = "uYNw5K2ZcTuWfxcXG";
-
-        var query = { mondayDate: jdate};
-        tw = weeks.findOne(query);
-
-        console.log(tw.timeslots);
-        return;
-        */
-        var date = event.target.id.substring(0,10);
-        var slot = event.target.id.substring(11,23);
-        mdate = moment(date);
-        msg_day = mdate.format('dddd ');
-        msg_date = mdate.format('MMMM D');
-        var bb_msg = "You have selected the " + msg_day + slot + " time slot. Session will start on " + msg_date;
-        //bootbox.alert('test');
-        bootbox.dialog({
-            message: bb_msg,
-            title: "Booking Confirmation",
-            onEscape: function() {} // allows for esc to close modal
+        if (event.target.classList.contains("btn-success")) {
+            Session.set(str, false);
+            event.target.classList.remove("btn-success");
+            event.target.classList.add("btn-danger");
+        } else {
+            Session.set(str, true);
+            event.target.classList.remove("btn-danger");
+            event.target.classList.add("btn-success");
+        }
+    },
+    'click .btn-proceed' (event) {
+        event.preventDefault();
+        var vendorSlots = [];
+        var ts = Timeslots.find({});
+        ts.forEach(function(sl){
+            var days =["mon","tue","wed","thu","fri","sat","sun"];
+            days.forEach(function(dayvar){
+                var ss = "vsched " + dayvar + " " + sl.slot;
+                if (Session.get(ss) == undefined || Session.get(ss) == true) {
+                    vendorSlots.push(ss.substring(7,99));
+                }
+            });
         });
-
+        Meteor.call('vendordata.pushSlot', vendorSlots);
     },
     'click .prevweekbtn' (event) {
         event.preventDefault();
@@ -118,6 +132,7 @@ Template.Schedule.events({
         Session.set('currweek', tempjdate);
 
     },
+    
 
 });
 

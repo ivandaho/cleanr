@@ -7,7 +7,6 @@
   <div class="container">
     <h2>Table</h2>
     <br>
-    <!-- {{> quickForm collection='weeks' id='insertweek' type='insert'}} -->
     <p>Click to toggle individual time slots for each day.</p>
     <div class="table-responsive">
     <table class="table">
@@ -39,15 +38,15 @@
 {{#each this}} <!-- will iterate over each timeslot -->
     <tr>
       <td>{{slot}}</td>
-      {{>veachslot days}}
+      {{>veachslot dayhelper num}} <!-- this helper has to be in vschedtable.-->
     </tr>
   {{/each}}
 </template>
 
 <template name="veachslot">
-  {{#each item in this}}
+  {{#each this}}
     <td>
-        <button class="btn btn-success selectbtn" id="{{item}} {{../slot}}">Toggle Selection</button>
+        <button class="btn btn-success selectbtn" id="{{day}} {{num}}">Toggle Selection</button>
     </td>
   {{/each}}
 </template>

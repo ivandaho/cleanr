@@ -1,11 +1,18 @@
-<template name="Schedule">
+<template name="VendorCal">
+<h2>Thank you for selecting your available slots.<br>
+    We auto generate your schedule for the next y weeks<br>
+    based on the information you have provided us.<br></h2>
+  If you have additional exceptions to your normal schedule,<br>
+  please indicate them here.<br>
+  
   <div class="container">
     <h2>Table</h2>
     <br>
     <!-- {{> quickForm collection='weeks' id='insertweek' type='insert'}} -->
-    <p>Choose a time slot and a day</p>
     <button class="btn prevweekbtn">Previous Week</button>
     <button class="btn nextweekbtn">Next Week</button>
+    
+    <p>Click to toggle individual time slots for each day.</p>
     <div class="table-responsive">
     <table class="table">
       <thead>
@@ -21,30 +28,32 @@
         </tr>
       </thead>
       <tbody>
-        {{>schedtable timeslots}}
+        {{>vcalschedtable timeslots}}
       </tbody>
     </table>
     </div>
   </div>
+  <br>
+  <br>
+
+  <button type="submit" class="btn btn-success newbtn">Proceed</button>
 </template>
 
-<template name="schedtable">
+<template name="vcalschedtable">
 {{#each this}} <!-- will iterate over each timeslot -->
     <tr>
       <td>{{slot}}</td>
-      {{>eachslot days num}}
+      {{>vcaleachslot days num}}
     </tr>
   {{/each}}
 </template>
 
-<template name="eachslot">
+<template name="vcaleachslot">
   {{#each this}}
     <td>
-      {{#if hasopen date n}} <!-- if has open slot on that day... -->
-      <button class="btn btn-success bookbtn" id="{{date}} {{n}}">Book this slot</button>
-      {{else}}
-        <button class="btn btn-disabled" >Not Available</button>
-      {{/if}}
+    <button class="btn btn-success slotopen" id="{{date}} {{n}}">{{hasopen date n}}</button>
+    <!-- <button class="btn btn-disabled slotclose" id="{{date}} {{n}}">Toggle this slot</button> -->
     </td>
   {{/each}}
 </template>
+
