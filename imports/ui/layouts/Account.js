@@ -4,8 +4,8 @@ import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 
 // need these for subscriptions to work../??
-import { Jobs } from '../../api/jobs/Jobs.js';
-import { Sessions } from '../../api/sessions/Sessions.js';
+// import { Jobs } from '../../api/jobs/Jobs.js';
+// import { Sessions } from '../../api/sessions/Sessions.js';
 import { Userdata } from '../../api/userdata/Userdata.js';
 import './Account.html';
     //Meteor.subscribe('recipes');

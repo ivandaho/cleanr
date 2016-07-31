@@ -21,10 +21,12 @@ Ingredient = new SimpleSchema({
 
 SessionSchema = new SimpleSchema({
     date: {
-        type: Date,
+        type: Date
+              /*
         autoform: {
             type: "bootstrap-datepicker"
         }
+        */
     },
     desc: {
         type: String,

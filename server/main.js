@@ -9,8 +9,8 @@ Meteor.startup(() => {
     // return;
     //script to create weeks data. does not handle updates from vendors, only initial creations
 
-    //vd = Vendordata.find({});
-    vd = Vendordata.find({_id: "6WXGGorhWRTGvdEfW"});
+    vd = Vendordata.find({});
+    // vd = Vendordata.find({_id: "6WXGGorhWRTGvdEfW"});
     
     var today = moment();
     var y = 5; // how many weeks in advance

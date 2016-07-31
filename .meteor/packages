@@ -19,25 +19,26 @@ ecmascript              # Enable ECMAScript2015+ syntax in app code
 
 kadira:flow-router
 kadira:blaze-layout
-erasaur:meteor-lodash
-stolinski:stylus-multi
+# erasaur:meteor-lodash
+# stolinski:stylus-multi
 fortawesome:fontawesome
-spiderable
-fastclick
-raix:handlebar-helpers
+# spiderable # for indexing later
+# fastclick # for mobile clicking events, reduces delay
+# raix:handlebar-helpers
 aldeed:collection2
 accounts-ui
 accounts-password
 matb33:bootstrap-glyphicons
-zimme:active-route
-gwendall:auth-client-callbacks
+# zimme:active-route
+# gwendall:auth-client-callbacks // callbacks when client logs in/out
 meteortoys:allthings
 
-aldeed:autoform-bs-datepicker
+aldeed:autoform
+# aldeed:autoform-bs-datepicker
 alanning:roles
-andruschka:autoform-dropdown-select
+# andruschka:autoform-dropdown-select
 kenken:meteor-counters
-reactive-dict
+# reactive-dict
 session
 useraccounts:bootstrap
 useraccounts:flow-routing
@@ -49,3 +50,4 @@ rajit:bootstrap3-datepicker
 arillo:flow-router-helpers
 mizzao:bootboxjs
 mrt:moment
+# aramk:rangeslider

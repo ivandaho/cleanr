@@ -76,28 +76,55 @@ Template.Schedule.events({
     'click .bookbtn' (event) {
         event.preventDefault();
 
-        return;
-        /*
-        var mdate = moment().startOf('week').add(1, 'days'); // monday
-        var jdate = mdate.toDate();
-        var st = "uYNw5K2ZcTuWfxcXG";
-
-        var query = { mondayDate: jdate};
-        tw = weeks.findOne(query);
-
-        console.log(tw.timeslots);
-        return;
-        */
         var date = event.target.id.substring(0,10);
         var slot = event.target.id.substring(11,23);
         mdate = moment(date);
         msg_day = mdate.format('dddd ');
         msg_date = mdate.format('MMMM D');
-        var bb_msg = "You have selected the " + msg_day + slot + " time slot. Session will start on " + msg_date;
+        var ts = Timeslots.findOne({num: parseInt(slot)});
+
+        var bb_msg = '<div class="row text-center"><h4>You have selected the ' + msg_day + '(' + msg_date + ') ' + ts.slot + ' time slot.</h4></div>';
         //bootbox.alert('test');
+    //'<input type="range" min="0" max="3" step="1" value="1" data-orientation="horizontal" >' +
+        var contenthtml = '<div class="row">  ' +
+                            '<div class="col-xs-4"> ' +
+                                '<button class="btn btn-success btn-block single">Single Session</button>' +
+                            '</div>' +
+                            '<div class="col-xs-8 vertical-align"> ' +
+                            'Once-off cleaning session.' +
+                            '</div>' +
+                        '</div>' +
+                        '<div class="row">  ' +
+                            '<div class="col-xs-4"> ' +
+                                '<button class="btn btn-success btn-block single">Weekly Session</button>' +
+                            '</div>' +
+                            '<div class="col-xs-8 vertical-align"> ' +
+                            'Weekly Session. We bill you once a month. Cancel anytime.' +
+                            '</div>' +
+                        '</div>';
+
         bootbox.dialog({
-            message: bb_msg,
-            title: "Booking Confirmation",
+            title: "Booking",
+            message: bb_msg + '<br>' + contenthtml,
+            /*
+            buttons: {
+                'sng': {
+                    label: 'Single Session',
+                    className: 'btn-success',
+                    callback: function() {
+                        console.log('single session clicked');
+                    }
+                },
+                'wkl': {
+                    label: 'Weekly Session',
+                    className: 'btn-success',
+                    callback: function() {
+                        console.log('Weekly session clicked');
+                        return false;
+                    }
+                }
+            },
+            */
             onEscape: function() {} // allows for esc to close modal
         });
 

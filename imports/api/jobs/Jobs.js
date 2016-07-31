@@ -37,11 +37,13 @@ JobSchema = new SimpleSchema({
 
     jobDateTime: {
         type: Date,
-        label: "Cleaning date & time",
+        label: "Cleaning date & time"
+            /*
         autoform: {
             // change to pickadate
             type: "bootstrap-datepicker"
         },
+            */
     },
 
     custID: {
