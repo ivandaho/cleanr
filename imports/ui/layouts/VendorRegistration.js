@@ -34,6 +34,21 @@ Template.vschedtable.helpers({
     },
 });
 
+Template.veachslot.helpers({
+    btndecider(day, num) {
+        var str = day + ' ' + num;
+        var sesstr = "vsched " + str;
+        var vinfo = Vendordata.findOne({ownerID: Meteor.userId(), defaultSlots: {$in: [str]}});
+        if (vinfo) {
+            Session.set(sesstr, true);
+            return 'btn-success'
+        } else {
+            Session.set(sesstr, false);
+            return 'btn-danger'
+        }
+    },
+});
+
 
 Template.VendorRegistration.events({
     'click .selectbtn' (event) {
@@ -64,6 +79,19 @@ Template.VendorRegistration.events({
             });
         });
         Meteor.call('vendordata.pushSlots', vs);
+
+        bootbox.dialog({
+            message: 'Your default weekly schedule has been updated.<br><br>' +
+                'Please note that any changes you made will only take effect when new weeks are generated each Monday, and has no effect on weeks that have been generated.',
+            title: 'Update complete',
+            buttons: {
+                success: {
+                    label: "Ok",
+                    className: "btn-success"
+                }
+            },
+            onEscape: function() {}, // for escape to close
+        });
     }
 
 });

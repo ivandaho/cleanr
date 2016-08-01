@@ -1,0 +1,12 @@
+.sched-cols {
+    max-width:120px;
+    min-width:100px;
+}
+
+.slotdecrease {
+    color: #d9534f;
+}
+
+.slotincrease {
+    color: #5cb85c;
+}

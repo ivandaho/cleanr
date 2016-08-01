@@ -4,7 +4,6 @@ import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { Userdata } from '../../api/userdata/Userdata.js';
 
-// need these for subscriptions to work../??
 
 Template.Header.onCreated(function AccountOnCreated() {
     Meteor.subscribe('userdata');
@@ -18,6 +17,9 @@ Template.Header.helpers({
 
 Template.Header.events({
     //'click .account-info' (event) {
+    'click .btn-booknow' (event) {
+        FlowRouter.go('schedule');
+    },
     'click .test-btn' (event) {
         event.preventDefault();
         bootbox.alert('test');

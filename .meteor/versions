@@ -10,7 +10,6 @@ aldeed:schema-deny@1.0.1
 aldeed:schema-index@1.0.1
 aldeed:simple-schema@1.5.3
 allow-deny@1.0.5
-aramk:rangeslider@1.2.2
 arillo:flow-router-helpers@0.5.2
 autoupdate@1.2.11
 babel-compiler@6.8.5
@@ -55,6 +54,7 @@ less@2.6.5
 livedata@1.0.18
 localstorage@1.0.11
 logging@1.0.14
+matb33:bootstrap-affix-js@10.0.0
 matb33:bootstrap-base@10.0.0
 matb33:bootstrap-glyphicons@10.0.0
 mdg:validation-error@0.2.0

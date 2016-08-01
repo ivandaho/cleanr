@@ -18,13 +18,13 @@
       <thead>
         <tr>
           <th>Time Slots</th>
-          <th>Monday <br> {{weekdates 0}}</th>
-          <th>Tuesday <br> {{weekdates 1}}</th>
-          <th>Wednesday <br> {{weekdates 2}}</th>
-          <th>Thursday <br> {{weekdates 3}}</th>
-          <th>Friday <br> {{weekdates 4}}</th>
-          <th>Saturday <br> {{weekdates 5}}</th>
-          <th>Sunday <br> {{weekdates 6}}</th>
+          <th class="text-center sched-cols">Monday <br> {{weekdates 0}}</th>
+          <th class="text-center sched-cols">Tuesday <br> {{weekdates 1}}</th>
+          <th class="text-center sched-cols">Wednesday <br> {{weekdates 2}}</th>
+          <th class="text-center sched-cols">Thursday <br> {{weekdates 3}}</th>
+          <th class="text-center sched-cols">Friday <br> {{weekdates 4}}</th>
+          <th class="text-center sched-cols">Saturday <br> {{weekdates 5}}</th>
+          <th class="text-center sched-cols">Sunday <br> {{weekdates 6}}</th>
         </tr>
       </thead>
       <tbody>
@@ -50,10 +50,10 @@
 
 <template name="vcaleachslot">
   {{#each this}}
-    <td>
-    <button class="btn btn-xs btn-danger slotdecrease" id="{{date}} {{n}}">-</button>
-    {{hasopen date n}}
-    <button class="btn btn-xs btn-success slotincrease" id="{{date}} {{n}}">+</button>
+    <td class="text-center">
+    <i class="fa fa-minus-circle slotdecrease" id="{{date}} {{n}}"></i>
+    <span style="font-size:1.5em;">{{hasopen date n}}</span>
+    <i class="fa fa-plus-circle slotincrease" id="{{date}} {{n}}"></i>
     <!-- <button class="btn btn-disabled slotclose" id="{{date}} {{n}}">Toggle this slot</button> -->
     </td>
   {{/each}}

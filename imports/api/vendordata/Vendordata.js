@@ -16,14 +16,14 @@ Vendordata.attachSchema(VendordataSchema);
 
 Meteor.methods({
     'vendordata.pushSlots' (slots) {
-        // TODO: catch if attempting to register again
         doc = Vendordata.findOne({ownerID: this.userId});
         doc ? Vendordata.update({_id: doc._id},
-            {$set: {slotsAvailable: slots}}):
+            {$set: {defaultSlots: slots}}):
             Vendordata.insert({
                 ownerID: this.userId,
                 defaultSlots: slots
             });
+
     },
     'vendordata.updateSlots' (data) {
         // get doc for current logged in vendor
