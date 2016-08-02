@@ -13,8 +13,8 @@ import '../../ui/layouts/Login.html';
 import '../../ui/layouts/MainLayout.html';
 import '../../ui/layouts/Schedule.html';
 import '../../ui/layouts/Schedule.js';
-import '../../ui/layouts/SessionConfirmation.html';
-import '../../ui/layouts/SessionConfirmation.js';
+import '../../ui/layouts/Confirmation.html';
+import '../../ui/layouts/Confirmation.js';
 import '../../ui/layouts/Signup.html';
 import '../../ui/layouts/VendorCP.html';
 import '../../ui/layouts/VendorCP.js';
@@ -48,7 +48,7 @@ FlowRouter.route('/account', {
 FlowRouter.route('/confirmation', {
     name: 'confirmation',
     action() {
-        BlazeLayout.render('MainLayout', {main: 'SessionConfirmation'})
+        BlazeLayout.render('MainLayout', {main: 'Confirmation'})
     }
 });
 

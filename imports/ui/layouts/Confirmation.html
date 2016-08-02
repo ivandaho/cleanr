@@ -1,0 +1,119 @@
+<template name="Confirmation">
+<h2>session confirmation area.<br></h2>
+  <section id="confirm-sec-1" class="bg-light-gray">
+      <div class="container">
+          <!--
+          <div class="row">
+              <div class="col-md-4">
+                  <br><br><button type="button" class="btn btn-warning btn-lg" id="btnEditSessions">Edit Sessions</button>
+                  <br><br>
+              </div>
+          </div>
+          -->
+          <div class="row">
+              <div class="row-same-height">
+                  <div class="col-md-6 col-sm-height">
+                      <!-- info div contains info -->
+                      <div class="info">
+                          <p class="sec-heading">Package:<br></p>
+                          <p class="sec-value">1 maid for 4 hours<br></p>
+
+                          <p class="sec-heading">Scheduling Details:<br></p>
+                          <p class="sec-value">{{schedSlotTime}}<br></p>
+                          {{#if weekly}}
+                            <p class="sec-value">{{schedSlotDay}}<br></p>
+                          {{else}}
+                            <p class="sec-value">{{schedSlotDate}}<br></p>
+                          {{/if}}
+
+                          {{#if weekly}}
+                            <p class="sec-heading">First session:<br></p>
+                            <p class="sec-value">{{schedSlotDate}}<br></p>
+                          {{/if}}
+                      </div>
+                      <!-- this placeholderthing is to offset some space for the button to appear at the bottom of the column -->
+                      <!-- check css for details -->
+                      <div class="placeholderthing"></div>
+                      <div class="btndiv">
+                          <a href='/schedule' class="btn btn-warning btn-lg btn-block">Change Booking</a>
+                      </div>
+                  </div>
+
+                  <div class="col-md-6 col-sm-height">
+                      <div class="info">
+                          <p class="sec-heading">Customer Details:<br></p>
+                          <p class="sec-value">{{userdata.user_name}}</p>
+                          <p class="sec-value">{{userdata.user_tel}}</p>
+                          <p class="sec-value">{{userdata.user_email}}</p>
+
+                          <p class="sec-heading">Cleaning Location:<br></p>
+                          <p class="sec-value">{{userdata.user_address.[0].street}}<br></p>
+                          <p class="sec-value">{{userdata.user_address.[0].city}}<br></p>
+                          <p class="sec-value">{{userdata.user_address.[0].state}}<br></p>
+                          <p class="sec-value">{{userdata.user_address.[0].zip}}<br></p>
+                      </div>
+                      <!-- this placeholderthing is to offset some space for the button to appear at the bottom of the column -->
+                      <!-- check css for details -->
+                      <div class="placeholderthing"></div>
+                      <div class="btndiv">
+                          <button type="button" class="btn btn-warning btn-lg btn-block">Change Address</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          <br><br>
+          <div class="row">
+              <div class="row-same-height">
+
+                  <!-- padded class just adds some margins for spacing purposes -->
+                  <div class="col-md-4 col-sm-height padded">
+                      <!-- img-responsive and center-block helps a lot with image centerization -->
+                      <!-- todo: make centered text on top of picture -->
+                      <img class="img-responsive img-circle center-block" src="/res/img/placeholder320x320.jpg">
+                      <div class="textonimg">Mattress Cleaning<br>+RM50/Session</div>
+                      <!-- same purpose as the placeholderthing class, but slightly shorter -->
+                      <div class="placeholdershort"></div>
+                      <!-- addbtn can be used for further customization, for now it is the same except for height:40px -->
+                      <button type="button" class="btn btn-success btn-block addbtn" id="addMC">{{addMCStatus}}</button>
+                  </div>
+
+                  <div class="col-md-4 col-sm-height padded">
+                      <img class="img-responsive img-circle center-block" src="/res/img/placeholder320x320.jpg">
+                      <div class="textonimg">Carpet Cleaning<br>+RM50/Session</div>
+                      <div class="placeholdershort"></div>
+                      <button type="button" class="btn {{addCCBtn}} btn-block addbtn" id="addCC">{{addCCStatus}}</button>
+                  </div>
+
+                  <div class="col-md-4 col-sm-height">
+                      <!-- vertical alignment super annoying, this solution is more like a workaround -->
+                      <!-- tc is a text container, to align the text within it. tc is set to
+                           100% height and width of the parent div which contains the text and the button,
+                           see css for more info -->
+                      <div class="tc">
+                          <div class="row vertical-align valignfix">
+                              <!-- to vertically align elements, there has to be more than one element
+                                   this placeholderthing2 helps to align the text in the third column -->
+                              <div class="placeholderthing2"> </div>
+                              <!-- this div contains the text information -->
+                              <div class="confirmtext">
+                                  Clicking on the "Confirm Booking"<br>
+                                  button indicates that<br>
+                                  I have read and agreed to the<br>
+                                  terms and conditions and<br>
+                                  the service level agreement.
+                              </div>
+                          </div>
+                      </div>
+                      <!-- placeholder again, for space before the next element (confirm button).
+                           works by setting a min-height to offset. It will not be noticable on desktop but on mobile it is -->
+                      <div class="placeholderthing3"></div>
+                      <!-- button currently adds addbtn css rules -->
+                      <button type="button" class="btn btn-success btn-block addbtn" id="proceedPayment">Proceed to Payment</button>
+                  </div>
+              </div>
+          </div>
+         
+      </div>
+  </section>
+</template>

@@ -8,6 +8,7 @@ Meteor.publish('sessions', function(){
     if (Roles.userIsInRole(this.userId, 'admin')) {
         return Sessions.find({});
     } else {
+        return Sessions.find({});
         // user unauthorized
         this.stop();
         return;

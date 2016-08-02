@@ -10,27 +10,28 @@ Sessions.allow({
     }
 });
 
-Ingredient = new SimpleSchema({
-    name: {
-        type: String,
-    },
-    amount: {
-        type: String
-    }
-});
-
 SessionSchema = new SimpleSchema({
     date: {
         type: Date
-              /*
-        autoform: {
-            type: "bootstrap-datepicker"
-        }
-        */
     },
-    desc: {
-        type: String,
-        label: "Description"
+    timeslot: {
+        type: Number
+    },
+    custID: {
+        type: String
+    },
+    packageID: {
+        type: Number
+    },
+    bookingID: {
+        type: String
+    },
+    sessionstatus: {
+        type: Number,
+        label: "0 = not yet completed, 1 = completed, 2 = warn"
+    },
+    feedback: {
+        type: String
     }
 });
 
