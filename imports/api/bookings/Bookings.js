@@ -60,7 +60,10 @@ Meteor.methods({
     'bookings.insert'(date, slot, repeat, mc, cc){
         // TODO: parse date slot for weekly sessions, with repeat var
         // TODO: assign vendor
-        // dont need subdate or custID because autovalue
+
+        // LATER:
+        // notify vendor
+
         var pmc;
         var pcc;
         if (mc == undefined) {
@@ -96,6 +99,9 @@ Meteor.methods({
         var sessids = [];
 
         // create one session
+        var firstsess = Meteor.call('sessions.createSession',
+                date, slot, this.userId, 1, bookingid, 0, '--');
+        /*
         var firstsess = {
             date: date,
             timeslot: slot,
@@ -105,15 +111,18 @@ Meteor.methods({
             sessionstatus: 0,
             feedback: '--'
         };
+        */
         // push into array
         sess.push(firstsess);
         // check for weekly schedule
         if (repeat) {
-            var sdf = 0; // placeholder
-            // generate for wekes...
+            for (var x = 1; x < 4; x++) {
+                var newdate = moment(date).add(x, 'weeks').toDate();
+                var anothersess = Meteor.call('sessions.createSession',
+                        newdate, slot, this.userId, 1, bookingid, 0, '--');
+                sess.push(anothersess);
+            }
         }
-        // push into sess array again for each week
-        //
         // for each item in array
         sess.forEach(function(each) {
             // add to session Collection
@@ -123,6 +132,9 @@ Meteor.methods({
             // push the _id into a new array
             });
         
+        // assign vendor
+
+        // udate the booking with session ids
         Bookings.update(doc, {$set: {sessionIDs: sessids}});
 
     },

@@ -10,6 +10,9 @@ VendordataSchema = new SimpleSchema({
     defaultSlots: {
         type: [String]
     },
+    recentSessions: {
+        type: Number
+    },
 });
 
 Vendordata.attachSchema(VendordataSchema);

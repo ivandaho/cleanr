@@ -1,6 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 
+import { Vendorslots } from '../vendorslots/Vendorslots.js';
+
 export const Sessions = new Mongo.Collection('sessions');
 
 Sessions.allow({
@@ -23,6 +25,9 @@ SessionSchema = new SimpleSchema({
     packageID: {
         type: Number
     },
+    vendorID: {
+        type: String
+    },
     bookingID: {
         type: String
     },
@@ -36,4 +41,39 @@ SessionSchema = new SimpleSchema({
 });
 
 Sessions.attachSchema(SessionSchema);
+
+Meteor.methods({
+    'sessions.createSession' (dt, st, c, p, b, ss, f) {
+        var v;
+        // find available vendors
+
+        // default slot string
+        // dss = moment(dt).format('ddd').toLowerCase() + ' ' + st;
+        var availableVendors = Vendorslots.find({d: dt, s:parseInt(st)});
+        var avds = []; // available vendors (ids)
+
+        availableVendors.forEach(function (av) {
+            // get id, put id in array
+            avds.push(av);
+        });
+
+        // sets vendor to a random available vendor.
+        // TODO: algorithm based on recent Sessions
+        v = avds[Math.floor(Math.random()*avds.length)];
+
+        Vendorslots.remove(v);
+
+        var doc = {
+            date: dt,
+            timeslot: st,
+            custID: c,
+            packageID: p,
+            vendorID: v.ownerID,
+            bookingID: b,
+            sessionstatus: ss,
+            feedback: f
+        };
+        return doc;
+    },
+});
 
