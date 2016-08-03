@@ -43,25 +43,25 @@ SessionSchema = new SimpleSchema({
 Sessions.attachSchema(SessionSchema);
 
 Meteor.methods({
-    'sessions.createSession' (dt, st, c, p, b, ss, f) {
+    'sessions.createSession' (dt, st, c, p, ss, f) {
         var v;
         // find available vendors
 
         // default slot string
         // dss = moment(dt).format('ddd').toLowerCase() + ' ' + st;
-        var availableVendors = Vendorslots.find({d: dt, s:parseInt(st)});
-        var avds = []; // available vendors (ids)
-
-        availableVendors.forEach(function (av) {
-            // get id, put id in array
-            avds.push(av);
+        var avds = [];
+        Vendorslots.find({d: dt, s:parseInt(st)}).forEach(function (each) {
+            avds.push(each);
         });
+
+        if (avds.length < 1) {
+            // no vendors found on that date. abort
+            return null;
+        }
 
         // sets vendor to a random available vendor.
         // TODO: algorithm based on recent Sessions
         v = avds[Math.floor(Math.random()*avds.length)];
-
-        Vendorslots.remove(v);
 
         var doc = {
             date: dt,
@@ -69,7 +69,6 @@ Meteor.methods({
             custID: c,
             packageID: p,
             vendorID: v.ownerID,
-            bookingID: b,
             sessionstatus: ss,
             feedback: f
         };

@@ -1,0 +1,50 @@
+<template name="VendorWorkSchedule">
+  <div class="container">
+    <h2>Vendor Work Schedule</h2>
+    <br>
+    <p>Choose a time slot and a day</p>
+    <button class="btn prevweekbtn">Previous Week</button>
+    <button class="btn nextweekbtn">Next Week</button>
+    <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Time Slots</th>
+          <th>Monday <br> {{weekdates 0}}</th>
+          <th>Tuesday <br> {{weekdates 1}}</th>
+          <th>Wednesday <br> {{weekdates 2}}</th>
+          <th>Thursday <br> {{weekdates 3}}</th>
+          <th>Friday <br> {{weekdates 4}}</th>
+          <th>Saturday <br> {{weekdates 5}}</th>
+          <th>Sunday <br> {{weekdates 6}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{>vwschedtable timeslots}}
+      </tbody>
+    </table>
+    </div>
+  </div>
+</template>
+
+<template name="vwschedtable">
+{{#each this}} <!-- will iterate over each timeslot -->
+    <tr>
+      <td>{{slot}}</td>
+      {{>vweachslot days num}}
+    </tr>
+  {{/each}}
+</template>
+
+<template name="vweachslot">
+  {{#each this}}
+    <td>
+        {{#with testsess date n}}
+        {{ph}}
+        {{cus.user_name}}<br>
+        {{cus.user_address.[0].street}}
+        {{/with}}
+        <!-- add border styling etc -->
+    </td>
+  {{/each}}
+</template>

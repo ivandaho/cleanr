@@ -20,6 +20,8 @@ import '../../ui/layouts/VendorCP.html';
 import '../../ui/layouts/VendorCP.js';
 import '../../ui/layouts/VendorRegistration.html';
 import '../../ui/layouts/VendorRegistration.js';
+import '../../ui/layouts/VendorWorkSchedule.html';
+import '../../ui/layouts/VendorWorkSchedule.js';
 // need to import the js file, for subscriptions
 
 import '../../ui/components/jobitem.html';
@@ -70,5 +72,11 @@ FlowRouter.route('/vendorregistration', {
     name: 'vendorregistration',
     action() {
         BlazeLayout.render('MainLayout', {main: 'VendorRegistration'})
+    }
+});
+FlowRouter.route('/vendorworkschedule', {
+    name: 'vendorworkschedule',
+    action() {
+        BlazeLayout.render('MainLayout', {main: 'VendorWorkSchedule'})
     }
 });

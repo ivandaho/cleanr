@@ -2,6 +2,8 @@ import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 
 import { Sessions } from '../sessions/Sessions.js';
+import { Vendorslots } from '../vendorslots/Vendorslots.js';
+import { Timeslots } from '../timeslots/Timeslots.js';
 
 export const Bookings = new Mongo.Collection('bookings');
 
@@ -31,9 +33,6 @@ BookingsSchema = new SimpleSchema({
         type: Number,
         label: "package id number"
     },
-    sessionIDs: {
-        type: [String]
-    },
     jobstatus: {
         type: Number,
         label: "0 = unpaid, 1 = paid, 2 = scheduled, 3 = all sessions completed"
@@ -58,84 +57,93 @@ Meteor.methods({
         */
     },
     'bookings.insert'(date, slot, repeat, mc, cc){
-        // TODO: parse date slot for weekly sessions, with repeat var
-        // TODO: assign vendor
+        // handle session generation
+        var sess = [];
+        // push into array
+        // check for weekly schedule
+        var y = 0;
+        if (repeat) {
+            y = 3;
+        }
+
+        var error = false;
+
+        for (var x = 0; x <= y; x++) { // generate for 3 more weeks
+            if (!error) {
+                var newdate = moment(date).add(x, 'weeks').toDate();
+                var found = Vendorslots.find({d: newdate, s: slot})
+                var onesess = Meteor.call('sessions.createSession',
+                        newdate, slot, this.userId, 1, 0, '--');
+
+                if (onesess == null) {
+                    // no vendor available for that slot
+                    error = true;
+                } else {
+                    sess.push(onesess);
+                }
+            } else {
+                // catch problem
+            }
+        }
+        // process mattress cleaning and carpet cleaning
+        if (!error) {
+            var pmc;
+            var pcc;
+            if (mc == undefined) {
+                pmc = false;
+            }
+            if (mc == undefined) {
+                pcc = false;
+            }
+            // create doc for booking
+            var doc = {packageID: 1,
+                    jobstatus: 1,
+                    mc: pmc,
+                    cc: pcc,
+                    subdate: new Date()
+                  }
+
+            // create booking
+            Bookings.insert(doc);
+
+            // get bookingID
+            var bookingid = Bookings.findOne(doc)._id;
+
+                sess.forEach(function(each) {
+                    // add booking id into session array
+                    each.bookingID = bookingid;
+                    // add to session Collection
+                    Sessions.insert(each);
+                    // remove vendorslot
+                    Vendorslots.remove({
+                        ownerID: each.vendorID,
+                        d: each.date,
+                        s: each.timeslot
+                        });
+                });
+        } else {
+            var able = sess.length;
+            var sessword = 'sessions';
+            var slotstr = Timeslots.findOne({num: parseInt(slot)}).slot;
+            var day = moment(date).format('dddd');
+            if (able == 1) {
+                var sessword =  'session';
+            }
+
+            // TODO: make proper messages.
+            var msg = 'We were only able to schedule ' + sess.length +
+                ' ' + sessword +
+                    ' for the ' + slotstr + ' slot on ' + day + 's. ' +
+                    'Do you want to proceed with ' + able +
+                    ' scheduled ' + sessword + ' for this booking?' +
+                    ' (We will not renew your subscription after.)';
+            console.log(msg);
+
+        }
 
         // LATER:
         // notify vendor
 
-        var pmc;
-        var pcc;
-        if (mc == undefined) {
-            pmc = false;
-        }
-        if (mc == undefined) {
-            pcc = false;
-        }
-        var doc = {packageID: 1,
-                sessionIDs: [],
-                jobstatus: 1,
-                mc: pmc,
-                cc: pcc,
-                subdate: new Date()
-              }
-
-        Bookings.insert(doc);
-        /*
-            packageID: 1,
-            sessionIDs: [],
-            jobstatus: 1,
-            mc: pmc,
-            cc: pcc
-        });
-            */
-        var found = Bookings.findOne(doc);
-        //console.log(found);
-
-        var bookingid = found._id;
-
-        // handle session generation
-        var sess = [];
-        var sessids = [];
-
-        // create one session
-        var firstsess = Meteor.call('sessions.createSession',
-                date, slot, this.userId, 1, bookingid, 0, '--');
-        /*
-        var firstsess = {
-            date: date,
-            timeslot: slot,
-            custID: this.userId,
-            packageID: 1,
-            bookingID: bookingid,
-            sessionstatus: 0,
-            feedback: '--'
-        };
-        */
-        // push into array
-        sess.push(firstsess);
-        // check for weekly schedule
-        if (repeat) {
-            for (var x = 1; x < 4; x++) {
-                var newdate = moment(date).add(x, 'weeks').toDate();
-                var anothersess = Meteor.call('sessions.createSession',
-                        newdate, slot, this.userId, 1, bookingid, 0, '--');
-                sess.push(anothersess);
-            }
-        }
-        // for each item in array
-        sess.forEach(function(each) {
-            // add to session Collection
-            Sessions.insert(each);
-            // find that item in the Collection, and get the _id
-            sessids.push(Sessions.findOne(each)._id);
-            // push the _id into a new array
-            });
-        
-        // assign vendor
-
-        // udate the booking with session ids
-        Bookings.update(doc, {$set: {sessionIDs: sessids}});
 
     },
     'bookings.single'(){

@@ -1,0 +1,17 @@
+p2
+parse mongodb timeslots so they will always be in order
+timeslots editor or some proper way of editing timeslots
+different timeslots & vendorslots for different packages
+delete old vendorslots, or store them elsewhere
+proper vendor registration (application)
+vendor setup after application
+vendor team assignment + account stuff etc
+
+p1
+set redirect for confirmation page if not yet selected timeslot etc
+slot rotation for vendors when there are more than 1 vendors per slot
+
+p0
+vendor schedule
+user schedule
+user booking subscriptions
