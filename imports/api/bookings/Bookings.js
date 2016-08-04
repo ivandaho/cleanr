@@ -91,9 +91,13 @@ Meteor.methods({
             var pcc;
             if (mc == undefined) {
                 pmc = false;
+            } else {
+                pmc = mc;
             }
-            if (mc == undefined) {
+            if (cc == undefined) {
                 pcc = false;
+            } else {
+                pcc = cc;
             }
             // create doc for booking
             var doc = {packageID: 1,

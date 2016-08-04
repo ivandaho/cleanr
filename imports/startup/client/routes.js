@@ -22,6 +22,8 @@ import '../../ui/layouts/VendorRegistration.html';
 import '../../ui/layouts/VendorRegistration.js';
 import '../../ui/layouts/VendorWorkSchedule.html';
 import '../../ui/layouts/VendorWorkSchedule.js';
+import '../../ui/layouts/VendorSessionDetails.html';
+import '../../ui/layouts/VendorSessionDetails.js';
 // need to import the js file, for subscriptions
 
 import '../../ui/components/jobitem.html';
@@ -78,5 +80,11 @@ FlowRouter.route('/vendorworkschedule', {
     name: 'vendorworkschedule',
     action() {
         BlazeLayout.render('MainLayout', {main: 'VendorWorkSchedule'})
+    }
+});
+FlowRouter.route('/vendorsessiondetails/:sessid', {
+    name: 'vendorsessiondetails',
+    action: function(params, queryParams) {
+        BlazeLayout.render('MainLayout', {main: 'VendorSessionDetails'})
     }
 });

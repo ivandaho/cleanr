@@ -1,37 +1,73 @@
-import './VendorWorkSchedule.html';
+import './VendorSessionDetails.html';
 
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 
 import { Timeslots } from '../../api/timeslots/Timeslots.js';
-import { Vendorslots } from '../../api/vendorslots/Vendorslots.js';
 import { Sessions } from '../../api/sessions/Sessions.js';
-import { Userdata } from '../../api/userdata/Userdata.js';
     //Meteor.subscribe('recipes');
 
-Template.VendorWorkSchedule.onCreated(function VendorWorkScheduleOnCreated() {
+Template.VendorSessionDetails.onCreated(function VendorSessionDetailsOnCreated() {
     Meteor.subscribe('timeslots');
-    Meteor.subscribe('vendorslots');
-    var mdate = moment().startOf('week').add(1, 'days'); // this week's monday
-    var jdate = mdate.toDate();
-    Session.set('currweek', jdate);
-    tss = Timeslots.find({});
     Meteor.subscribe('sessions');
-    Meteor.subscribe('userdata');
+
+    tss = Timeslots.find({});
 });
 
 var tss;
 
-Template.VendorWorkSchedule.helpers({
+Template.VendorSessionDetails.helpers({
     timeslots() {
-        if (tss != undefined){
+        if (tss != undefined) {
             return tss;
         }
     },
-    weekdates(i) {
-        var jdate = Session.get('currweek');
-        var mdate = moment(jdate);
-        return mdate.add(i, 'days').format("DD-MM");
+    sess() {
+        var sid = FlowRouter.getParam('sessid');
+        var found = Sessions.findOne({_id: sid}) || {};
+        return found;
+    },
+    sess_day(sess) {
+        return moment(sess.date).format('dddd');
+    },
+    sess_date(sess) {
+        return moment(sess.date).format('YYYY-MM-DD');
+    },
+    sess_slotstr(sess) {
+        var ts = Timeslots.findOne({num: parseInt(sess.timeslot)}) || {};
+        return ts.slot;
+    },
+    sess_nextsessdate(sess) {
+        // this sorts dates on the server, client cant sort Date
+        // to sort dates on client we need some other way
+        var allsess = Sessions.find({bookingID: sess.bookingID, date: {$gt: sess.date}}, {sort: {date: 1}}) || {};
+        var arr = [];
+        allsess.forEach(function (item) {
+            arr.push(item);
+        });
+
+        if (arr.length > 0) {
+            return moment(arr[0].date).format('YYYY-MM-DD');
+        }
+    },
+    nextsessid(sess, direction) {
+        var dir;
+
+        if (direction == 'prv') {
+            var allsess = Sessions.find({bookingID: sess.bookingID, date: {$lt: sess.date}}, {sort: {date: -1}}) || {};
+        } else {
+            var allsess = Sessions.find({bookingID: sess.bookingID, date: {$gt: sess.date}}, {sort: {date: 1}}) || {};
+        }
+
+        var arr = [];
+
+        allsess.forEach(function (item) {
+            arr.push(item);
+        });
+
+        if (arr.length > 0) {
+            return arr[0]._id;
+        }
     },
 });
 
@@ -61,45 +97,33 @@ Template.vwschedtable.helpers({
     },
 });
 
-Template.vsupcoming.helpers({
-    getcuss(sess) {
-        // customer userdata accesible to vendor
-        var customer = Userdata.findOne({_id: sess.custID});
-
-        return customer && customer;
-    },
-});
 Template.vweachslot.helpers({
-    getsess(date, n) {
+    testsess(date, n) {
         var jdate = moment(date).toDate();
+        // find a session that is assigned to this vendor
         var sess = Sessions.findOne({
                                     date: jdate,
                                     timeslot: parseInt(n),
                                     vendorID: Meteor.userId()
                                 });
-        if (sess!= undefined) {
+        // search for customer details
+        if (sess != undefined) {
+            var customer = Userdata.findOne({_id: sess.custID});
+            sess.cus = customer;
             return sess;
-        } else {
-            return false;
         }
     },
 });
 
-Template.VendorWorkSchedule.events({
-    'click .prevweekbtn' (event) {
+Template.VendorSessionDetails.events({
+    /*
+    'click .nextsess' (event) {
         event.preventDefault();
-        var tempjdate = Session.get('currweek');
-        var mdate = moment(tempjdate).subtract(1, 'weeks'); // monday
-        tempjdate = mdate.toDate();
-        Session.set('currweek', tempjdate);
-        /* disabled the limit backwards, so vendors can view their history
-        if (tempjdate < moment().subtract(1, 'weeks')) {
-            return;
-        } else {
-            Session.set('currweek', tempjdate);
-        }
-        */
+        var nextsessid
+        var str = 'vendorsessiondetails/' + nextsessid;
+        FlowRouter.go(str);
     },
+    */
     'click .resetweekbtn' (event) {
         event.preventDefault();
         var mdate = moment().startOf('week').add(1, 'days');

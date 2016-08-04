@@ -1,0 +1,203 @@
+<template name="VendorSessionDetails">
+  <section id="sess" class="bg-light-gray">
+    <div class="container">
+      <div class="row text-center">
+        <div class="col-lg-12">
+          <h2 class="quick-view-rpts-h2">Session Details</h2>
+          <p class="quick-view-rpts-p">--</p>
+        </div>
+      </div>
+      <div class="row bordered">
+        <div class="row">
+          <div class="col-md-12 text-center bighdr">
+            Session Details
+          </div>
+        </div>
+        <div class="row-same-height">
+          <div class="col-md-4 col-sm-height">
+            <div class="hdr">
+              Team
+            </div>
+            <div class="value">
+              $_Alpha <button type="button" class="btn btn-default">Change</button>
+            </div>
+            <div class="placeholderthing">
+            </div>
+            <div class="text-center">
+              <div class="btndiv">
+                <a href="/vendorsessiondetails/{{nextsessid sess 'prv'}}" class="btn btn-default newbtn nextsess">Go to previous session</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-height padded">
+            <div class="hdr">
+              Date
+            </div>
+            <div class="value">
+              {{sess_day sess}}, {{sess_date sess}}
+            </div>
+            <div class="hdr">
+              Time
+            </div>
+            <div class="value">
+              {{sess_slotstr sess}}
+            </div>
+            <div class="hdr">
+              Session ID
+            </div>
+            <div class="value">
+              {{sess._id}}
+            </div>
+            <div class="placeholderthing">
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-height">
+            <div class="hdr">
+              Next Session
+            </div>
+            <div class="value">
+              {{sess_nextsessdate sess}}
+            </div>
+            <div class="placeholderthing">
+            </div>
+            <div clas="text-center">
+              <div class="btndiv">
+                <a href="/vendorsessiondetails/{{nextsessid sess 'nxt'}}" class="btn btn-default newbtn nextsess">Go to next session</a>
+                  <!-- <button type="button" class="btn newbtn nextsess">Go to corresponding session (if assigned to vendor)</button> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row bordered">
+        <div class="row">
+          <div class="col-md-12 text-center bighdr">
+            Booking Details
+          </div>
+        </div>
+        <div class="row-same-height">
+          <div class="col-md-4 col-sm-height">
+            <div class="hdr">
+              Package
+            </div>
+            <div class="value">
+              $_2 maids for 2 hours
+            </div>
+            <div class="hdr">
+              Additional Services
+            </div>
+            <div class="value">
+              $mc<br>
+              $cc
+            </div>
+            <div class="placeholderthing">
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-height padded"> <!-- padded?? -->
+            <div class="hdr">
+              Booking ID
+            </div>
+            <div class="value">
+              $sess.bookingID
+            </div>
+            <div class="text-center">
+              <div class="btndiv">
+                <button type="button" class="btn newbtn">View Details</button>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-height padded">
+            <div class="hdr">
+              Date Booked
+            </div>
+            <div class="value">
+              Bookings.findOne($sess.bookingID).subdate
+            </div>
+            <div class="hdr">
+              Sessions Completed
+            </div>
+            <div class="value">
+              Bookings.findOne($sess.bookingID).completed
+            </div>
+            <div class="hdr">
+              Subscription Status
+            </div>
+            <div class="value">
+              Bookings.findOne($sess.bookingID).substatus
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row bordered">
+        <div class="row">
+          <div class="col-md-12 text-center bighdr">
+            Customer Details
+            <button type="button" class="btn" style="margin-left:10px">View Profile</button>
+          </div>
+        </div>
+        <div class="row-same-height">
+          <div class="col-md-4 col-sm-height">
+            <div class="hdr">
+              Name
+            </div>
+            <div class="value">
+              $user_name
+            </div>
+            <div class="hdr">
+              Mobile Number
+            </div>
+            <div class="value">
+              $user_tel
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-height padded">
+            <div class="hdr">
+              Address
+            </div>
+            <div class="value">
+              $user_address[0].street <br>
+              $user_address[0].city <br>
+              $user_address[0].state <br>
+              $user_address[0].zip
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-height">
+            <div class="hdr">
+              Customer ID
+            </div>
+            <div class="value">
+              $sess.custID
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row bordered">
+        <div class="row">
+          <div class="col-md-12 text-center bighdr">
+            Remarks
+          </div>
+        </div>
+        <div class="row-same-height">
+          <div class="col-md-8 col-sm-height">
+            <div class="hdr">
+              Remark Header if needed
+            </div>
+            <div class="value">
+              1. $_Request to clean fans twice a month
+            </div>
+            <div class="value">
+              2. $_Additional requests
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-height padded">
+            <div class="text-center">
+              <button type="button" class="btn newbtn2">Edit</button>
+              <br>
+              <button type="button" class="btn newbtn2">Add</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</template>

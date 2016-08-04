@@ -3,11 +3,35 @@
 import { Meteor } from 'meteor/meteor';
 
 import { Userdata } from '../Userdata.js';
+import { Sessions } from '../../sessions/Sessions.js';
 
 Meteor.publish('userdata', function(){
-    if (this.userId) {
+    if (Roles.userIsInRole(this.userId, 'vendor')) {
+        // find all customers that have sessions that are assigned
+        // to the vendor
+        var vendorsessions = Sessions.find({vendorID: this.userId});
+        var custids = [];
+        var temp = {};
+        vendorsessions.forEach(function (item) {
+            custids.push(item.custID);
+        });
+
+        for (var i = 0; i < custids.length; i++) {
+            temp[custids[i]] = true;
+        }
+
+        var r = [];
+
+        for (var each in temp) {
+            r.push(each);
+        }
+
+        // r will have non dupe custids
+
+        // vendor is allowed to see customer info for their customers
+        return Userdata.find({_id: {$in: r}});
+    } else if (this.userId) {
         return Userdata.find({_id: this.userId});
-            //{fields: {'user_email': 1, 'user_tel': 1}});
     } else {
         this.ready();
         return;

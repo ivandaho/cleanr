@@ -4,19 +4,20 @@
     <br>
     <p>Choose a time slot and a day</p>
     <button class="btn prevweekbtn">Previous Week</button>
+    <button class="btn resetweekbtn">Jump To Current Week</button>
     <button class="btn nextweekbtn">Next Week</button>
     <div class="table-responsive">
     <table class="table table-bordered">
       <thead>
         <tr>
-          <th>Time Slots</th>
-          <th>Monday <br> {{weekdates 0}}</th>
-          <th>Tuesday <br> {{weekdates 1}}</th>
-          <th>Wednesday <br> {{weekdates 2}}</th>
-          <th>Thursday <br> {{weekdates 3}}</th>
-          <th>Friday <br> {{weekdates 4}}</th>
-          <th>Saturday <br> {{weekdates 5}}</th>
-          <th>Sunday <br> {{weekdates 6}}</th>
+          <th class="text-center">Time Slots</th>
+          <th class="text-center">Monday <br> {{weekdates 0}}</th>
+          <th class="text-center">Tuesday <br> {{weekdates 1}}</th>
+          <th class="text-center">Wednesday <br> {{weekdates 2}}</th>
+          <th class="text-center">Thursday <br> {{weekdates 3}}</th>
+          <th class="text-center">Friday <br> {{weekdates 4}}</th>
+          <th class="text-center">Saturday <br> {{weekdates 5}}</th>
+          <th class="text-center">Sunday <br> {{weekdates 6}}</th>
         </tr>
       </thead>
       <tbody>
@@ -38,13 +39,30 @@
 
 <template name="vweachslot">
   {{#each this}}
-    <td>
-        {{#with testsess date n}}
-        {{ph}}
-        {{cus.user_name}}<br>
-        {{cus.user_address.[0].street}}
-        {{/with}}
-        <!-- add border styling etc -->
-    </td>
+    <!-- add border styling etc -->
+    {{#with getsess date n}}
+      {{>vsupcoming}}
+    {{else}}
+      {{>vsempty}}
+    {{/with}}
   {{/each}}
+</template>
+
+<template name="vsupcoming">
+  <td class="vs-upcoming text-center">
+    {{#with getcuss this}}
+    <div class="divbox">
+      <a href=/vendorsessiondetails/{{../_id}}>
+        {{user_name}}<br>
+        {{user_address.[0].street}}<br>
+      </a>
+    </div>
+    {{/with}}
+  </td>
+</template>
+
+<template name="vsempty">
+  <td class="vs-empty text-center">
+    placeholdertext!
+  </td>
 </template>

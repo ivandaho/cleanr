@@ -3,13 +3,6 @@ import { Mongo } from 'meteor/mongo';
 
 export const Userdata = new Mongo.Collection('userdata');
 
-Userdata.allow({
-    // if userId exists, means we are signed in, and able to insert
-    insert: function(userId, doc) {
-        return !!userId;
-    }
-});
-
 AddressSchema = new SimpleSchema({
     // TODO: change to MY address schema?
     street: {
