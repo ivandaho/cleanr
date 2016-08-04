@@ -6,6 +6,9 @@
           <h2 class="quick-view-rpts-h2">Session Details</h2>
           <p class="quick-view-rpts-p">--</p>
         </div>
+        <div class="col-lg-3">
+          <a href="/vendorworkschedule" class="btn btn-default">Back to Schedule</a>
+        </div>
       </div>
       <div class="row bordered">
         <div class="row">
@@ -22,11 +25,6 @@
               $_Alpha <button type="button" class="btn btn-default">Change</button>
             </div>
             <div class="placeholderthing">
-            </div>
-            <div class="text-center">
-              <div class="btndiv">
-                <a href="/vendorsessiondetails/{{nextsessid sess 'prv'}}" class="btn btn-default newbtn nextsess">Go to previous session</a>
-              </div>
             </div>
           </div>
           <div class="col-md-4 col-sm-height padded">
@@ -56,13 +54,26 @@
               Next Session
             </div>
             <div class="value">
-              {{sess_nextsessdate sess}}
+              {{#with sess_nextsessdate sess}}
+                {{this}}
+              {{else}}
+                None
+              {{/with}}
             </div>
             <div class="placeholderthing">
             </div>
             <div clas="text-center">
               <div class="btndiv">
-                <a href="/vendorsessiondetails/{{nextsessid sess 'nxt'}}" class="btn btn-default newbtn nextsess">Go to next session</a>
+                {{#with nextsessid sess 'prv'}}
+                  <a href="/vendorsessiondetails/{{this}}" class="btn btn-default newbtn">Go to previous session</a>
+                {{else}}
+                  <a href="#" class="btn btn-default newbtn disabled">No Earlier Session</a>
+                {{/with}}
+                {{#with nextsessid sess 'nxt'}}
+                <a href="/vendorsessiondetails/{{this}}" class="btn btn-default newbtn">Go to next session</a>
+                {{else}}
+                  <a href="#" class="btn btn-default newbtn disabled">No Next Session</a>
+                {{/with}}
                   <!-- <button type="button" class="btn newbtn nextsess">Go to corresponding session (if assigned to vendor)</button> -->
               </div>
             </div>
