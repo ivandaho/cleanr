@@ -25,13 +25,7 @@ AddressSchema = new SimpleSchema({
 
 userdataSchema = new SimpleSchema({
     _id: {
-        type: String,
-        autoform: {
-            type: "hidden"
-        },
-        autoValue: function() {
-            return this.userId;
-        }
+        type: String
     },
     user_name: {
         type: String

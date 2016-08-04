@@ -11,7 +11,7 @@ Template.Header.onCreated(function AccountOnCreated() {
 
 Template.Header.helpers({
     userdata() {
-        return Userdata.findOne({});
+        return Userdata.findOne({_id: Meteor.userId()});
     },
 });
 

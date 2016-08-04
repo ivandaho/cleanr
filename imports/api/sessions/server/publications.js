@@ -9,8 +9,9 @@ Meteor.publish('sessions', function(){
         return Sessions.find({});
     } else if (Roles.userIsInRole(this.userId, 'vendor')) {
         return Sessions.find({vendorID: this.userId});
+    } else if (Roles.userIsInRole(this.userId, 'customer')) {
+        return Sessions.find({custID: this.userId});
     } else {
-        // user unauthorized
         this.stop();
         return;
     }

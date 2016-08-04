@@ -3,7 +3,6 @@ import { ReactiveDict } from 'meteor/reactive-dict';
 
 import { Jobs } from '../../api/jobs/Jobs.js';
 import { Timeslots } from '../../api/timeslots/Timeslots.js';
-import { Bookings } from '../../api/bookings/Bookings.js';
 import { Sessions } from '../../api/sessions/Sessions.js';
 
 import '../../api/jobs/Jobs.js';
@@ -15,7 +14,6 @@ import { Userdata } from '../../api/userdata/Userdata.js';
 
 Template.Confirmation.onCreated(function ConfirmationOnCreated() {
   Meteor.subscribe('jobs');
-  Meteor.subscribe('bookings');
   Meteor.subscribe('sessions');
   this.state = new ReactiveDict();
 });
