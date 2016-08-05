@@ -65,12 +65,12 @@
             <div clas="text-center">
               <div class="btndiv">
                 {{#with nextsessid sess 'prv'}}
-                  <a href="/vendorsessiondetails/{{this}}" class="btn btn-default newbtn">Go to previous session</a>
+                  <a href="/vendorsessiondetails/{{this}}" class="btn btn-default newbtn">Previous session</a>
                 {{else}}
                   <a href="#" class="btn btn-default newbtn disabled">No Earlier Session</a>
                 {{/with}}
                 {{#with nextsessid sess 'nxt'}}
-                <a href="/vendorsessiondetails/{{this}}" class="btn btn-default newbtn">Go to next session</a>
+                <a href="/vendorsessiondetails/{{this}}" class="btn btn-default newbtn">Next session</a>
                 {{else}}
                   <a href="#" class="btn btn-default newbtn disabled">No Next Session</a>
                 {{/with}}
@@ -80,6 +80,7 @@
           </div>
         </div>
       </div>
+      {{#with thebooking sess}}
       <div class="row bordered">
         <div class="row">
           <div class="col-md-12 text-center bighdr">
@@ -98,8 +99,8 @@
               Additional Services
             </div>
             <div class="value">
-              $mc<br>
-              $cc
+              {{#if mc}}Mattress Cleaning<br>{{/if}}
+              {{#if cc}}Carpet Cleaning<br>{{/if}}
             </div>
             <div class="placeholderthing">
             </div>
@@ -109,7 +110,7 @@
               Booking ID
             </div>
             <div class="value">
-              $sess.bookingID
+              {{_id}}
             </div>
             <div class="text-center">
               <div class="btndiv">
@@ -122,28 +123,30 @@
               Date Booked
             </div>
             <div class="value">
-              Bookings.findOne($sess.bookingID).subdate
+              {{formatdate subdate}}
             </div>
             <div class="hdr">
               Sessions Completed
             </div>
             <div class="value">
-              Bookings.findOne($sess.bookingID).completed
+              {{#if completed}}{{this}}{{else}}$completed{{/if}}
             </div>
             <div class="hdr">
               Subscription Status
             </div>
             <div class="value">
-              Bookings.findOne($sess.bookingID).substatus
+              {{#if substatus}}{{this}}{{else}}$substatus{{/if}}
             </div>
           </div>
         </div>
       </div>
+      {{/with}}
+      {{#with cust sess}}
       <div class="row bordered">
         <div class="row">
           <div class="col-md-12 text-center bighdr">
             Customer Details
-            <button type="button" class="btn" style="margin-left:10px">View Profile</button>
+            <a href="/vendorcustomer/{{_id}}" class="btn btn-default">View Profile</a>
           </div>
         </div>
         <div class="row-same-height">
@@ -152,13 +155,13 @@
               Name
             </div>
             <div class="value">
-              $user_name
+              {{user_name}}
             </div>
             <div class="hdr">
               Mobile Number
             </div>
             <div class="value">
-              $user_tel
+              {{user_tel}}
             </div>
           </div>
           <div class="col-md-4 col-sm-height padded">
@@ -166,10 +169,10 @@
               Address
             </div>
             <div class="value">
-              $user_address[0].street <br>
-              $user_address[0].city <br>
-              $user_address[0].state <br>
-              $user_address[0].zip
+              {{user_address.[0].street}} <br>
+              {{user_address.[0].city}} <br>
+              {{user_address.[0].state}} <br>
+              {{user_address.[0].zip}}
             </div>
           </div>
           <div class="col-md-4 col-sm-height">
@@ -177,11 +180,12 @@
               Customer ID
             </div>
             <div class="value">
-              $sess.custID
+              {{_id}}
             </div>
           </div>
         </div>
       </div>
+      {{/with}}
       <div class="row bordered">
         <div class="row">
           <div class="col-md-12 text-center bighdr">

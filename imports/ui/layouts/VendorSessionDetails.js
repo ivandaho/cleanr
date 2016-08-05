@@ -5,11 +5,15 @@ import { Template } from 'meteor/templating';
 
 import { Timeslots } from '../../api/timeslots/Timeslots.js';
 import { Sessions } from '../../api/sessions/Sessions.js';
+import { Userdata } from '../../api/userdata/Userdata.js';
+import { Bookings } from '../../api/bookings/Bookings.js';
     //Meteor.subscribe('recipes');
 
 Template.VendorSessionDetails.onCreated(function VendorSessionDetailsOnCreated() {
     Meteor.subscribe('timeslots');
     Meteor.subscribe('sessions');
+    Meteor.subscribe('userdata');
+    Meteor.subscribe('bookings');
 
     tss = Timeslots.find({});
 });
@@ -21,6 +25,17 @@ Template.VendorSessionDetails.helpers({
         if (tss != undefined) {
             return tss;
         }
+    },
+    formatdate(d) {
+        return moment(d).format('YYYY-MM-DD');
+    },
+    thebooking(sess) {
+        var found = Bookings.findOne({_id: sess.bookingID}) || {};
+        return found;
+    },
+    cust(sess) {
+        var found = Userdata.findOne({_id: sess.custID}) || {};
+        return found;
     },
     sess() {
         var sid = FlowRouter.getParam('sessid');

@@ -17,6 +17,8 @@ import '../../ui/layouts/Confirmation.html';
 import '../../ui/layouts/Confirmation.js';
 import '../../ui/layouts/VendorCP.html';
 import '../../ui/layouts/VendorCP.js';
+import '../../ui/layouts/VendorCustomer.html';
+import '../../ui/layouts/VendorCustomer.js';
 import '../../ui/layouts/VendorCustomerList.html';
 import '../../ui/layouts/VendorCustomerList.js';
 import '../../ui/layouts/VendorRegistration.html';
@@ -68,6 +70,13 @@ FlowRouter.route('/vendorcp', {
     name: 'vendorcp',
     action() {
         BlazeLayout.render('MainLayout', {main: 'VendorCP'})
+    }
+});
+
+FlowRouter.route('/vendorcustomer/:custid', {
+    name: 'vendorcustomer',
+    action(params, queryParams) {
+        BlazeLayout.render('MainLayout', {main: 'VendorCustomer'})
     }
 });
 

@@ -1,0 +1,78 @@
+<template name="VendorCustomer">
+{{#with cust}}
+  <section id="custdetails-sec-1" class="bg-light-gray">
+    <div class="container">
+      <div class="row">
+        <div class="text-center">
+          <h2>Customer Details</h2>
+          <p class="sec-heading">{{_id}}<br></p>
+          <p class="sec-value">{{user_name}}<br></p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="row-same-height">
+
+          <div class="col-md-4 col-sm-height text-center">
+            <div class="info">
+              <p class="sec-heading">E-mail:<br></p>
+              <p class="sec-value">{{user_email}}<br></p>
+            </div>
+          </div>
+
+          <div class="col-md-4 col-sm-height text-center">
+            <div class="info">
+              <p class="sec-heading">Mobile Number:<br></p>
+              <p class="sec-value">{{user_tel}}<br></p>
+            </div>
+          </div>
+
+          <div class="col-md-4 col-sm-height">
+          </div>
+
+        </div> <!-- row same height -->
+      </div>  <!-- row -->
+
+      <div class="row">
+        <div class="row-same-height">
+          <div class="col-md-12 col-sm-height text-center">
+            <h2>recent sessions</h2>
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th class="text-center">Session ID</th>
+                  <th class="text-center">Time Slot</th>
+                  <th class="text-center">Booking ID</th>
+                  <th class="text-center">Mattress Cleaning</th>
+                  <th class="text-center">Carpet Cleaning</th>
+                  <th class="text-center">Status</th>
+                  <th class="text-center">Feedback</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#each sesses this}}
+                <tr>
+                  <td><a href="/vendorsessiondetails/{{_id}}">{{_id}}</a></td>
+                  <td>{{d date}} {{s timeslot}}</td>
+                  <td>{{bookingID}}</td>
+                  <td>$mc</td>
+                  <td>$cc</td>
+                  <td>{{sessionstatus}}</td>
+                  <td>{{feedback}}</td>
+                </tr>
+                {{/each}}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div> <!-- row -->
+      <div class="row">
+        <button class="btn btn-default lessbtn">Show Less</button>
+        <button class="btn btn-default morebtn">Show More</button>
+      </div>
+    </div> <!-- container -->
+  </section>> <!-- section -->
+{{else}}
+  customer not found/not authorized
+{{/with}}
+
+</template>
