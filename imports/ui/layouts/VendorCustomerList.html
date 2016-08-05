@@ -1,0 +1,37 @@
+<template name="VendorCustomerList">
+  <div class="container">
+    <h2>Vendor Customer List</h2>
+    <br>
+    <form class="filter">
+        <input type="text" name="text" placeholder="Type to filter name" />
+    </form>
+    <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th class="text-center">Customer ID</th>
+          <th class="text-center">Customer Name</th>
+          <th class="text-center">Phone Number</th>
+          <th class="text-center">Current Booking ID</th>
+          <th class="text-center">Last Completed Session</th>
+          <th class="text-center">Next Session</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each textfilter}}
+        <tr>
+          <td>{{_id}}</td>
+          <td>{{user_name}}</td>
+          <td>{{user_tel}}</td>
+          <td>{{recentbooking this}}</td>
+          <td>{{findsession this 1}}</td>
+          <td>{{findsession this 0}}</td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+    </div>
+  </div>
+</template>
+
+

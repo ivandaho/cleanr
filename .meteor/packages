@@ -38,7 +38,7 @@ aldeed:autoform
 alanning:roles
 # andruschka:autoform-dropdown-select
 kenken:meteor-counters
-# reactive-dict
+reactive-dict
 session
 useraccounts:bootstrap
 useraccounts:flow-routing
