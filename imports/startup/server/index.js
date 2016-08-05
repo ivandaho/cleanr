@@ -9,3 +9,4 @@ import '../../api/bookings/server/publications.js';
 
 import './timedjobs.js'
 import './rolesetup.js'
+import './secret.js'

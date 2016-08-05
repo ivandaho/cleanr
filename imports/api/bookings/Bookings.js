@@ -42,6 +42,12 @@ BookingsSchema = new SimpleSchema({
     },
     cc: {
         type: Boolean
+    },
+    timeslot: {
+        type: Number
+    },
+    day: {
+        type: String
     }
 });
 
@@ -100,10 +106,13 @@ Meteor.methods({
                 pcc = cc;
             }
             // create doc for booking
+            var daystr = moment(date).clone().format('ddd').toLowerCase();
             var doc = {packageID: 1,
                     jobstatus: 1,
                     mc: pmc,
                     cc: pcc,
+                    timeslot: parseInt(slot),
+                    day: daystr,
                     subdate: new Date()
                   }
 

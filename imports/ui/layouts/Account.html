@@ -1,20 +1,113 @@
 <template name="Account">
-  <div class="account-countainer">
-    <h2>account page.</h2>
-    <!-- {{> quickForm collection=ud id='insertud' type='insert'}} -->
-    user_name:<br>
-    {{userdata.user_name}}<br>
-    user_email:<br>
-    {{userdata.user_email}} <button class="edit-email">edit</button><br>
-    user_tel:<br>
-    {{userdata.user_tel}} <button class="edit-tel">edit</button><br>
-    user_address:<br>
-    {{userdata.user_address.[0].street}}<br>
-    {{userdata.user_address.[0].city}}<br>
-    {{userdata.user_address.[0].state}}<br>
-    {{userdata.user_address.[0].zip}} <button class="edit-address">edit</button><br>
+{{#with userdata}}
+  <section id="custdetails-sec-1" class="bg-light-gray">
+    <div class="container">
+      <div class="row">
+        <div class="text-center">
+          <h2>Account Details</h2>
+          <p class="sec-heading">{{_id}}<br></p>
+          <p class="sec-value">{{user_name}}<br></p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="row-same-height">
 
-  {{#if isAdmin}}
-  {{/if}}
-  </div>
+          <div class="col-md-4 col-sm-height text-center gethover">
+            <div class="info">
+              <p class="sec-heading"><i class="fa fa-edit editicon changeEmail"></i> E-mail:</p>
+              <p class="sec-value">{{user_email}}<br></p>
+            </div>
+          </div>
+
+          <div class="col-md-4 col-sm-height text-center gethover">
+            <div class="info">
+              <p class="sec-heading"><i class="fa fa-edit editicon changetel"></i> Phone Number<br></p>
+              <p class="sec-value">{{user_tel}}<br></p>
+            </div>
+          </div>
+
+          <div class="col-md-4 col-sm-height text-center gethover">
+            <div class="valign2">
+              <div class="row vertical-align valignfix">
+              <!-- css is in confirmation's css i think -->
+
+                <div class="placeholderthing2"> </div>
+                <!-- this div contains the text information -->
+                <div class="confirmtext">
+                  <p class="sec-value"><a href='/changepwd' class="btn btn-default">Change Password</a><br></p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div> <!-- row same height -->
+      </div>  <!-- row -->
+
+      <!-- addresses -->
+      <div class="row">
+        <div class="text-center">
+          <h1>Addresses</h1>
+          <p class="sec-heading">Add up to 3 addresses.<br></p>
+          <!-- TODO: set a margin (css) -->
+          <br>
+          <br>
+        </div>
+      </div>
+      <div class="row">
+        <div class="row-same-height">
+
+          <div class="col-md-4 col-sm-height text-center gethover">
+            <div class="info">
+              <p class="sec-heading"><i class="fa fa-edit editicon changeaddress" id="0"></i> Main Address:<br></p>
+              <p class="sec-value">{{user_address.[0].street}}<br></p>
+              <p class="sec-value">{{user_address.[0].city}}<br></p>
+              <p class="sec-value">{{user_address.[0].state}}<br></p>
+              <p class="sec-value">{{user_address.[0].zip}}<br></p>
+            </div>
+          </div>
+
+          <div class="col-md-4 col-sm-height text-center gethover">
+            {{#with user_address.[1]}}
+              <div class="info">
+                <p class="sec-heading"><i class="fa fa-edit editicon changeaddress" id="1"></i> Address 2:<br></p>
+                <p class="sec-value">{{street}}<br></p>
+                <p class="sec-value">{{city}}<br></p>
+                <p class="sec-value">{{state}}<br></p>
+                <p class="sec-value">{{zip}}<br></p>
+              </div>
+              <button class="btn btn-default setaddress" id="1">Use This Address as my Main Address</button>
+            {{else}}
+              <div class="info">
+                <p class="sec-value">None found<br></p>
+              </div>
+            {{/with}}
+          </div>
+
+          <div class="col-md-4 col-sm-height text-center gethover">
+            {{#with user_address.[2]}}
+              <div class="info">
+                <p class="sec-heading">Address 3:<br></p>
+                <p class="sec-value">{{street}}<br></p>
+                <p class="sec-value">{{city}}<br></p>
+                <p class="sec-value">{{state}}<br></p>
+                <p class="sec-value">{{zip}}<br></p>
+              </div>
+              <button class="btn btn-default setaddress" id="2">Use This Address as my Main Address</button>
+            {{else}}
+              <div class="info">
+                <p class="sec-heading"><i class="fa fa-edit editicon changeaddress" id="2"></i> Address 3:<br></p>
+                <p class="sec-value">None found<br></p>
+              </div>
+            {{/with}}
+          </div>
+
+        </div> <!-- row same height -->
+      </div>  <!-- row -->
+
+    </div> <!-- container -->
+  </section>> <!-- section -->
+{{else}}
+  customer not found/not authorized
+{{/with}}
+
 </template>

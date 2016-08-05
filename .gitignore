@@ -2,3 +2,4 @@ node_modules/
 *.swp
 *.swo
 ngrok.exe
+/imports/startup/server/secret.js

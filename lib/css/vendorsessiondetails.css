@@ -26,7 +26,7 @@
     font-weight: bold;
 }
 
-.btndiv {
+.vs-btndiv {
     position:absolute;
     margin:0 auto;
     bottom:0;
@@ -111,4 +111,3 @@
 .col-bottom {
   vertical-align: bottom;
 }
-

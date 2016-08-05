@@ -23,12 +23,15 @@ Meteor.publish('userdata', function(){
         var r = [];
 
         for (var each in temp) {
+          // r will have non dupe custids
             r.push(each);
         }
+        // and also the vendor's own id
+        r.push(this.userId);
 
-        // r will have non dupe custids
 
         // vendor is allowed to see customer info for their customers
+        // also, their own userdata
         return Userdata.find({_id: {$in: r}});
     } else if (this.userId) {
         return Userdata.find({_id: this.userId});
@@ -37,4 +40,3 @@ Meteor.publish('userdata', function(){
         return;
     }
 });
-

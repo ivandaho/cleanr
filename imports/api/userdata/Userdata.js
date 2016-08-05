@@ -46,4 +46,70 @@ userdataSchema = new SimpleSchema({
 });
 
 Userdata.attachSchema(userdataSchema);
+Meteor.methods({
+    'userdata.changeEmail' (newmail){
+        Userdata.update({_id: this.userId},
+            {$set: {user_email: newmail}});
+    },
+    'userdata.setMainAddress' (i){
+        var theuser = Userdata.findOne({_id: this.userId});
 
+
+        var i_st = theuser.user_address[parseInt(i)].street;
+        var i_c = theuser.user_address[parseInt(i)].city;
+        var i_stt = theuser.user_address[parseInt(i)].state;
+        var i_zc = theuser.user_address[parseInt(i)].zip;
+
+        var i_str_street = "user_address.0.street";
+        var i_str_city = "user_address.0.city";
+        var i_str_state = "user_address.0.state";
+        var i_str_zip = "user_address.0.zip";
+
+        var i_set = {};
+        i_set[i_str_street] = i_st;
+        i_set[i_str_city] = i_c;
+        i_set[i_str_state] = i_stt;
+        i_set[i_str_zip] = i_zc;
+        // i_set now has [i]
+
+        var x_st = theuser.user_address[0].street;
+        var x_c = theuser.user_address[0].city;
+        var x_stt = theuser.user_address[0].state;
+        var x_zc = theuser.user_address[0].zip;
+
+        var x_str_street = "user_address." + i + ".street";
+        var x_str_city = "user_address." + i + ".city";
+        var x_str_state = "user_address." + i + ".state";
+        var x_str_zip = "user_address." + i + ".zip";
+
+        var x_set = {};
+        x_set[x_str_street] = x_st;
+        x_set[x_str_city] = x_c;
+        x_set[x_str_state] = x_stt;
+        x_set[x_str_zip] = x_zc;
+        // x_set is [0]
+
+        // switch
+        Userdata.update({_id: this.userId},
+            {$set: i_set});
+
+        Userdata.update({_id: this.userId},
+            {$set: x_set});
+
+    },
+    'userdata.changeAddress' (i, st, c, stt, zc){
+        var str_street = "user_address." + i + ".street";
+        var str_city = "user_address." + i + ".city";
+        var str_state = "user_address." + i + ".state";
+        var str_zip = "user_address." + i + ".zip";
+        var set = {};
+
+        set[str_street] = st;
+        set[str_city] = c;
+        set[str_state] = stt;
+        set[str_zip] = zc;
+        //NOTE: this is how you update a field based on variables
+        Userdata.update({_id: this.userId},
+            {$set: set});
+    },
+});
