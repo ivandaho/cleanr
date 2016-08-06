@@ -34,8 +34,14 @@ BookingsSchema = new SimpleSchema({
         label: "package id number"
     },
     jobstatus: {
-        type: Number,
-        label: "0 = unpaid, 1 = paid, 2 = scheduled, 3 = all sessions completed"
+        type: Number
+        // 0 - no pending sessions, no subscription
+        // 1 - pending sessions, no subscription
+        // 2 - no pending sessions, subscription active
+        // 3 - pending sessions, subscription active
+
+        // TODO: when vendor marks a session as complete, it will check
+        // the booking for jobstatus and change it accordingly
     },
     mc: {
         type: Boolean
@@ -79,7 +85,7 @@ Meteor.methods({
                 var newdate = moment(date).add(x, 'weeks').toDate();
                 var found = Vendorslots.find({d: newdate, s: slot})
                 var onesess = Meteor.call('sessions.createSession',
-                        newdate, slot, this.userId, 1, 0, '--');
+                        newdate, slot, this.userId, 1, 0, '--', null);
 
                 if (onesess == null) {
                     // no vendor available for that slot
@@ -107,8 +113,14 @@ Meteor.methods({
             }
             // create doc for booking
             var daystr = moment(date).clone().format('ddd').toLowerCase();
+            var js; // weekly subscription
+            if (repeat) {
+                js = 3; // subscription active
+            } else {
+                js = 1 // subscription not active
+            }
             var doc = {packageID: 1,
-                    jobstatus: 1,
+                    jobstatus: js,
                     mc: pmc,
                     cc: pcc,
                     timeslot: parseInt(slot),
@@ -122,18 +134,21 @@ Meteor.methods({
             // get bookingID
             var bookingid = Bookings.findOne(doc)._id;
 
-                sess.forEach(function(each) {
-                    // add booking id into session array
-                    each.bookingID = bookingid;
-                    // add to session Collection
-                    Sessions.insert(each);
-                    // remove vendorslot
-                    Vendorslots.remove({
-                        ownerID: each.vendorID,
-                        d: each.date,
-                        s: each.timeslot
-                        });
-                });
+            // each Booking
+
+            // add Sessions
+            sess.forEach(function(each) {
+                // add booking id into session array
+                each.bookingID = bookingid;
+                // add to session Collection
+                Sessions.insert(each);
+                // remove vendorslot
+                Vendorslots.remove({
+                    ownerID: each.vendorID,
+                    d: each.date,
+                    s: each.timeslot
+                    });
+            });
         } else {
             var able = sess.length;
             var sessword = 'sessions';

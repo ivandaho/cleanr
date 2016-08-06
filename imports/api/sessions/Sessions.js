@@ -43,7 +43,8 @@ SessionSchema = new SimpleSchema({
 Sessions.attachSchema(SessionSchema);
 
 Meteor.methods({
-    'sessions.createSession' (dt, st, c, p, ss, f) {
+    'sessions.createSession' (dt, st, c, p, ss, f, b) {
+        // date, slot, custID, packageID, vendorID, sessionstatus, feedback, bid
         var v;
         // find available vendors
 
@@ -62,17 +63,29 @@ Meteor.methods({
         // sets vendor to a random available vendor.
         // TODO: algorithm based on recent Sessions
         v = avds[Math.floor(Math.random()*avds.length)];
-
-        var doc = {
-            date: dt,
-            timeslot: st,
-            custID: c,
-            packageID: p,
-            vendorID: v.ownerID,
-            sessionstatus: ss,
-            feedback: f
-        };
+        var doc = {};
+        if (b != null) {
+            doc = {
+                date: dt,
+                timeslot: st,
+                custID: c,
+                packageID: p,
+                vendorID: v.ownerID,
+                sessionstatus: ss,
+                feedback: f,
+                bookingID: b
+            };
+        } else {
+            doc = {
+                date: dt,
+                timeslot: st,
+                custID: c,
+                packageID: p,
+                vendorID: v.ownerID,
+                sessionstatus: ss,
+                feedback: f
+            };
+        }
         return doc;
     },
 });
-
