@@ -4,14 +4,15 @@
     based on the information you have provided us.<br></h2>
   If you have additional exceptions to your normal schedule,<br>
   please indicate them here.<br>
-  
+
   <div class="container">
     <h2>Table</h2>
     <br>
     <!-- {{> quickForm collection='weeks' id='insertweek' type='insert'}} -->
     <button class="btn prevweekbtn">Previous Week</button>
+    <button class="btn resetweekbtn">Jump To Current Week</button>
     <button class="btn nextweekbtn">Next Week</button>
-    
+
     <p>Click to change the number of teams you have available for the individual time slots.</p>
     <div class="table-responsive">
     <table class="table">
@@ -36,7 +37,7 @@
   <br>
   <br>
 
-  <button type="submit" class="btn btn-success newbtn">Proceed</button>
+<!-- <button type="submit" class="btn btn-success newbtn">Proceed</button> -->
 </template>
 
 <template name="vcalschedtable">
@@ -58,4 +59,3 @@
     </td>
   {{/each}}
 </template>
-

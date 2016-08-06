@@ -7,6 +7,7 @@ import '../../api/vendordata/server/publications.js';
 import '../../api/vendorslots/server/publications.js';
 import '../../api/bookings/server/publications.js';
 
+import './repopulate.js'
 import './timedjobs.js'
 import './rolesetup.js'
 import './secret.js'

@@ -4,17 +4,19 @@ import { BlazeLayout } from 'meteor/kadira:blaze-layout';
 // if you have the js file you don't need the html file????? see input. not imported
 import '../../ui/layouts/Account.html';
 import '../../ui/layouts/Account.js';
+import '../../ui/layouts/Booking.html';
+import '../../ui/layouts/Booking.js';
+import '../../ui/layouts/Confirmation.html';
+import '../../ui/layouts/Confirmation.js';
 import '../../ui/layouts/Footer.html';
 import '../../ui/layouts/Header.html';
 import '../../ui/layouts/Header.js';
 import '../../ui/layouts/HomeLayout.html';
 import '../../ui/layouts/Input.js';
-import '../../ui/layouts/Userform.html';
 import '../../ui/layouts/MainLayout.html';
 import '../../ui/layouts/Schedule.html';
 import '../../ui/layouts/Schedule.js';
-import '../../ui/layouts/Confirmation.html';
-import '../../ui/layouts/Confirmation.js';
+import '../../ui/layouts/Userform.html';
 import '../../ui/layouts/VendorCP.html';
 import '../../ui/layouts/VendorCP.js';
 import '../../ui/layouts/VendorCustomer.html';
@@ -49,6 +51,13 @@ FlowRouter.route('/account', {
     name: 'account',
     action() {
         BlazeLayout.render('MainLayout', {main: 'Account'})
+    }
+});
+
+FlowRouter.route('/booking/:bid', {
+    name: 'booking',
+    action(params, queryParams) {
+        BlazeLayout.render('MainLayout', {main: 'Booking'})
     }
 });
 

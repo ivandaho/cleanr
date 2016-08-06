@@ -144,6 +144,12 @@ Template.Schedule.events({
         }
 
     },
+    'click .resetweekbtn' (event) {
+        event.preventDefault();
+        var mdate = moment().startOf('week').add(1, 'days');
+        tempjdate = mdate.toDate();
+        Session.set('currweek', tempjdate);
+    },
     'click .nextweekbtn' (event) {
         event.preventDefault();
         var tempjdate = Session.get('currweek');
@@ -158,4 +164,3 @@ Template.Schedule.events({
     },
 
 });
-

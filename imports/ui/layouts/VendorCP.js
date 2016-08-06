@@ -18,7 +18,7 @@ Template.VendorCP.onCreated(function VendorCPOnCreated() {
     var jdate = mdate.toDate();
     Session.set('currweek', jdate);
     tss = Timeslots.find({});
-    
+
 });
 
 var tss;
@@ -108,6 +108,8 @@ Template.VendorCP.events({
             event.target.classList.add("btn-success");
         }
     },
+    /*
+    // unneeded because the - + buttons do it already
     'click .btn-proceed' (event) {
         event.preventDefault();
         var vendorSlots = [];
@@ -123,6 +125,7 @@ Template.VendorCP.events({
         });
         Meteor.call('vendordata.pushSlot', vendorSlots);
     },
+    */
     'click .prevweekbtn' (event) {
         event.preventDefault();
         var tempjdate = Session.get('currweek');
@@ -134,6 +137,12 @@ Template.VendorCP.events({
             Session.set('currweek', tempjdate);
         }
 
+    },
+    'click .resetweekbtn' (event) {
+        event.preventDefault();
+        var mdate = moment().startOf('week').add(1, 'days');
+        tempjdate = mdate.toDate();
+        Session.set('currweek', tempjdate);
     },
     'click .nextweekbtn' (event) {
         event.preventDefault();
@@ -147,7 +156,6 @@ Template.VendorCP.events({
         }
 
     },
-    
+
 
 });
-
