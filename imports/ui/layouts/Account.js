@@ -55,7 +55,30 @@ Template.Account.events({
             }
         );
     },
-    'click .changeaddress' (event) {
+    'click .changeTel' (event) {
+        event.preventDefault();
+        bootbox.dialog({
+                title: "Change Phone Number",
+                message:
+                  '<div class="row">  ' +
+                    '<div class="col-md-4"> ' +
+                      '<input id="tel" name="street" placeholder="enter new phone number" type="text" class="input-street"> ' +
+                    '</div>' +
+                  '</div>',
+                buttons: {
+                    success: {
+                        label: "Save",
+                        className: "btn-success",
+                        callback: function () {
+                            var newtel = $("#tel").val();
+                            Meteor.call('userdata.changeTel', newtel);
+                        }
+                    }
+                }
+            }
+        );
+    },
+    'click .changeAddress' (event) {
         event.preventDefault();
         var i = (event.target.id);
         bootbox.dialog({
@@ -79,7 +102,7 @@ Template.Account.events({
                             var city = $("#city").val();
                             var state = $("#state").val();
                             var zip = $("#zip").val();
-                            Meteor.call('userdata.changeEmail', index, street, city, state, zip);
+                            Meteor.call('userdata.changeAddress', index, street, city, state, zip);
                         }
                     }
                 }

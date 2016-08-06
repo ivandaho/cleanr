@@ -13,9 +13,9 @@ import { Session } from 'meteor/session';
 import { Userdata } from '../../api/userdata/Userdata.js';
 
 Template.Confirmation.onCreated(function ConfirmationOnCreated() {
-  Meteor.subscribe('jobs');
-  Meteor.subscribe('sessions');
-  this.state = new ReactiveDict();
+    Meteor.subscribe('jobs');
+    Meteor.subscribe('sessions');
+    this.state = new ReactiveDict();
 });
 
 
@@ -100,11 +100,37 @@ Template.Confirmation.helpers({
     },
 });
 Template.Confirmation.events({
-    'submit .ip' (event) {
+    'click .changeAddress' (event) {
         event.preventDefault();
-        const target = event.target;
+        var i = (event.target.id);
+        bootbox.dialog({
+                title: "Change Address",
+                message:
+                  '<div class="row">  ' +
+                    '<div class="col-md-4"> ' +
+                      '<input id="street" name="street" placeholder="Street" type="text" class="input-street"> ' +
+                      '<input id="city" name="city" placeholder="City" type="text" class="input-street"> ' +
+                      '<input id="state" name="state" placeholder="State" type="text" class="input-street"> ' +
+                      '<input id="zip" name="zip" placeholder="ZIP" type="text" class="input-street"> ' +
+                    '</div>' +
+                  '</div>',
+                buttons: {
+                    success: {
+                        label: "Save",
+                        className: "btn-success",
+                        callback: function () {
+                            var index = parseInt(i);
+                            var street = $("#street").val();
+                            var city = $("#city").val();
+                            var state = $("#state").val();
+                            var zip = $("#zip").val();
+                            Meteor.call('userdata.changeAddress', index, street, city, state, zip);
+                        }
+                    }
+                }
+            }
+        );
     },
-
     'click #addMC' (event) {
         if (event.target.classList.contains("btn-default")) {
             // if client wants to remove

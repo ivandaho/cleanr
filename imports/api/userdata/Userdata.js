@@ -51,6 +51,10 @@ Meteor.methods({
         Userdata.update({_id: this.userId},
             {$set: {user_email: newmail}});
     },
+    'userdata.changeTel' (newmail){
+        Userdata.update({_id: this.userId},
+            {$set: {user_tel: newmail}});
+    },
     'userdata.setMainAddress' (i){
         var theuser = Userdata.findOne({_id: this.userId});
 
