@@ -103,6 +103,67 @@
         </div> <!-- row same height -->
       </div>  <!-- row -->
 
+      <div class="row">
+        <div class="row-same-height">
+
+          <div class="col-md-6 col-sm-height text-center gethover">
+            <div class="info">
+              <p class="sec-heading">Recent Sessions</p>
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th class="text-center">Session ID</th>
+                    <th class="text-center">Time Slot</th>
+                    <th class="text-center">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {{#each sesses this}}
+                  <tr>
+                    <td><a href="/vendorsessiondetails/{{_id}}">{{_id}}</a></td>
+                    <td>{{d date}} {{s timeslot}}</td>
+                    <td>{{sessionstatus}}</td>
+                  </tr>
+                  {{/each}}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-sm-height text-center gethover">
+            <div class="info">
+              <p class="sec-heading">Current Booking</p>
+              {{#with booking}}
+                <p class="sec-value"><a href="/booking/{{_id}}">{{_id}}</a></p>
+                <p class="sec-value">Submitted on {{subdate subdate}}</p>
+                <p class="sec-value">{{s timeslot}} every {{day}}</p>
+                <p class="sec-heading">Subscription Status</p>
+                <p class="sec-value">{{substatus this}}</p>
+              {{/with}}
+              <p class="sec-heading">Previous Bookings</p>
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th class="text-center">Session ID</th>
+                      <th class="text-center">Time Slot</th>
+                      <th class="text-center">Last Session</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {{#each morebookings}}
+                    <tr>
+                      <td><a href="/booking/{{_id}}">{{_id}}</a></td>
+                      <td>{{s timeslot}} every {{day}}</td>
+                      <td>$ended</td>
+                    </tr>
+                    {{/each}}
+                  </tbody>
+                </table>
+            </div>
+          </div>
+
+        </div> <!-- row same height -->
+      </div>  <!-- row -->
     </div> <!-- container -->
   </section>> <!-- section -->
 {{else}}

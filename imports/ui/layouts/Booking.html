@@ -6,6 +6,9 @@
         <div class="text-center">
           <h2>Booking Details</h2>
           <p class="sec-heading">{{_id}}<br></p>
+          {{#with cust custID}}
+            <p class="sec-heading"><a href="/vendorcustomer/{{_id}}/">{{user_name}}</a></p>
+          {{/with}}
           <p class="sec-value">Submitted on {{subdate subdate}}<br></p>
         </div>
       </div>

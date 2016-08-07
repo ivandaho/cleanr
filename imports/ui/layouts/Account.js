@@ -5,24 +5,56 @@ import './Account.html';
 
 // this is for meteor session variables, not cleaning session
 import { Userdata } from '../../api/userdata/Userdata.js';
-/*
-import { Session } from 'meteor/session';
 import { Sessions } from '../../api/sessions/Sessions.js';
 import { Timeslots } from '../../api/timeslots/Timeslots.js';
+import { Bookings } from '../../api/bookings/Bookings.js';
+/*
+import { Session } from 'meteor/session';
 */
 
 Template.Account.onCreated(function AccountOnCreated() {
-    /*
+    Meteor.subscribe('userdata');
     Meteor.subscribe('sessions');
     Meteor.subscribe('timeslots');
-    */
-    Meteor.subscribe('userdata');
+    Meteor.subscribe('bookings');
 });
 
 
 Template.Account.helpers({
+    subdate(date) {
+        return moment(date).format('YYYY-MM-DD HH:MM');
+    },
+    substatus(booking) {
+        var ss = booking.jobstatus;
+        if (ss == 2 || ss == 3) {
+            return "Active";
+        }
+        return "Inactive";
+    },
+    morebookings() {
+        return Bookings.find({custID: Meteor.userId()});
+    },
+    booking() {
+        // get most recent session
+        var d = moment().subtract(6, 'months').toDate();
+        var mrs = Sessions.findOne({custID: Meteor.userId(),
+                                    date: {$gt: d}},
+                                    {sort: {date: -1}}) || {};
+        return Bookings.findOne({_id: mrs.bookingID});
+    },
     userdata() { //TODO: is this secure? #22
         return Userdata.findOne({_id: Meteor.userId()});
+    },
+    sesses() { //TODO: is this secure? #22
+        return Sessions.find({custID: Meteor.userId()});
+    },
+    d(p) {
+        return moment(p).format('YYYY-MM-DD');
+    },
+    s(p) {
+        var found = Timeslots.findOne({num: parseInt(p)}) || {};
+
+        return found.slot && found.slot;
     },
 });
 Template.Account.events({
