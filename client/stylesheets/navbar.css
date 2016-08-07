@@ -1,3 +1,7 @@
+.navbar-btn-fix {
+  padding-left: 15px;
+}
+
 /* Collapsing Navbar Styles */
 
 @media(min-width:768px) {

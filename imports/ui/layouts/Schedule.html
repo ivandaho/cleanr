@@ -1,32 +1,36 @@
 <template name="Schedule">
-  <div class="container">
-    <h2>Table</h2>
-    <br>
-    <!-- {{> quickForm collection='weeks' id='insertweek' type='insert'}} -->
-    <p>Choose a time slot and a day</p>
-    <button class="btn prevweekbtn">Previous Week</button>
-    <button class="btn resetweekbtn">Jump To Current Week</button>
-    <button class="btn nextweekbtn">Next Week</button>
-    <div class="table-responsive">
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Time Slots</th>
-          <th>Monday <br> {{weekdates 0}}</th>
-          <th>Tuesday <br> {{weekdates 1}}</th>
-          <th>Wednesday <br> {{weekdates 2}}</th>
-          <th>Thursday <br> {{weekdates 3}}</th>
-          <th>Friday <br> {{weekdates 4}}</th>
-          <th>Saturday <br> {{weekdates 5}}</th>
-          <th>Sunday <br> {{weekdates 6}}</th>
-        </tr>
-      </thead>
-      <tbody>
-        {{>schedtable timeslots}}
-      </tbody>
-    </table>
+  <header class="header-schedule">
+    <div class="container headertext">
+      <h1>Book a time slot.</h1>
+      <p>Schedule appointments up to 4 weeks in advance.</p>
     </div>
-  </div>
+  </header>
+  <section>
+    <div class="container">
+      <button class="btn prevweekbtn">Previous Week</button>
+      <button class="btn resetweekbtn">Jump To Current Week</button>
+      <button class="btn nextweekbtn">Next Week</button>
+      <div class="table-responsive">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Time Slots</th>
+            <th>Monday <br> {{weekdates 0}}</th>
+            <th>Tuesday <br> {{weekdates 1}}</th>
+            <th>Wednesday <br> {{weekdates 2}}</th>
+            <th>Thursday <br> {{weekdates 3}}</th>
+            <th>Friday <br> {{weekdates 4}}</th>
+            <th>Saturday <br> {{weekdates 5}}</th>
+            <th>Sunday <br> {{weekdates 6}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{>schedtable timeslots}}
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </section>
 </template>
 
 <template name="schedtable">

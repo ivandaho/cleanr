@@ -1,16 +1,16 @@
+.header-schedule {
+    background-image: url('res/img/header-bg-schedule.jpg');
+  }
 .sched-cols {
     max-width:120px;
     min-width:100px;
 }
-
 .slotdecrease {
     color: #d9534f;
 }
-
 .slotincrease {
     color: #5cb85c;
 }
-
 .noselect {
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none;   /* Chrome/Safari/Opera */

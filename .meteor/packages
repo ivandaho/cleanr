@@ -44,14 +44,16 @@ session
 #useraccounts:flow-routing
 
 less
-twbs:bootstrap
-rajit:bootstrap3-datepicker
+#twbs:bootstrap
+huttonr:bootstrap3
+
+# rajit:bootstrap3-datepicker
 
 arillo:flow-router-helpers
 mizzao:bootboxjs
 mrt:moment
 # aramk:rangeslider
-matb33:bootstrap-affix-js
+# matb33:bootstrap-affix-js
 
 percolate:synced-cron
 # email

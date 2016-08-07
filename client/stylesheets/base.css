@@ -1,10 +1,13 @@
+.btn-cleanr a:visited {
+    color: #fff;
+}
+.cleanr-icon-green {
+    color:#47a747;
+}
 header {
-    //padding: 300px;
     text-align: center;
-    background-image: url('res/img/header-bg.jpg');
     padding-top: 300px;
     padding-bottom:200px;
-    //height: 400px;
     background-position: center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -12,16 +15,23 @@ header {
     -o-background-size: cover;
     background-attachment: scroll;
 }
-
 header h1{
     font-size: 6.5em;
     margin-top:0px;
 }
-
 header p{
     font-size: 2.2em;
 }
 .headertext {
     color: #fff;
 }
-
+main {
+}
+section {
+    padding-bottom:150px;
+    padding-top:150px;
+}
+footer {
+    padding-top:100px;
+    padding-bottom:25px;
+}

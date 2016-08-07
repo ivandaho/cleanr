@@ -1,12 +1,14 @@
 <template name="HomeLayout">
   {{> Header }}
 
-<header>
+<header class="header-frontpage">
   <div class="container headertext">
     <h1>A clean home starts here.</h1>
     <p>Book part-time cleaners, conveniently.</p>
     <!-- change to a link? -->
-    <button class='btn btn-lg btn-success btn-cleanr' onclick="FlowRouter.go('/schedule');">Book Now</Button>
+    <p>
+      <a href='/schedule' class='btn btn-lg btn-success btn-cleanr'>Book Now</a>
+    </p>
   </div>
 </header>
   <section id="how-it-works">
@@ -20,7 +22,7 @@
       <div class="row text-center">
         <div class="col-md-4">
           <span class="fa-stack fa-4x">
-            <i class="fa fa-circle fa-stack-2x text-primary"></i>
+            <i class="fa fa-circle fa-stack-2x cleanr-icon-green"></i>
             <i class="fa fa-th-list fa-stack-1x fa-inverse"></i>
           </span>
           <h4 class="service-heading">Scheduling</h4>
@@ -28,7 +30,7 @@
         </div>
         <div class="col-md-4">
           <span class="fa-stack fa-4x">
-            <i class="fa fa-circle fa-stack-2x text-primary"></i>
+            <i class="fa fa-circle fa-stack-2x cleanr-icon-green"></i>
             <i class="fa  fa-group fa-stack-1x fa-inverse"></i>
           </span>
           <h4 class="service-heading">Part-time Maids</h4>
@@ -36,7 +38,7 @@
         </div>
         <div class="col-md-4">
           <span class="fa-stack fa-4x">
-            <i class="fa fa-circle fa-stack-2x text-primary"></i>
+            <i class="fa fa-circle fa-stack-2x cleanr-icon-green"></i>
             <i class="fa fa-credit-card fa-stack-1x fa-inverse"></i>
           </span>
           <h4 class="service-heading">Automatic Billing</h4>
