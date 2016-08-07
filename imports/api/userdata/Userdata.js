@@ -116,4 +116,26 @@ Meteor.methods({
         Userdata.update({_id: this.userId},
             {$set: set});
     },
+    'userdata.registerNewUser' (userObject) {
+        Accounts.createUser(userObject);
+    },
+    'userdata.giveUserRole' (accounttype) {
+        Roles.addUsersToRoles(Meteor.userId(), accounttype);
+    },
+    'userdata.addUserInfo' (name, tel, address1, address2, address3, address4) {
+        var adobj = {street: address1,
+                city: address2,
+                state: address3,
+                zip: address4
+            };
+
+        var email = Meteor.user().emails[0].address;
+        Userdata.insert({
+            _id: Meteor.userId(),
+            user_name: name,
+            user_email: email,
+            user_tel: tel,
+            user_address: [adobj]
+        })
+    },
 });

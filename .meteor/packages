@@ -40,8 +40,8 @@ alanning:roles
 kenken:meteor-counters
 reactive-dict
 session
-useraccounts:bootstrap
-useraccounts:flow-routing
+#useraccounts:bootstrap
+#useraccounts:flow-routing
 
 less
 twbs:bootstrap
@@ -54,4 +54,5 @@ mrt:moment
 matb33:bootstrap-affix-js
 
 percolate:synced-cron
-email
+# email
+dfischer:faker

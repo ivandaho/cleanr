@@ -79,6 +79,7 @@
             {{else}}
               <div class="info">
                 <p class="sec-value">None found<br></p>
+                <p class="sec-heading"><button class="btn btn-default changeAddress" id="1">Add</button></p>
               </div>
             {{/with}}
           </div>
@@ -96,6 +97,7 @@
             {{else}}
               <div class="info">
                 <p class="sec-value">None found<br></p>
+                <p class="sec-heading"><button class="btn btn-default changeAddress" id="2">Add</button></p>
               </div>
             {{/with}}
           </div>
@@ -167,7 +169,7 @@
     </div> <!-- container -->
   </section>> <!-- section -->
 {{else}}
-  customer not found/not authorized
+  {{loginredirect}}
 {{/with}}
 
 </template>

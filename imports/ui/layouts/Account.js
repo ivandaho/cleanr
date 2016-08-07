@@ -24,6 +24,9 @@ Template.Account.helpers({
     subdate(date) {
         return moment(date).format('YYYY-MM-DD HH:MM');
     },
+    loginredirect() {
+        FlowRouter.go('login');
+    },
     substatus(booking) {
         var ss = booking.jobstatus;
         if (ss == 2 || ss == 3) {
@@ -144,32 +147,5 @@ Template.Account.events({
     'click .lessbtn' (event) {
         event.preventDefault();
         console.log('TODO: change treshold for recent sessions');
-    },
-    'click #addMC' (event) {
-        if (event.target.classList.contains("btn-default")) {
-            // if client wants to remove
-            Session.set('addMC', false);
-        } else {
-            // add the service
-            Session.set('addMC', true);
-        }
-    },
-    'click #addCC' (event) {
-        if (event.target.classList.contains("btn-default")) {
-            // if client wants to remove
-            Session.set('addCC', false);
-        } else {
-            // add the service
-            Session.set('addCC', true);
-        }
-    },
-    'click #proceedPayment' () {
-      // TODO: actual payment stuff
-        var date = moment(Session.get('date')).toDate();
-        var slot = Session.get('slot');
-        var repeat = Session.get('repeat');
-        var mc = Session.get('addMC');
-        var cc = Session.get('addCC');
-        Meteor.call('bookings.insert', date, slot, repeat, mc, cc);
     },
 });

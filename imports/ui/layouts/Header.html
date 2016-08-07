@@ -16,9 +16,13 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         {{#if currentUser}}
-          <li><a href="{{pathFor 'account'}}">Welcome, {{userdata.user_name}}</a></li>
+          {{#if userdata.user_name}}
+            <li><a href="{{pathFor 'account'}}">Welcome, {{userdata.user_name}}</a></li>
+          {{else}}
+            <li><a href="{{pathFor 'account'}}">Welcome, {{currentUser.emails.[0].address}}</a></li>
+          {{/if}}
         {{/if}}
-        <li> {{> atNavButton}}</li>
+        {{> NavbarUserControl}}
         <!-- <li class="divider-vertical"></li> -->
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Vendor Actions<span class="caret"></span></a>

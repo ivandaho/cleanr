@@ -18,6 +18,7 @@ Template.Header.helpers({
 Template.Header.events({
     //'click .account-info' (event) {
     'click .btn-booknow' (event) {
+        event.preventDefault();
         FlowRouter.go('schedule');
     },
     'click .test-btn' (event) {

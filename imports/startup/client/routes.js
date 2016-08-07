@@ -12,8 +12,16 @@ import '../../ui/layouts/Footer.html';
 import '../../ui/layouts/Header.html';
 import '../../ui/layouts/Header.js';
 import '../../ui/layouts/HomeLayout.html';
-import '../../ui/layouts/Input.js';
+//import '../../ui/layouts/Input.js';
+import '../../ui/layouts/Login.js';
+import '../../ui/layouts/Login.html';
 import '../../ui/layouts/MainLayout.html';
+import '../../ui/layouts/NavbarUserControl.js';
+import '../../ui/layouts/NavbarUserControl.html';
+import '../../ui/layouts/Registration.html';
+import '../../ui/layouts/Registration.js';
+import '../../ui/layouts/Registration2.html';
+import '../../ui/layouts/Registration2.js';
 import '../../ui/layouts/Schedule.html';
 import '../../ui/layouts/Schedule.js';
 import '../../ui/layouts/Userform.html';
@@ -65,6 +73,27 @@ FlowRouter.route('/confirmation', {
     name: 'confirmation',
     action() {
         BlazeLayout.render('MainLayout', {main: 'Confirmation'})
+    }
+});
+
+FlowRouter.route('/login', {
+    name: 'login',
+    action() {
+        BlazeLayout.render('MainLayout', {main: 'Login'})
+    }
+});
+
+FlowRouter.route('/registration', {
+    name: 'registration',
+    action() {
+        BlazeLayout.render('MainLayout', {main: 'Registration'})
+    }
+});
+
+FlowRouter.route('/registration/step2', {
+    name: 'registration2',
+    action() {
+        BlazeLayout.render('MainLayout', {main: 'Registration2'})
     }
 });
 
