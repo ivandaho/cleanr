@@ -24,6 +24,19 @@
             <div class="value">
               $_Alpha <button type="button" class="btn btn-default">Change</button>
             </div>
+            <div class="hdr">
+              Session Status
+            </div>
+            <div class="value">
+              {{#with getsessionstatus sess}}
+                <!-- if session not completed -->
+                Not Completed
+            <button type="button" class="btn btn-success btn-mark-completed">Mark as Completed</button>
+              {{else}}
+                Completed
+              {{/with}}
+            </div>
+            <br>
             <div class="placeholderthing">
             </div>
           </div>

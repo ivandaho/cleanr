@@ -43,17 +43,29 @@ SessionSchema = new SimpleSchema({
 Sessions.attachSchema(SessionSchema);
 
 Meteor.methods({
+    'sessions.markCompleted' (sid) {
+        // check if vendor is authorized
+        var thesession = Sessions.findOne({_id: sid});
+
+        if (thesession.vendorID == Meteor.userId()) {
+            console.log('authorized to mark as completed');
+            var newstatus = 1;
+
+            // "0 = not yet completed, 1 = completed, 2 = warn"
+            Sessions.update(thesession, {$set: {sessionstatus: newstatus}});
+        }
+    },
     'sessions.createSession' (dt, st, c, p, ss, f, b) {
         // date, slot, custID, packageID, vendorID, sessionstatus, feedback, bid
         var v;
         // find available vendors
 
-        // default slot string
-        // dss = moment(dt).format('ddd').toLowerCase() + ' ' + st;
-        var avds = [];
+    // default slot string
+    // // dss = moment(dt).format('ddd').toLowerCase() + ' ' + st;
+    // var avds = [];
         Vendorslots.find({d: dt, s:parseInt(st)}).forEach(function (each) {
             avds.push(each);
-        });
+        })
 
         if (avds.length < 1) {
             // no vendors found on that date. abort

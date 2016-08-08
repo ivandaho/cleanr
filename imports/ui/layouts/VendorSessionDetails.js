@@ -21,6 +21,11 @@ Template.VendorSessionDetails.onCreated(function VendorSessionDetailsOnCreated()
 var tss;
 
 Template.VendorSessionDetails.helpers({
+    getsessionstatus(thesess) {
+        if (thesess.sessionstatus == 0) {
+            return true;
+        }
+    },
     timeslots() {
         if (tss != undefined) {
             return tss;
@@ -139,6 +144,10 @@ Template.VendorSessionDetails.events({
         FlowRouter.go(str);
     },
     */
+    'click .btn-mark-completed' (event) {
+        event.preventDefault();
+        Meteor.call('sessions.markCompleted', FlowRouter.getParam('sessid'));
+    },
     'click .resetweekbtn' (event) {
         event.preventDefault();
         var mdate = moment().startOf('week').add(1, 'days');
