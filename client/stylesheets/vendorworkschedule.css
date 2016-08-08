@@ -1,0 +1,16 @@
+/* css rules for customer div box */
+.custbox-complete {
+    background-color : #1d829e;
+}
+.custbox-incomplete {
+    background-color : #47a747;
+}
+.custbox-empty {
+    background-color : #eeeeee;
+}
+.vs-empty {
+    background-color: #eeeeee;
+}
+.nopadding {
+    padding:0,
+}
