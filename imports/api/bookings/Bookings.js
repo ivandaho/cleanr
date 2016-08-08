@@ -171,13 +171,22 @@ Meteor.methods({
 
         // LATER:
         // notify vendor
-
-
     },
-    'bookings.single'(){
-        FlowRouter.go('/confirmation');
-    },
-    'bookings.weekly'(){
-        FlowRouter.go('/confirmation');
+    'bookings.stopSubscription' (bid) {
+        // find the booking
+        console.log(bid);
+        var thebooking = Bookings.findOne({_id: bid});
+
+        if (thebooking.custID == Meteor.userId()) {
+            console.log('authorized to cancel');
+            var newstatus;
+
+            if (thebooking.jobstatus == 2) {
+                newstatus = 0;
+            } else if (thebooking.jobstatus == 3) {
+                newstatus = 1;
+            }
+            Bookings.update(thebooking, {$set: {jobstatus: newstatus}});
+        }
     },
 });

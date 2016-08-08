@@ -1,0 +1,160 @@
+.sec-heading {
+    color: #000000;
+    font-size: 1em;
+    margin-bottom:0px;
+}
+
+.sec-value {
+    color: #000000;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.placeholderthing{
+    min-height:50px;
+}
+
+.cf-btndiv {
+    position:absolute;
+    margin:0 auto;
+    bottom:0;
+    display:block;
+    width:100%;
+    padding-left:20px;
+    padding-right:20px;
+    left:0px;
+}
+
+.info {
+    padding-left:10px;
+    padding-right:10px;
+}
+
+/* columns of same height styles */
+.row-full-height {
+  height: 100%;
+}
+.col-full-height {
+  height: 100%;
+  vertical-align: middle;
+}
+.row-same-height {
+  display: table;
+  width: 100%;
+  /* fix overflow */
+  table-layout: fixed;
+}
+.col-xs-height {
+  display: table-cell;
+  float: none !important;
+}
+
+@media (min-width: 768px) {
+  .col-sm-height {
+    display: table-cell;
+    float: none !important;
+  }
+}
+@media (min-width: 992px) {
+  .col-md-height {
+    display: table-cell;
+    float: none !important;
+  }
+}
+@media (min-width: 1200px) {
+  .col-lg-height {
+    display: table-cell;
+    float: none !important;
+  }
+}
+
+/* vertical alignment styles */
+.col-top {
+  vertical-align: top;
+}
+.col-middle {
+  vertical-align: middle;
+}
+.col-bottom {
+  vertical-align: bottom;
+}
+
+.addbtn {
+    height:45px;
+    width:50%;
+    margin:auto;
+    padding:initial;
+    //left:25%;
+}
+
+.btn-removeService {
+    background-color: #ff9999;
+}
+    /*
+    width:50%;
+    margin:auto;
+    max-width:100%;
+    border-radius:.8em;
+    */
+
+.textonimg {
+    position:absolute;
+    width:100%;
+    text-align: center;
+    z-index: 100;
+    top:30%;
+    left:0;
+    font-size:2.5em;
+}
+
+.tc {
+    z-index:-99;
+    min-height:120px;
+    width:100%;
+    height:100%;
+    position:absolute;
+    top:0;
+    left:0;
+}
+
+.confirmtext {
+    text-align:center;
+}
+
+.row-eq-height {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display:         flex;
+}
+
+.vertical-align {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+}
+
+.valignfix{
+    height:100%;
+}
+
+.placeholderthing2{
+    width:0;
+    height:100%;
+}
+
+.placeholderthing3{
+    width:0;
+    min-height:200px;
+    height:100%;
+}
+
+.placeholdershort{
+    min-height:35px;
+}
+
+.padded {
+    margin-top:20px;
+    margin-bottom:20px;
+}

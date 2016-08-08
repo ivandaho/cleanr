@@ -1,5 +1,4 @@
 import { Template } from 'meteor/templating';
-import { ReactiveDict } from 'meteor/reactive-dict';
 
 import './Account.html';
 
@@ -43,12 +42,17 @@ Template.Account.helpers({
         var mrs = Sessions.findOne({custID: Meteor.userId(),
                                     date: {$gt: d}},
                                     {sort: {date: -1}}) || {};
-        return Bookings.findOne({_id: mrs.bookingID});
+        var found = Bookings.findOne({_id: mrs.bookingID});
+            if (found){
+              if (found.jobstatus == 3 || found.jobstatus == 2) {
+                return found;
+              }
+            }
     },
-    userdata() { //TODO: is this secure? #22
+    userdata() { // TODO: is this secure? #22
         return Userdata.findOne({_id: Meteor.userId()});
     },
-    sesses() { //TODO: is this secure? #22
+    sesses() { // TODO: is this secure? #22
         return Sessions.find({custID: Meteor.userId()});
     },
     d(p) {

@@ -19,6 +19,11 @@ Template.Booking.onCreated(function BookingOnCreated() {
 
 
 Template.Booking.helpers({
+    getsubstatus(booking) {
+        if (booking.jobstatus == 2 || booking.jobstatus == 3) {
+            return true;
+        }
+    },
     booking() {
         return Bookings.findOne({_id: FlowRouter.getParam('bid')});
     },
@@ -54,8 +59,6 @@ Template.Booking.events({
         event.preventDefault();
         console.log('TODO: change treshold for recent sessions');
     },
-
-
     'click #addMC' (event) {
         if (event.target.classList.contains("btn-default")) {
             // if client wants to remove
@@ -82,4 +85,8 @@ Template.Booking.events({
         var cc = Session.get('addCC');
         Meteor.call('bookings.insert', date, slot, repeat, mc, cc);
     },
+    'click .btn-cancel-booking' () {
+        event.preventDefault();
+        Meteor.call('bookings.stopSubscription', FlowRouter.getParam('bid'));
+    }
 });
