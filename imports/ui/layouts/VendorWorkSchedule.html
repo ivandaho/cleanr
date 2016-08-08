@@ -49,24 +49,38 @@
   {{#each this}}
     <!-- add border styling etc -->
     {{#with getsess date n}}
-      {{>vsupcoming}}
+    <!-- if ther is a session, return that session -->
+      {{>vssession}}
     {{else}}
       {{>vsempty}}
     {{/with}}
   {{/each}}
 </template>
 
-<template name="vsupcoming">
-  <td class="vs-upcoming text-center">
-    {{#with getcuss this}}
-    <div class="divbox">
+<template name="vssession">
+  {{#if getsessionstatus this}}
+    <td class="custbox-incomplete text-center">
+      <!-- if status = incomplete -->
+      {{#with getcuss this}}
+      INCOMPLETE<br>
       <a href=/vendorsessiondetails/{{../_id}}>
         {{user_name}}<br>
         {{user_address.[0].street}}<br>
       </a>
-    </div>
-    {{/with}}
-  </td>
+      {{/with}}
+    </td>
+  {{else}}
+    <td class="custbox-complete text-center">
+      <!-- status is complete -->
+      {{#with getcuss this}}
+      COMPLETED<br>
+      <a href=/vendorsessiondetails/{{../_id}}>
+        {{user_name}}<br>
+        {{user_address.[0].street}}<br>
+      </a>
+      {{/with}}
+    </td>
+  {{/if}}
 </template>
 
 <template name="vsempty">

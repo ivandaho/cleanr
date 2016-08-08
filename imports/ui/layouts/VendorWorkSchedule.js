@@ -61,7 +61,13 @@ Template.vwschedtable.helpers({
     },
 });
 
-Template.vsupcoming.helpers({
+Template.vssession.helpers({
+    getsessionstatus(sess) {
+        var ss = sess.sessionstatus;
+        if (ss == 0) {
+            return true;
+        }
+    },
     getcuss(sess) {
         // customer userdata accesible to vendor
         var customer = Userdata.findOne({_id: sess.custID});
