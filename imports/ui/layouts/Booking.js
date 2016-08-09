@@ -59,32 +59,6 @@ Template.Booking.events({
         event.preventDefault();
         console.log('TODO: change treshold for recent sessions');
     },
-    'click #addMC' (event) {
-        if (event.target.classList.contains("btn-default")) {
-            // if client wants to remove
-            Session.set('addMC', false);
-        } else {
-            // add the service
-            Session.set('addMC', true);
-        }
-    },
-    'click #addCC' (event) {
-        if (event.target.classList.contains("btn-default")) {
-            // if client wants to remove
-            Session.set('addCC', false);
-        } else {
-            // add the service
-            Session.set('addCC', true);
-        }
-    },
-    'click #proceedPayment' () {
-        var date = moment(Session.get('date')).toDate();
-        var slot = Session.get('slot');
-        var repeat = Session.get('repeat');
-        var mc = Session.get('addMC');
-        var cc = Session.get('addCC');
-        Meteor.call('bookings.insert', date, slot, repeat, mc, cc);
-    },
     'click .btn-cancel-booking' () {
         event.preventDefault();
         Meteor.call('bookings.stopSubscription', FlowRouter.getParam('bid'));

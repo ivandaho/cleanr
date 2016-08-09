@@ -79,8 +79,9 @@ Template.Schedule.events({
 
         var date = event.target.id.substring(0,10);
         var slot = event.target.id.substring(11,23);
-        Session.set('date', date);
-        Session.set('slot', slot);
+
+        // query params
+        var qp = {date: date, slot: slot};
         mdate = moment(date);
         msg_day = mdate.format('dddd ');
         msg_date = mdate.format('MMMM D');
@@ -113,8 +114,8 @@ Template.Schedule.events({
                     label: 'Single Session',
                     className: 'btn-success',
                     callback: function() {
-                        Session.set('repeat', false);
-                        FlowRouter.go('/confirmation');
+                        qp.repeat = false;
+                        FlowRouter.go('/confirmation', null, qp);
                         return true;
                     }
                 },
@@ -122,8 +123,8 @@ Template.Schedule.events({
                     label: 'Weekly Sessions',
                     className: 'btn-success',
                     callback: function() {
-                        Session.set('repeat', true);
-                        FlowRouter.go('/confirmation');
+                        qp.repeat = true;
+                        FlowRouter.go('/confirmation', null, qp);
                         return true;
                     }
                 }

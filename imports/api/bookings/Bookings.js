@@ -88,6 +88,7 @@ Meteor.methods({
                         newdate, slot, this.userId, 1, 0, '--', null);
 
                 if (onesess == null) {
+                    //TODO: add warning to client user
                     // no vendor available for that slot
                     error = true;
                 } else {

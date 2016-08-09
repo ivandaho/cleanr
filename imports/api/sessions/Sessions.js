@@ -62,7 +62,7 @@ Meteor.methods({
 
     // default slot string
     // // dss = moment(dt).format('ddd').toLowerCase() + ' ' + st;
-    // var avds = [];
+        var avds = [];
         Vendorslots.find({d: dt, s:parseInt(st)}).forEach(function (each) {
             avds.push(each);
         })

@@ -15,6 +15,7 @@ import { Userdata } from '../../api/userdata/Userdata.js';
 Template.Confirmation.onCreated(function ConfirmationOnCreated() {
     Meteor.subscribe('jobs');
     Meteor.subscribe('sessions');
+    Meteor.subscribe('timeslots');
     this.state = new ReactiveDict();
 });
 
@@ -25,18 +26,18 @@ Template.Confirmation.helpers({
     },
     schedSlotTime() {
         // time slot
-        var slot = parseInt(Session.get('slot'));
+        var slot = parseInt(FlowRouter.getQueryParam('slot'));
         var tsdata = Timeslots.findOne({"num": slot});
         if (tsdata != undefined) {
             var slotstr = tsdata.slot;
             return slotstr;
         } else {
+            return 'invalid slot.';
             return null;
         }
     },
     schedSlotDay() {
-        // time slot
-        var date = Session.get('date');
+        var date = FlowRouter.getQueryParam('date');
         var mdate = moment(date);
         if (mdate != undefined) {
             var str = 'Every ' + mdate.format('dddd');
@@ -46,8 +47,7 @@ Template.Confirmation.helpers({
         }
     },
     schedSlotDate() {
-        // time slot
-        var date = Session.get('date');
+        var date = FlowRouter.getQueryParam('date');
         var mdate = moment(date);
         if (mdate != undefined) {
             var str = mdate.format('YYYY-MM-DD');
@@ -57,45 +57,20 @@ Template.Confirmation.helpers({
         }
     },
     weekly() {
-        if (Session.get('repeat') == true) {
+        if (FlowRouter.getQueryParam('repeat') == 'true') {
             return true;
         } else {
             return false;
         }
     },
-    firstSession() {
-        var date = Session.get('date');
-        var slot = Session.get('slot');
-        // parse
-
-        return slot;
-    },
-    addMCBtn() {
-        if (Session.get('addMC', true)) {
-            return 'btn-default';
-        } else {
-            return 'btn-success';
+    wantMC() {
+        if (FlowRouter.getQueryParam('addMC') == 'true') {
+            return true;
         }
     },
-    addCCBtn() {
-        if (Session.get('addCC', true)) {
-            return 'btn-default';
-        } else {
-            return 'btn-success';
-        }
-    },
-    addMCStatus() {
-        if (Session.get('addMC', true)) {
-            return 'Added';
-        } else {
-            return 'Add';
-        }
-    },
-    addCCStatus() {
-        if (Session.get('addCC', true)) {
-            return 'Added';
-        } else {
-            return 'Add';
+    wantCC() {
+        if (FlowRouter.getQueryParam('addCC') == 'true') {
+            return true;
         }
     },
 });
@@ -132,29 +107,39 @@ Template.Confirmation.events({
         );
     },
     'click #addMC' (event) {
-        if (event.target.classList.contains("btn-default")) {
+        event.preventDefault();
+        if (FlowRouter.getQueryParam('addMC') == 'true') {
             // if client wants to remove
-            Session.set('addMC', false);
+            FlowRouter.withReplaceState(function() {
+                FlowRouter.setQueryParams({'addMC': false});
+            });
         } else {
             // add the service
-            Session.set('addMC', true);
+            FlowRouter.withReplaceState(function() {
+                FlowRouter.setQueryParams({'addMC': true});
+            });
         }
     },
     'click #addCC' (event) {
-        if (event.target.classList.contains("btn-default")) {
+        event.preventDefault();
+        if (FlowRouter.getQueryParam('addCC') == 'true') {
             // if client wants to remove
-            Session.set('addCC', false);
+            FlowRouter.withReplaceState(function() {
+                FlowRouter.setQueryParams({'addCC': false});
+            });
         } else {
             // add the service
-            Session.set('addCC', true);
+            FlowRouter.withReplaceState(function() {
+                FlowRouter.setQueryParams({'addCC': true});
+            });
         }
     },
     'click #proceedPayment' () {
-        var date = moment(Session.get('date')).toDate();
-        var slot = Session.get('slot');
-        var repeat = Session.get('repeat');
-        var mc = Session.get('addMC');
-        var cc = Session.get('addCC');
+        var date = moment(FlowRouter.getQueryParam('date')).toDate();
+        var slot = FlowRouter.getQueryParam('slot');
+        var repeat = Boolean(FlowRouter.getQueryParam('repeat'));
+        var cc = Boolean(FlowRouter.getQueryParam('addCC'));
+        var mc = Boolean(FlowRouter.getQueryParam('addMC'));
         Meteor.call('bookings.insert', date, slot, repeat, mc, cc);
     },
 });

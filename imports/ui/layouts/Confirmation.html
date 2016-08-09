@@ -75,14 +75,22 @@
                       <!-- same purpose as the placeholderthing class, but slightly shorter -->
                       <div class="placeholdershort"></div>
                       <!-- addbtn can be used for further customization, for now it is the same except for height:40px -->
-                      <button type="button" class="btn {{addMCBtn}} btn-block addbtn" id="addMC">{{addMCStatus}}</button>
+                      {{#if wantMC}}
+                      <button type="button" class="btn btn-default btn-block addbtn" id="addMC">Added</button>
+                      {{else}}
+                      <button type="button" class="btn btn-success btn-block addbtn" id="addMC">Add</button>
+                      {{/if}}
                   </div>
 
                   <div class="col-md-4 col-sm-height padded">
                       <img class="img-responsive img-circle center-block" src="/res/img/placeholder320x320.jpg">
                       <div class="textonimg">Carpet Cleaning<br>+RM50/Session</div>
                       <div class="placeholdershort"></div>
-                      <button type="button" class="btn {{addCCBtn}} btn-block addbtn" id="addCC">{{addCCStatus}}</button>
+                      {{#if wantCC}}
+                      <button type="button" class="btn btn-default btn-block addbtn" id="addCC">Added</button>
+                      {{else}}
+                      <button type="button" class="btn btn-success btn-block addbtn" id="addCC">Add</button>
+                      {{/if}}
                   </div>
 
                   <div class="col-md-4 col-sm-height">
