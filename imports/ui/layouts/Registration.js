@@ -18,17 +18,19 @@ Template.Registration.events({
         var userObject = {
             email: email,
             password: password,
+            profile: {acc:accounttype},
         };
 
+        var success = false;
+        var lel = 'test';
         Meteor.call('userdata.registerNewUser', userObject, function(error){
-            if (error){
+            if (error) {
                 console.log(error);
             } else {
-                Meteor.loginWithPassword(email, password);
-                Meteor.call('userdata.giveUserRole', accounttype);
-                FlowRouter.go('/registration/step2'); // prompt to fill in profile
-                console.log('registration ok');
+            Meteor.loginWithPassword(email, password);
+            FlowRouter.go('/registration/step2'); // prompt to fill in profile
             }
         });
+
     }
 });

@@ -119,8 +119,11 @@ Meteor.methods({
     'userdata.registerNewUser' (userObject) {
         Accounts.createUser(userObject);
     },
-    'userdata.giveUserRole' (accounttype) {
-        Roles.addUsersToRoles(Meteor.userId(), accounttype);
+    'userdata.giveUserRole' () {
+        var role = Meteor.user().profile.acc;
+        console.log(role);
+        //console.log(users.findOne({})); //CONTINUE
+         Roles.addUsersToRoles(Meteor.userId(), role);
     },
     'userdata.addUserInfo' (name, tel, address1, address2, address3, address4) {
         var adobj = {street: address1,

@@ -27,6 +27,7 @@ Template.Registration2.events({
         var address2 = $('[name=address2]').val();
         var address3 = $('[name=address3]').val();
         var address4 = $('[name=address4]').val();
+        Meteor.call('userdata.giveUserRole');
         Meteor.call('userdata.addUserInfo', name, tel, address1,
                                     address2, address3, address4);
         FlowRouter.go('account');
