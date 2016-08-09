@@ -1,37 +1,42 @@
 <template name="VendorRegistration">
-<h2>Interested in Becoming a partner?<br>
-    We would like to have a chat with you<br></h2>
-  Please choose your available slots.<br>
-  Note that you will be responsible for fulfilling all appointments.<br>
-  
-  <div class="container">
-    <h2>Table</h2>
-    <br>
-    <p>Click to toggle individual time slots for each day.</p>
-    <div class="table-responsive">
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Time Slots</th>
-          <th>Monday</th>
-          <th>Tuesday</th>
-          <th>Wednesday</th>
-          <th>Thursday</th>
-          <th>Friday</th>
-          <th>Saturday</th>
-          <th>Sunday</th>
-        </tr>
-      </thead>
-      <tbody>
-        {{>vschedtable tsdata}}
-      </tbody>
-    </table>
+  <section>
+    <div class="container">
+      <!-- <h2>Interested in Becoming a partner?<br> -->
+      <!--   We would like to have a chat with you<br></h2> -->
+      {{#if firsttimesetup}}
+      <h2>
+        Please choose your available slots to complete registration.
+      </h2>
+      {{else}}
+      <h2>
+        Make changes to your default available slots.
+      </h2>
+      {{/if}}
+      <br>
+      Note that you will be responsible for fulfilling all appointments.
+      <p>Click to toggle individual time slots for each day.</p>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Time Slots</th>
+              <th>Monday</th>
+              <th>Tuesday</th>
+              <th>Wednesday</th>
+              <th>Thursday</th>
+              <th>Friday</th>
+              <th>Saturday</th>
+              <th>Sunday</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{>vschedtable tsdata}}
+          </tbody>
+        </table>
+      </div>
+      <button type="submit" class="btn btn-success btn-proceed">Proceed</button>
     </div>
-  </div>
-  <br>
-  <br>
-
-  <button type="submit" class="btn btn-success btn-proceed">Proceed</button>
+  </section>
 </template>
 
 <template name="vschedtable">

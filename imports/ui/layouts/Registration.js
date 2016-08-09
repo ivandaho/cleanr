@@ -5,9 +5,6 @@ import { Template } from 'meteor/templating';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 
 Template.Registration.helpers({
-    loginredirect() {
-        FlowRouter.go('/');
-    }
 });
 Template.Registration.events({
     'submit form': function(event){
@@ -15,10 +12,14 @@ Template.Registration.events({
         var email = $('[name=email]').val();
         var password = $('[name=password]').val();
         var accounttype = $('[name=accounttype]').val();
+        profileobj = {};
+        
+        profileobj = {acc:accounttype, donesetup: false};
+
         var userObject = {
             email: email,
             password: password,
-            profile: {acc:accounttype},
+            profile: profileobj
         };
 
         var success = false;

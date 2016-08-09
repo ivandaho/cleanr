@@ -1,4 +1,16 @@
 <template name = "Registration2">
+  {{#if currentUser}}
+  {{#if founduserinfo}}
+  something
+  test
+  <section>
+    <div class="container">
+      <div class="col-centered col-md-6">
+        <h2>looks like you've set up your profile. Redirecting you in *5* seconds.</h2>
+      </div>
+    </div>
+  </section>
+  {{else}}
   <section>
     <div class="container">
       <div class="col-centered col-md-4">
@@ -19,4 +31,7 @@
       </div>
     </div>
   </section>
+  {{/if}}
+
+  {{/if}}
 </template>

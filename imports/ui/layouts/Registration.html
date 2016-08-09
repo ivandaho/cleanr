@@ -3,7 +3,6 @@
     <div class="container">
       <div class="row">
         <div class="col-centered col-md-4">
-          {{#unless currentUser}}
           <form class="register">
             <p>Email: <input type="email" name="email"></p>
             <p>Password: <input type="password" name="password"></p>
@@ -15,9 +14,6 @@
 
             <p><input type="submit" value="Register"></p>
           </form>
-          {{else}}
-          {{loginredirect}}
-          {{/unless}}
         </div>
       </div>
     </div>

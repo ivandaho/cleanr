@@ -57,6 +57,12 @@ FlowRouter.route('/input', {
 
 FlowRouter.route('/account', {
     name: 'account',
+    triggersEnter: [function() {
+        if (Meteor.user() == null) {
+            // if user is not logged in
+            FlowRouter.go('login');
+        }
+    }],
     action() {
         BlazeLayout.render('MainLayout', {main: 'Account'})
     }
@@ -78,6 +84,12 @@ FlowRouter.route('/confirmation', {
 
 FlowRouter.route('/login', {
     name: 'login',
+    triggersEnter: [function() {
+        if (Meteor.user() != null) {
+            // if user is logged in
+            FlowRouter.go('account');
+        }
+    }],
     action() {
         BlazeLayout.render('MainLayout', {main: 'Login'})
     }
@@ -85,6 +97,12 @@ FlowRouter.route('/login', {
 
 FlowRouter.route('/registration', {
     name: 'registration',
+    triggersEnter: [function() {
+        if (Meteor.user() != null) {
+            // if user is logged in
+            FlowRouter.go('account');
+        }
+    }],
     action() {
         BlazeLayout.render('MainLayout', {main: 'Registration'})
     }
@@ -143,3 +161,4 @@ FlowRouter.route('/vendorsessiondetails/:sessid', {
         BlazeLayout.render('MainLayout', {main: 'VendorSessionDetails'})
     }
 });
+

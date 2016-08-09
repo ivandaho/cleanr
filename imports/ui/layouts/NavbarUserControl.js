@@ -7,6 +7,7 @@ import { Template } from 'meteor/templating';
 Template.NavbarUserControl.events({
   'click .navbar-logout' (event){
     event.preventDefault();
+    FlowRouter.go('/');
     Meteor.logout();
   }
 });

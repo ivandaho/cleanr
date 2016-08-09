@@ -27,9 +27,14 @@ Template.Registration2.events({
         var address2 = $('[name=address2]').val();
         var address3 = $('[name=address3]').val();
         var address4 = $('[name=address4]').val();
-        Meteor.call('userdata.giveUserRole');
-        Meteor.call('userdata.addUserInfo', name, tel, address1,
-                                    address2, address3, address4);
-        FlowRouter.go('account');
+         Meteor.call('userdata.giveUserRole');
+         Meteor.call('userdata.addUserInfo', name, tel, address1,
+                                     address2, address3, address4);
+         if (Meteor.user().profile.donesetup == false
+             && Meteor.user().profile.acc == 'vendor') {
+          FlowRouter.go('/vendorRegistration'); // prompt to fill in vendor stuff
+         } else {
+          FlowRouter.go('/account');
+         }
     }
 });

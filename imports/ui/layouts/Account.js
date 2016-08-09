@@ -23,9 +23,6 @@ Template.Account.helpers({
     subdate(date) {
         return moment(date).format('YYYY-MM-DD HH:MM');
     },
-    loginredirect() {
-        FlowRouter.go('login');
-    },
     substatus(booking) {
         var ss = booking.jobstatus;
         if (ss == 2 || ss == 3) {

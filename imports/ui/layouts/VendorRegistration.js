@@ -16,6 +16,17 @@ Template.VendorRegistration.onCreated(function VendorRegistrationOnCreated() {
 });
 
 Template.VendorRegistration.helpers({
+    firsttimesetup() {
+
+      var prof = Meteor.user().profile || {};
+      var donesetup = prof.donesetup;
+        if (donesetup == false) {
+          // if not dont yet
+            return true;
+        } else {
+            return false;
+        }
+    },
     tsdata() {
         return Timeslots.find({});
     },
@@ -79,6 +90,7 @@ Template.VendorRegistration.events({
             });
         });
         Meteor.call('vendordata.pushSlots', vs);
+        Meteor.call('vendordata.releaseSchedule');
 
         bootbox.dialog({
             message: 'Your default weekly schedule has been updated.<br><br>' +
