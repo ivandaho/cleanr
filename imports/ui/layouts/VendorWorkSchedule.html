@@ -59,18 +59,19 @@
 
 <template name="vssession">
   {{#if getsessionstatus this}}
-    <td class="custbox-incomplete text-center">
-      <!-- if status = incomplete -->
-      {{#with getcuss this}}
-      INCOMPLETE<br>
-      <a href=/vendorsessiondetails/{{../_id}}>
-        {{user_name}}<br>
-        {{user_address.[0].street}}<br>
-      </a>
-      {{/with}}
+  <td class="{{dateover ..}} text-center">
+    <!-- if status = incomplete -->
+    {{#with getcuss this}}
+    INCOMPLETE<br>
+    <a href=/vendorsessiondetails/{{../_id}}>
+      {{user_name}}<br>
+      {{user_address.[0].street}}<br>
+    </a>
+    {{/with}}
     </td>
   {{else}}
-    <td class="custbox-complete text-center">
+    <td class="custbox-complete {{dateover ..}}text-center">
+
       <!-- status is complete -->
       {{#with getcuss this}}
       COMPLETED<br>
@@ -79,12 +80,13 @@
         {{user_address.[0].street}}<br>
       </a>
       {{/with}}
+      k   
     </td>
   {{/if}}
 </template>
 
 <template name="vsempty">
-  <td class="vs-empty text-center">
+  <td class="vs-empty {{dateover ./date ./n}} text-center">
     N/A
   </td>
 </template>

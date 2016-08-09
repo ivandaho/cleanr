@@ -2,9 +2,6 @@
 .custbox-complete {
     background-color : #1d829e;
 }
-.custbox-incomplete {
-    background-color : #47a747;
-}
 .custbox-empty {
     background-color : #eeeeee;
 }
@@ -13,4 +10,24 @@
 }
 .nopadding {
     padding:0,
+}
+.vs-passdate-cust {
+    background: rgba(71, 167, 71, 0.3);
+    background-image: repeating-linear-gradient(
+        315deg,
+        transparent,
+        transparent 14px,
+        rgba(255,255,255,.5) 14px,
+        rgba(255,255,255,.5) 30px
+    );
+}
+.vs-passdate {
+    background-color: gray;
+    background-image: repeating-linear-gradient(
+        315deg,
+        transparent,
+        transparent 14px,
+        rgba(255,255,255,.5) 14px,
+        rgba(255,255,255,.5) 30px
+    );
 }

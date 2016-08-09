@@ -62,6 +62,12 @@ Template.vwschedtable.helpers({
 });
 
 Template.vssession.helpers({
+    dateover(sess) {
+        if (moment(sess.date) < moment()) {
+            return 'vs-passdate-cust';
+        }
+    },
+
     getsessionstatus(sess) {
         var ss = sess.sessionstatus;
         if (ss == 0) {
@@ -88,6 +94,16 @@ Template.vweachslot.helpers({
         } else {
             return false;
         }
+    },
+});
+
+Template.vsempty.helpers({
+    dateover(date, n) {
+        //TODO: update by time slot in addition to day
+        if (moment(date) < moment()) {
+            return 'vs-passdate';
+        }
+        return 'test';
     },
 });
 

@@ -75,6 +75,7 @@ Meteor.methods({
         // check for weekly schedule
         var y = 0;
         if (repeat) {
+            console.log('repeat');
             y = 3;
         }
 

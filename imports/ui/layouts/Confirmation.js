@@ -137,9 +137,24 @@ Template.Confirmation.events({
     'click #proceedPayment' () {
         var date = moment(FlowRouter.getQueryParam('date')).toDate();
         var slot = FlowRouter.getQueryParam('slot');
-        var repeat = Boolean(FlowRouter.getQueryParam('repeat'));
-        var cc = Boolean(FlowRouter.getQueryParam('addCC'));
-        var mc = Boolean(FlowRouter.getQueryParam('addMC'));
+        var repeat;
+        if (FlowRouter.getQueryParam('repeat') == 'true') {
+            repeat = true;
+        } else {
+            repeat = false;
+        }
+
+        if (FlowRouter.getQueryParam('addCC') == 'true') {
+            cc = true;
+        } else {
+            cc = false;
+        }
+
+        if (FlowRouter.getQueryParam('addMC') == 'true') {
+            mc = true;
+        } else {
+            mc = false;
+        }
         Meteor.call('bookings.insert', date, slot, repeat, mc, cc);
     },
 });
