@@ -44,7 +44,8 @@ Template.VendorSessionDetails.helpers({
     },
     sess() {
         var sid = FlowRouter.getParam('sessid');
-        var found = Sessions.findOne({_id: sid}) || {};
+        // might break later?
+        var found = Sessions.findOne({_id: sid}); //  || {};
         return found;
     },
     sess_day(sess) {
@@ -147,6 +148,10 @@ Template.VendorSessionDetails.events({
     'click .btn-mark-completed' (event) {
         event.preventDefault();
         Meteor.call('sessions.markCompleted', FlowRouter.getParam('sessid'));
+    },
+    'click .btn-mark-not-completed' (event) {
+        event.preventDefault();
+        Meteor.call('sessions.markNotCompleted', FlowRouter.getParam('sessid'));
     },
     'click .resetweekbtn' (event) {
         event.preventDefault();

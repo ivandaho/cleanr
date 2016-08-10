@@ -43,12 +43,22 @@ SessionSchema = new SimpleSchema({
 Sessions.attachSchema(SessionSchema);
 
 Meteor.methods({
+    'sessions.markNotCompleted' (sid) {
+        // check if vendor is authorized
+        var thesession = Sessions.findOne({_id: sid});
+
+        if (thesession.vendorID == Meteor.userId()) {
+            var newstatus = 0;
+
+            // "0 = not yet completed, 1 = completed, 2 = warn"
+            Sessions.update(thesession, {$set: {sessionstatus: newstatus}});
+        }
+    },
     'sessions.markCompleted' (sid) {
         // check if vendor is authorized
         var thesession = Sessions.findOne({_id: sid});
 
         if (thesession.vendorID == Meteor.userId()) {
-            console.log('authorized to mark as completed');
             var newstatus = 1;
 
             // "0 = not yet completed, 1 = completed, 2 = warn"
