@@ -21,6 +21,22 @@ Template.VendorSessionDetails.onCreated(function VendorSessionDetailsOnCreated()
 var tss;
 
 Template.VendorSessionDetails.helpers({
+    overdate(sess) {
+        // get sessiond date and slot
+        var sd = sess.date;
+        var ss = sess.timeslot;
+        strdate = moment(sd).format('YYYY-MM-DD');
+        console.log('sess: ' + sess);
+        thetimeslot = Timeslots.findOne({num: parseInt(ss)});
+        console.log(thetimeslot);
+        slotend = thetimeslot.timeend;
+        strcheck = strdate + ' ' + slotend;
+
+        var check = moment(strcheck, 'YYYY-MM-DD HHmm');
+        if (moment() > check) {
+            return true;
+        }
+    },
     getsessionstatus(thesess) {
         if (thesess.sessionstatus == 0) {
             return true;

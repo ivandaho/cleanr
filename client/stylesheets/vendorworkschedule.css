@@ -1,6 +1,9 @@
 /* css rules for customer div box */
+.custbox-incomplete {
+    background: rgba(29, 130, 158, 0.3);
+}
 .custbox-complete {
-    background-color : #1d829e;
+    background: rgba(0, 179, 0, 0.3);
 }
 .custbox-empty {
     background-color : #eeeeee;
@@ -12,7 +15,6 @@
     padding:0,
 }
 .vs-passdate-cust {
-    background: rgba(71, 167, 71, 0.3);
     background-image: repeating-linear-gradient(
         315deg,
         transparent,

@@ -59,7 +59,7 @@
 
 <template name="vssession">
   {{#if getsessionstatus this}}
-  <td class="{{dateover ..}} text-center">
+  <td class="custbox-incomplete {{dateover ..}} text-center">
     <!-- if status = incomplete -->
     {{#with getcuss this}}
     INCOMPLETE<br>
@@ -70,7 +70,7 @@
     {{/with}}
     </td>
   {{else}}
-    <td class="custbox-complete {{dateover ..}}text-center">
+    <td class="custbox-complete {{dateover ..}} text-center">
 
       <!-- status is complete -->
       {{#with getcuss this}}

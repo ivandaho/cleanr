@@ -32,7 +32,9 @@
               {{#with getsessionstatus sess}}
                 <!-- if session not completed -->
                 Not Completed
-                <button type="button" class="btn btn-success btn-mark-completed">Mark as Completed</button>
+                {{#with overdate sess}}
+                  <button type="button" class="btn btn-success btn-mark-completed">Mark as Completed</button>
+                {{/with}}
               {{else}}
                 Completed
                 <button type="button" class="btn btn-warning btn-mark-not-completed">Mark as Incomplete</button>

@@ -16,7 +16,13 @@ TimeslotsSchema = new SimpleSchema({
     },
     num: { 
         type: Number
-    }
+    },
+    timestart: {
+        type: String
+    },
+    timeend: {
+        type: String
+    },
 });
 
 Timeslots.attachSchema(TimeslotsSchema);
