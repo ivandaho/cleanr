@@ -156,6 +156,7 @@ Template.Confirmation.events({
             mc = false;
         }
         Meteor.call('bookings.insert', date, slot, repeat, mc, cc);
+        bootbox.alert('success!');
     },
 });
 
