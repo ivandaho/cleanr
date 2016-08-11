@@ -141,4 +141,16 @@ Meteor.methods({
             user_address: [adobj]
         })
     },
+    'userdata.checkIsVendor' (sess) {
+        if (sess.vendorID == Meteor.userId()) {
+            return true;
+        }
+    },
+    'userdata.checkIsCustomer' (sess) {
+        if (sess.custID == Meteor.userId()) {
+            return true;
+        } else {
+            return false;
+        }
+    },
 });

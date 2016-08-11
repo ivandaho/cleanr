@@ -21,14 +21,24 @@ Template.VendorSessionDetails.onCreated(function VendorSessionDetailsOnCreated()
 var tss;
 
 Template.VendorSessionDetails.helpers({
+    isvendor(sess) {
+        return Meteor.call('userdata.checkIsVendor', sess) || {};
+    },
+    iscustomer(sess) {
+        return Meteor.call('userdata.checkIsCustomer', sess) || {};
+    },
+    custremarkfound(sess) {
+        return sess.custremarks;
+    },
+    vendremarkfound(sess) {
+        return sess.vendremarks;
+    },
     overdate(sess) {
         // get sessiond date and slot
         var sd = sess.date;
         var ss = sess.timeslot;
         strdate = moment(sd).format('YYYY-MM-DD');
-        console.log('sess: ' + sess);
         thetimeslot = Timeslots.findOne({num: parseInt(ss)});
-        console.log(thetimeslot);
         slotend = thetimeslot.timeend;
         strcheck = strdate + ' ' + slotend;
 
@@ -185,6 +195,74 @@ Template.VendorSessionDetails.events({
         } else {
             Session.set('currweek', tempjdate);
         }
+    },
+    'click .cedit' (event) {
+        event.preventDefault();
+        var sid = FlowRouter.getParam('sessid');
+        var oldcomment = event.target.id;
+        bootbox.prompt({
+            title: "Edit Comment",
+            value: oldcomment,
+            callback: function(result) {
+                if (result === null) {
+                    console.log("Prompt dismissed");                              
+                } else {
+                    Meteor.call('sessions.custEditComment', sid, oldcomment, result);
+                }
+            }
+        });
+    },
+    'click .vedit' (event) {
+        event.preventDefault();
+        var sid = FlowRouter.getParam('sessid');
+        var oldcomment = event.target.id;
+        bootbox.prompt({
+            title: "Edit Comment",
+            value: oldcomment,
+            callback: function(result) {
+                if (result === null) {
+                    console.log("Prompt dismissed");                              
+                } else {
+                    Meteor.call('sessions.vendEditComment', sid, oldcomment, result);
+                }
+            }
+        });
+    },
+    'click .crm' (event) {
+        var sid = FlowRouter.getParam('sessid');
+        comment = event.target.id;
+        Meteor.call('sessions.custDeleteComment', sid, comment);
+    },
+    'click .vrm' (event) {
+        var sid = FlowRouter.getParam('sessid');
+        comment = event.target.id;
+        Meteor.call('sessions.vendDeleteComment', sid, comment);
+    },
+    'click .cadd' (event) {
+        var sid = FlowRouter.getParam('sessid');
+        bootbox.prompt({
+            title: "Add Comment",
+            callback: function(result) {
+                if (result === null) {
+                    console.log("Prompt dismissed");                              
+                } else {
+                    Meteor.call('sessions.custAddComment', sid, result);
+                }
+            }
+        });
+    },
+    'click .vadd' (event) {
+        var sid = FlowRouter.getParam('sessid');
+        bootbox.prompt({
+            title: "Add Comment",
+            callback: function(result) {
+                if (result === null) {
+                    console.log("Prompt dismissed");                              
+                } else {
+                    Meteor.call('sessions.vendAddComment', sid, result);
+                }
+            }
+        });
     },
 
 });

@@ -99,8 +99,11 @@ Template.vweachslot.helpers({
 
 Template.vsempty.helpers({
     dateover(date, n) {
-        //TODO: update by time slot in addition to day
-        if (moment(date) < moment()) {
+        //console.log(n);
+        var endtime = Timeslots.findOne({num: n});
+        datestr = moment(date).format('YYYY-MM-DD');
+        checkstr = datestr + ' ' + endtime.timeend;
+        if (moment(checkstr, 'YYYY-MM-DD HHmm') < moment()) {
             return 'vs-passdate';
         }
         return 'test';

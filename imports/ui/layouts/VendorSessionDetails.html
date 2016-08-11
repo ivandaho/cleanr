@@ -209,24 +209,54 @@
             Remarks
           </div>
         </div>
-        <div class="row-same-height">
-          <div class="col-md-8 col-sm-height">
+        <div class="row">
+          <div class="col-md-12">
             <div class="hdr">
-              Remark Header if needed
+              Customer Remarks:
             </div>
-            <div class="value">
-              1. $_Request to clean fans twice a month
-            </div>
-            <div class="value">
-              2. $_Additional requests
-            </div>
+            <ol>
+            {{#each custremarkfound sess}} 
+              <div class="value">
+                <li>
+                  {{this}}
+                  {{#if iscustomer sess}}
+                  <button type="button" class="btn btn-xs btn-warning cedit" id="{{this}}">Edit</button>
+                  <button type="button" class="btn btn-xs btn-danger crm" id="{{this}}">Remove</button>
+                  {{/if}}
+                </li>
+              </div>
+            {{/each}}
+            {{#if iscustomer sess}}
+            <button type="button" class="btn btn-xs cadd">Add a remark</button>
+            {{/if}}
+            </ol>
           </div>
           <div class="col-md-4 col-sm-height padded">
-            <div class="text-center">
-              <button type="button" class="btn newbtn2">Edit</button>
-              <br>
-              <button type="button" class="btn newbtn2">Add</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="hdr">
+              Cleaner Remarks:
             </div>
+            <ol>
+            {{#each vendremarkfound sess}} 
+              <div class="value">
+                <li>
+                  {{this}}
+                  {{#if isvendor sess}}
+                    <button type="button" class="btn btn-xs btn-warning vedit" id="{{this}}">Edit</button>
+                    <button type="button" class="btn btn-xs btn-danger vrm" id="{{this}}">Remove</button>
+                  {{/if}}
+                </li>
+              </div>
+            {{/each}}
+            {{#if isvendor sess}}
+            <button type="button" class="btn btn-xs vadd">Add a remark</button>
+            {{/if}}
+            </ol>
+          </div>
+          <div class="col-md-4 col-sm-height padded">
           </div>
         </div>
       </div>

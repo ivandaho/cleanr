@@ -37,6 +37,12 @@ SessionSchema = new SimpleSchema({
     },
     feedback: {
         type: String
+    },
+    custremarks: {
+        type: [String]
+    },
+    vendremarks: {
+        type: [String]
     }
 });
 
@@ -65,8 +71,9 @@ Meteor.methods({
             Sessions.update(thesession, {$set: {sessionstatus: newstatus}});
         }
     },
-    'sessions.createSession' (dt, st, c, p, ss, f, b) {
+    'sessions.createSession' (dt, st, c, p, ss, f, b, cr, vr) {
         // date, slot, custID, packageID, vendorID, sessionstatus, feedback, bid
+        // custremarks, vendremarks
         var v;
         // find available vendors
 
@@ -95,7 +102,9 @@ Meteor.methods({
                 vendorID: v.ownerID,
                 sessionstatus: ss,
                 feedback: f,
-                bookingID: b
+                bookingID: b,
+                custremarks: [],
+                vendremarks: []
             };
         } else {
             doc = {
@@ -105,9 +114,63 @@ Meteor.methods({
                 packageID: p,
                 vendorID: v.ownerID,
                 sessionstatus: ss,
-                feedback: f
+                feedback: f,
+                custremarks: [],
+                vendremarks: []
             };
         }
         return doc;
     },
+    'sessions.custEditComment' (sid, oldcomment, newcomment) {
+        var thesess = Sessions.findOne(sid);
+        if (thesess.custID == Meteor.userId()) {
+            // current user authorized as customer of the session
+            console.log('trying to edit this cust comment');
+            Sessions.update({_id: sid,
+                            custremarks: 
+                                {$in: [oldcomment]}
+                            },
+                            {$set: 
+                                {"custremarks.$": newcomment}
+                            });
+        }
+    },
+    'sessions.vendEditComment' (sid, oldcomment, newcomment) {
+        var thesess = Sessions.findOne(sid);
+        if (thesess.vendorID == Meteor.userId()) {
+            // current user authorized as vendor of the session
+            Sessions.update({_id: sid,
+                            vendremarks: 
+                                {$in: [oldcomment]}
+                            },
+                            {$set: 
+                                {"vendremarks.$": newcomment}
+                            });
+        }
+    },
+    'sessions.custDeleteComment' (sid, comment) {
+        var thesess = Sessions.findOne(sid);
+        if (thesess.custID == Meteor.userId()) {
+            Sessions.update(thesess, {$pull: {custremarks: comment}});
+        }
+    },
+    'sessions.vendDeleteComment' (sid, comment) {
+        var thesess = Sessions.findOne(sid);
+        if (thesess.vendorID == Meteor.userId()) {
+            Sessions.update(thesess, {$pull: {vendremarks: comment}});
+        }
+    },
+    'sessions.custAddComment' (sid, comment) {
+        var thesess = Sessions.findOne(sid);
+        if (thesess.custID == Meteor.userId()) {
+            Sessions.update(thesess, {$push: {custremarks: comment}});
+        }
+    },
+    'sessions.vendAddComment' (sid, comment) {
+        var thesess = Sessions.findOne(sid);
+        if (thesess.vendorID == Meteor.userId()) {
+            Sessions.update(thesess, {$push: {vendremarks: comment}});
+        }
+    },
+
 });
