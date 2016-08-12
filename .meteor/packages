@@ -58,3 +58,4 @@ mrt:moment
 percolate:synced-cron
 # email
 dfischer:faker
+jabbslad:basic-auth

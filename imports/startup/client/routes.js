@@ -60,7 +60,7 @@ FlowRouter.route('/account', {
     triggersEnter: [function() {
         if (Meteor.user() == null) {
             // if user is not logged in
-            FlowRouter.go('login');
+            // FlowRouter.go('login');
         }
     }],
     action() {
