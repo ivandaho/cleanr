@@ -6,3 +6,5 @@ ngrok.exe
 /lib/css/.dontuse
 .eslintrc.json
 .tern-project
+mup.js
+settings.json
