@@ -53,6 +53,14 @@ Template.schedtable.helpers({
 Template.eachslot.helpers({
     hasopen(date, n) {
         var jdate = moment(date).toDate();
+        //console.log(n);
+        var starttime = Timeslots.findOne({num: n});
+        datestr = moment(date).format('YYYY-MM-DD');
+        checkstr = datestr + ' ' + starttime.timeend;
+        if (moment(checkstr, 'YYYY-MM-DD HHmm') < moment().add(2, 'days')) {
+            // if date passed 
+            return false;
+        }
 
         // console.log(date + ' ' + jdate);
 

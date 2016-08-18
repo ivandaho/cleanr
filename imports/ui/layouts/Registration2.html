@@ -13,22 +13,71 @@
   {{else}}
   <section>
     <div class="container">
-      <div class="col-centered col-md-4">
-        Please fill in additional data to complete your profile.<br><br>
-        <form class="register">
-          <p>Name:</p>
-          <p><input type="text" name="name"></p>
-          <p>tel:</p>
-          <p><input type="text" name="tel"></p>
-          <p>address:</p>
-          <p><input type="text" name="address1" placeholder="Street"></p>
-          <p><input type="text" name="address2" placeholder="City"></p>
-          <p><input type="text" name="address3" placeholder="State"></p>
-          <p><input type="text" name="address4" placeholder="ZIP"></p>
-          <p><input type="submit" value="Complete Registration"></p>
-        </form>
-        <button class="faker btn-btn-default">fake</button>
+      <div class="row">
+        <div class="text-center">
+          <h1>Please fill in additional data to complete your profile.</h1>
+          <br>
+          <br>
+        </div>
       </div>
+      <div class="row">
+        <div class="col-centered col-md-6">
+          <form class="form-horizontal register">
+            <div class="form-group">
+              <label for="name" class="col-sm-offset-1 col-sm-3 control-label">
+                Name:
+              </label>
+              <div class="col-sm-6">
+                <input type="text" name="name" id="name" class="form-control">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="phonenum" class="col-sm-offset-1 col-sm-3 control-label">
+                Phone Number:
+              </label>
+              <div class="col-sm-6">
+                <input type="text" name="tel" id="phonenum" class="form-control">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="address" class="col-sm-offset-1 col-sm-3 control-label">
+                Address:
+              </label>
+              <div class="col-sm-6">
+                <input type="text" name="address1" id="address" placeholder="Street" class="form-control">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-sm-offset-4 col-sm-6">
+                <input type="text" name="address2" placeholder="City" class="form-control">
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-offset-4 col-sm-6">
+                <input type="text" name="address3" placeholder="State" class="form-control">
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-offset-4 col-sm-6">
+                <input type="text" name="address4" placeholder="ZIP" class="form-control">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-sm-offset-4 col-sm-6">
+                <input type="submit" value="Complete Registration" class="btn btn-success">
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-offset-4 col-sm-6">
+                <button class="faker btn btn-default">Fake some info</button>
+              </div>
+            </div>
+          </form>
+        </div>
+    </div>
     </div>
   </section>
   {{/if}}

@@ -2,17 +2,47 @@
   <section>
     <div class="container">
       <div class="row">
-        <div class="col-centered col-md-4">
-          <form class="register">
-            <p>Email: <input type="email" name="email"></p>
-            <p>Password: <input type="password" name="password"></p>
-            <p>Account Type:
-            <select name="accounttype">
-              <option value="customer">Customer</option>
-              <option value="vendor">Vendor</option>
-            </select></p>
-
-            <p><input type="submit" value="Register"></p>
+        <div class="text-center">
+          <h1>Registration</h1>
+          <br>
+          <br>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-centered col-md-6">
+          <form class="form-horizontal register">
+            <div class="form-group">
+              <label for="email" class="col-sm-offset-1 col-sm-3 control-label">
+                Email: 
+              </label>
+              <div class="col-sm-6">
+                <input type="email" name="email" id="email" class="form-control">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="password" class="col-sm-offset-1 col-sm-3 control-label">
+                Password: 
+              </label>
+              <div class="col-sm-6">
+                <input type="password" name="password" id="password" class="form-control">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="acctype" class="col-sm-offset-1 col-sm-3 control-label">
+                Account Type:
+              </label>
+              <div class="col-sm-6">
+                <select name="accounttype" id="acctype" class="form-control">
+                  <option value="customer">Customer</option>
+                  <option value="vendor">Vendor</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-offset-4 col-sm-6">
+                <input type="submit" value="Register" class="btn btn-success">
+              </div>
+            </div>
           </form>
         </div>
       </div>
