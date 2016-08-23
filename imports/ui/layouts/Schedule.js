@@ -13,7 +13,7 @@ Template.Schedule.onCreated(function ScheduleOnCreated() {
     var mdate = moment().startOf('week').add(1, 'days'); // this week's monday
     var jdate = mdate.toDate();
     Session.set('currweek', jdate);
-    tss = Timeslots.find({});
+    tss = Timeslots.find({}, {sort: {num: 1}});
     //Meteor.subscribe('sessions');
 });
 
@@ -58,7 +58,7 @@ Template.eachslot.helpers({
         datestr = moment(date).format('YYYY-MM-DD');
         checkstr = datestr + ' ' + starttime.timeend;
         if (moment(checkstr, 'YYYY-MM-DD HHmm') < moment().add(2, 'days')) {
-            // if date passed 
+            // if date passed
             return false;
         }
 
