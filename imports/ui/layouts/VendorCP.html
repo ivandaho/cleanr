@@ -52,11 +52,18 @@
 
 <template name="vcaleachslot">
   {{#each this}}
-    <td class="text-center">
-    <i class="fa fa-minus-circle slotdecrease noselect" id="{{date}} {{n}}"></i>
-    <span style="font-size:1.5em;">{{hasopen date n}}</span>
-    <i class="fa fa-plus-circle slotincrease noselect" id="{{date}} {{n}}"></i>
-    <!-- <button class="btn btn-disabled slotclose" id="{{date}} {{n}}">Toggle this slot</button> -->
-    </td>
+    {{#if datenotover date n}}
+      <td class="text-center">
+      <i class="fa fa-minus-circle slotdecrease noselect" id="{{date}} {{n}}"></i>
+      <span style="font-size:1.5em;">{{hasopen date n}}</span>
+      <i class="fa fa-plus-circle slotincrease noselect" id="{{date}} {{n}}"></i>
+      <!-- <button class="btn btn-disabled slotclose" id="{{date}} {{n}}">Toggle this slot</button> -->
+      </td>
+    {{else}}
+      <td class="text-center">
+      <i class="fa fa-ban noselect"></i>
+        Slot passed
+      </td>
+    {{/if}}
   {{/each}}
 </template>

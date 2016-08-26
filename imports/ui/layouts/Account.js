@@ -34,7 +34,7 @@ Template.Account.helpers({
         return Bookings.find({custID: Meteor.userId()});
     },
     booking() {
-        // get most recent session
+        // get most recent booking with active subscription
         var d = moment().subtract(6, 'months').toDate();
         var mrs = Sessions.findOne({custID: Meteor.userId(),
                                     date: {$gt: d}},

@@ -77,6 +77,7 @@
                 <button class="btn btn-default setaddress" id="1">Use This Address as my Main Address</button>
               {{else}}
                 <div class="info">
+                  <p class="sec-heading">Address 2:<br></p>
                   <p class="sec-value">None found<br></p>
                   <p class="sec-heading"><button class="btn btn-default changeAddress" id="1">Add</button></p>
                 </div>
@@ -95,6 +96,7 @@
                 <button class="btn btn-default setaddress" id="2">Use This Address as my Main Address</button>
               {{else}}
                 <div class="info">
+                  <p class="sec-heading">Address 3:<br></p>
                   <p class="sec-value">None found<br></p>
                   <p class="sec-heading"><button class="btn btn-default changeAddress" id="2">Add</button></p>
                 </div>
@@ -139,6 +141,8 @@
                   <p class="sec-value">{{s timeslot}} every {{day}}</p>
                   <p class="sec-heading">Subscription Status</p>
                   <p class="sec-value">{{substatus this}}</p>
+                {{else}}
+                No active booking <a href='/schedule' class="btn btn-xs btn-success btn-cleanr">Book Now</a>
                 {{/with}}
                 <p class="sec-heading">Previous Bookings</p>
                 <table class="table table-bordered">

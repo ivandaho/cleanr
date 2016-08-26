@@ -56,6 +56,18 @@ Template.vcalschedtable.helpers({
 });
 
 Template.vcaleachslot.helpers({
+    datenotover(date, n) {
+        var jdate = moment(date).toDate();
+        //console.log(n);
+        var starttime = Timeslots.findOne({num: n});
+        datestr = moment(date).format('YYYY-MM-DD');
+        checkstr = datestr + ' ' + starttime.timestart;
+        if (moment(checkstr, 'YYYY-MM-DD HHmm') < moment().add(2, 'days')) {
+            // if date passed
+            return false;
+        }
+        return true;
+    },
     hasopen(date, n) {
         var jdate = moment(date).toDate();
         var ds = Vendorslots.find({
