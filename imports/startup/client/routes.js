@@ -161,4 +161,17 @@ FlowRouter.route('/vendorsessiondetails/:sessid', {
         BlazeLayout.render('MainLayout', {main: 'VendorSessionDetails'})
     }
 });
+FlowRouter.route('/verify-email/:token', {
+    name: 'verify-email',
+    action(params) {
+        Accounts.verifyEmail(params.token, (error) =>{
+            if (error) {
+                // console.log(error.reason);
+            } else {
+                FlowRouter.go( '/' );
+                // console.log('Email verified! Thanks!');
+            }
+        });
+    }
+});
 

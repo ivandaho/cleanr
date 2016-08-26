@@ -56,6 +56,6 @@ mrt:moment
 # matb33:bootstrap-affix-js
 
 percolate:synced-cron
-# email
+email
 dfischer:faker
 jabbslad:basic-auth

@@ -13,7 +13,7 @@ Template.Registration.events({
         var password = $('[name=password]').val();
         var accounttype = $('[name=accounttype]').val();
         profileobj = {};
-        
+
         profileobj = {acc:accounttype, donesetup: false};
 
         var userObject = {
@@ -28,8 +28,9 @@ Template.Registration.events({
             if (error) {
                 console.log(error);
             } else {
-            Meteor.loginWithPassword(email, password);
-            FlowRouter.go('/registration/step2'); // prompt to fill in profile
+                Meteor.loginWithPassword(email, password);
+                Meteor.call('sendVerificationLink');
+                FlowRouter.go('/registration/step2'); // prompt to fill in profile
             }
         });
 
