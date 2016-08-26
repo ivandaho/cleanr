@@ -24,13 +24,21 @@ Template.Registration.events({
 
         var success = false;
         var lel = 'test';
-        Meteor.call('userdata.registerNewUser', userObject, function(error){
+        // security concern if account is created from client??
+        // Meteor.call('userdata.registerNewUser');
+        Accounts.createUser(userObject, (error) => {
             if (error) {
-                console.log(error);
+                Bert.alert(error.reason, 'danger');
             } else {
-                Meteor.loginWithPassword(email, password);
-                Meteor.call('sendVerificationLink');
-                FlowRouter.go('/registration/step2'); // prompt to fill in profile
+                Meteor.call('sendVerificationLink', (error, response) => {
+                    if (error) {
+                        Bert.alert(error.reason, 'danger');
+                    } else {
+                        Bert.alert('Registration Successful', 'success');
+                        // prompt to fill in profile
+                        FlowRouter.go('/registration/step2');
+                    }
+                });
             }
         });
 

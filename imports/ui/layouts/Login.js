@@ -8,9 +8,11 @@ Template.Login.events({
         event.preventDefault();
         var email = $('[name=email]').val();
         var password = $('[name=password]').val();
-        Meteor.loginWithPassword(email, password, function(error){
+
+        Meteor.loginWithPassword(email, password, (error) => {
             if (error) {
-                console.log(error.reason);
+                console.log(error);
+                Bert.alert(error.reason, 'danger');
             } else {
                 FlowRouter.go('account');
             }

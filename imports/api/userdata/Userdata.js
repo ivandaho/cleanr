@@ -117,7 +117,19 @@ Meteor.methods({
             {$set: set});
     },
     'userdata.registerNewUser' (userObject) {
-        Accounts.createUser(userObject);
+        Accounts.createUser(userObject, (error) => {
+            if (error) {
+                Bert.alert(error.reason, 'danger');
+            } else {
+                Meteor.call('sendVerificationLink', (error, response) => {
+                    if (error) {
+                        Bert.alert(error.reason, 'danger');
+                    } else {
+                        Bert.alert('Welcome', 'success');
+                    }
+                });
+            }
+        });
     },
     'userdata.giveUserRole' () {
         var role = Meteor.user().profile.acc;
