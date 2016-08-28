@@ -15,6 +15,24 @@ Accounts.emailTemplates.verifyEmail = {
     }
 };
 
+Accounts.emailTemplates.resetPassword = {
+    subject() {
+        return "[Cleanr] Reset your Password";
+    },
+    text( user, url ) {
+        let emailAddress   = user.emails[0].address,
+        urlWithoutHash = url.replace( '#/', '' ),
+        supportEmail   = "support@site.com",
+        emailBody      = `To reset your password (${emailAddress}) visit the following link:\n\n${urlWithoutHash}\n\n If you did not request to reset your password, please ignore this email. If you feel something is wrong, please contact our support team: ${supportEmail}.`;
+
+        return emailBody;
+    }
+};
+
+Accounts.onResetPasswordLink = function() {
+    console.log('success');
+}
+
 Meteor.methods({
     'sendVerificationLink' () {
         let userId = Meteor.userId();

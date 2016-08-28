@@ -13,15 +13,19 @@ import '../../ui/layouts/Header.html';
 import '../../ui/layouts/Header.js';
 import '../../ui/layouts/HomeLayout.html';
 //import '../../ui/layouts/Input.js';
-import '../../ui/layouts/Login.js';
 import '../../ui/layouts/Login.html';
+import '../../ui/layouts/Login.js';
 import '../../ui/layouts/MainLayout.html';
-import '../../ui/layouts/NavbarUserControl.js';
 import '../../ui/layouts/NavbarUserControl.html';
+import '../../ui/layouts/NavbarUserControl.js';
+import '../../ui/layouts/Passwordrecovery.html';
+import '../../ui/layouts/Passwordrecovery.js';
 import '../../ui/layouts/Registration.html';
 import '../../ui/layouts/Registration.js';
 import '../../ui/layouts/Registration2.html';
 import '../../ui/layouts/Registration2.js';
+import '../../ui/layouts/Resetpassword.html';
+import '../../ui/layouts/Resetpassword.js';
 import '../../ui/layouts/Schedule.html';
 import '../../ui/layouts/Schedule.js';
 import '../../ui/layouts/Userform.html';
@@ -95,6 +99,13 @@ FlowRouter.route('/login', {
     }
 });
 
+FlowRouter.route('/passwordrecovery', {
+    name: 'passwordrecovery',
+    action() {
+        BlazeLayout.render('MainLayout', {main: 'Passwordrecovery'})
+    }
+});
+
 FlowRouter.route('/registration', {
     name: 'registration',
     triggersEnter: [function() {
@@ -114,6 +125,12 @@ FlowRouter.route('/registration/step2', {
         BlazeLayout.render('MainLayout', {main: 'Registration2'})
     }
 });
+
+FlowRouter.route('/reset-password/:token',{
+    action (params) {
+        BlazeLayout.render('MainLayout', {main: 'Resetpassword'})
+    }
+})
 
 FlowRouter.route('/schedule', {
     name: 'schedule',
