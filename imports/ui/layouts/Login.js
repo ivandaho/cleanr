@@ -11,7 +11,6 @@ Template.Login.events({
 
         Meteor.loginWithPassword(email, password, (error) => {
             if (error) {
-                console.log(error);
                 Bert.alert(error.reason, 'danger');
             } else {
                 FlowRouter.go('account');

@@ -1,0 +1,62 @@
+<template name="Changepwd">
+  {{#if currentUser}}
+  <section>
+    <div class="container">
+      <div class="row">
+        <div class="text-center">
+          <h1>Change Password</h1>
+          <br>
+          <br>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-centered col-md-6">
+          <form class="form-horizontal login">
+            <div class="form-group">
+              <label for="newpw" class="col-sm-offset-1 col-sm-3 control-label">
+                New password:
+              </label>
+              <div class="col-sm-6">
+                <input type="password" name="newpw" id="newpw" class="form-control">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="newpw2" class="col-sm-offset-1 col-sm-3 control-label">
+                Confirmation:
+              </label>
+              <div class="col-sm-6">
+                <input type="password" name="newpw2" id="newpw2" class="form-control">
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-offset-4 col-sm-6">
+                <input type="submit" value="Change password" class="btn btn-block btn-success">
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-centered col-md-6">
+          <div class="col-sm-offset-4 col-sm-6 text-center">
+            <a href="/login">Sign in</a> | <a href="/registration">Register</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  {{else}}
+    <section>
+      <div class="container">
+        <div class="row">
+          <div class="text-center">
+            <h2>Not Logged in</h2>
+            <a href='/login' class="btn btn-lg btn-success">Sign in</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  {{/if}}
+</template>
+
+

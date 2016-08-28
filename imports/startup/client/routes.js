@@ -6,6 +6,8 @@ import '../../ui/layouts/Account.html';
 import '../../ui/layouts/Account.js';
 import '../../ui/layouts/Booking.html';
 import '../../ui/layouts/Booking.js';
+import '../../ui/layouts/Changepwd.html';
+import '../../ui/layouts/Changepwd.js';
 import '../../ui/layouts/Confirmation.html';
 import '../../ui/layouts/Confirmation.js';
 import '../../ui/layouts/Footer.html';
@@ -126,11 +128,17 @@ FlowRouter.route('/registration/step2', {
     }
 });
 
+FlowRouter.route('/changepwd',{
+    action() {
+        BlazeLayout.render('MainLayout', {main: 'Changepwd'})
+    }
+});
+
 FlowRouter.route('/reset-password/:token',{
     action (params) {
         BlazeLayout.render('MainLayout', {main: 'Resetpassword'})
     }
-})
+});
 
 FlowRouter.route('/schedule', {
     name: 'schedule',
