@@ -1,0 +1,189 @@
+<template name="Account_2">
+  {{#if currentUser}}
+    {{#with userdata}}
+      <section id="custdetails-sec-1" class="bg-light-gray">
+        <div class="container">
+          <div class="row">
+            <div class="text-center">
+              <h2>Account_2 Details</h2>
+              <p class="sec-heading">{{_id}}<br></p>
+              <p class="sec-value">{{user_name}}<br></p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="row-same-height">
+
+              <div class="col-md-4 col-sm-height text-center gethover">
+                <div class="info">
+                  <p class="sec-heading"><i class="fa fa-edit editicon changeEmail"></i> E-mail:</p>
+                  <p class="sec-value">{{user_email}}<br></p>
+                </div>
+              </div>
+
+              <div class="col-md-4 col-sm-height text-center gethover">
+                <div class="info">
+                  <p class="sec-heading"><i class="fa fa-edit editicon changeTel"></i> Phone Number<br></p>
+                  <p class="sec-value">{{user_tel}}<br></p>
+                </div>
+              </div>
+
+              <div class="col-md-4 col-sm-height text-center gethover">
+                <div class="valign2">
+                  <div class="row vertical-align valignfix">
+
+                    <div class="placeholderthing2"> </div>
+                    <!-- this div contains the text information -->
+                    <div class="confirmtext">
+                      <p class="sec-value"><a href='/changepwd' class="btn btn-default">Change Password</a><br></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div> <!-- row same height -->
+          </div>  <!-- row -->
+
+          <!-- addresses -->
+          <div class="row">
+            <div class="text-center">
+              <h1>Addresses</h1>
+              <p class="sec-heading">Add up to 3 addresses.<br></p>
+              <!-- TODO: set a margin (css) -->
+              <br>
+              <br>
+            </div>
+          </div>
+          <div class="row">
+            <div class="row-same-height">
+
+              <div class="col-md-4 col-sm-height text-center gethover">
+                <div class="info">
+                  <p class="sec-heading"><i class="fa fa-edit editicon changeAddress" id="0"></i> Main Address:<br></p>
+                  <p class="sec-value">{{user_address.[0].street}}<br></p>
+                  <p class="sec-value">{{user_address.[0].city}}<br></p>
+                  <p class="sec-value">{{user_address.[0].state}}<br></p>
+                  <p class="sec-value">{{user_address.[0].zip}}<br></p>
+                </div>
+              </div>
+
+              <div class="col-md-4 col-sm-height text-center gethover">
+                {{#with user_address.[1]}}
+                  <div class="info">
+                    <p class="sec-heading"><i class="fa fa-edit editicon changeAddress" id="1"></i> Address 2:<br></p>
+                    <p class="sec-value">{{street}}<br></p>
+                    <p class="sec-value">{{city}}<br></p>
+                    <p class="sec-value">{{state}}<br></p>
+                    <p class="sec-value">{{zip}}<br></p>
+                  </div>
+                  <button class="btn btn-default setaddress" id="1">Use This Address as my Main Address</button>
+                {{else}}
+                  <div class="info">
+                    <p class="sec-heading">Address 2:<br></p>
+                    <p class="sec-value">None found<br></p>
+                    <p class="sec-heading"><button class="btn btn-default changeAddress" id="1">Add</button></p>
+                  </div>
+                {{/with}}
+              </div>
+
+              <div class="col-md-4 col-sm-height text-center gethover">
+                {{#with user_address.[2]}}
+                  <div class="info">
+                    <p class="sec-heading"><i class="fa fa-edit editicon changeAddress" id="2"></i> Address 3:<br></p>
+                    <p class="sec-value">{{street}}<br></p>
+                    <p class="sec-value">{{city}}<br></p>
+                    <p class="sec-value">{{state}}<br></p>
+                    <p class="sec-value">{{zip}}<br></p>
+                  </div>
+                  <button class="btn btn-default setaddress" id="2">Use This Address as my Main Address</button>
+                {{else}}
+                  <div class="info">
+                    <p class="sec-heading">Address 3:<br></p>
+                    <p class="sec-value">None found<br></p>
+                    <p class="sec-heading"><button class="btn btn-default changeAddress" id="2">Add</button></p>
+                  </div>
+                {{/with}}
+              </div>
+            </div> <!-- row same height -->
+          </div>  <!-- row -->
+
+          <div class="row">
+            <div class="row-same-height">
+
+              <div class="col-md-6 col-sm-height text-center gethover">
+                <div class="info">
+                  <p class="sec-heading">Recent Sessions</p>
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th class="text-center">Session ID</th>
+                        <th class="text-center">Time Slot</th>
+                        <th class="text-center">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {{#each sesses this}}
+                        <tr>
+                          <td><a href="/vendorsessiondetails/{{_id}}">{{_id}}</a></td>
+                          <td>{{d date}} {{s timeslot}}</td>
+                          <td>{{sessionstatus}}</td>
+                        </tr>
+                      {{/each}}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-height text-center gethover">
+                <div class="info">
+                  <p class="sec-heading">Current Booking</p>
+                  {{#with booking}}
+                    <p class="sec-value"><a href="/booking/{{_id}}">{{_id}}</a></p>
+                    <p class="sec-value">Submitted on {{subdate subdate}}</p>
+                    <p class="sec-value">{{s timeslot}} every {{day}}</p>
+                    <p class="sec-heading">Subscription Status</p>
+                    <p class="sec-value">{{substatus this}}</p>
+                  {{else}}
+                  No active booking <a href='/schedule' class="btn btn-xs btn-success btn-cleanr">Book Now</a>
+                  {{/with}}
+                  <p class="sec-heading">Previous Bookings</p>
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th class="text-center">Booking ID</th>
+                        <th class="text-center">Time Slot</th>
+                        <th class="text-center">Last Session</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {{#each morebookings}}
+                        <tr>
+                          <td><a href="/booking/{{_id}}">{{_id}}</a></td>
+                          <td>{{s timeslot}} every {{day}}</td>
+                          <td>$ended</td>
+                        </tr>
+                      {{/each}}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+            </div> <!-- row same height -->
+          </div>  <!-- row -->
+        </div> <!-- container -->
+      </section> <!-- section -->
+    {{else}}
+      {{> Registration2}}
+    {{/with}}
+  {{else}}
+    <section>
+      <div class="container">
+        <div class="row">
+          <div class="text-center">
+            <h2>Not Logged in</h2>
+            <a href='/login' class="btn btn-lg btn-success">Sign in</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  {{/if}}
+</template>

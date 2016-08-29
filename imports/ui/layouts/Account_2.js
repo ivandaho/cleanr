@@ -1,6 +1,6 @@
 import { Template } from 'meteor/templating';
 
-import './Account.html';
+import './Account_2.html';
 
 // this is for meteor session variables, not cleaning session
 import { Userdata } from '../../api/userdata/Userdata.js';
@@ -11,7 +11,7 @@ import { Bookings } from '../../api/bookings/Bookings.js';
 import { Session } from 'meteor/session';
 */
 
-Template.Account.onCreated(function AccountOnCreated() {
+Template.Account_2.onCreated(function AccountOnCreated() {
     Meteor.subscribe('userdata');
     Meteor.subscribe('sessions');
     Meteor.subscribe('timeslots');
@@ -19,7 +19,7 @@ Template.Account.onCreated(function AccountOnCreated() {
 });
 
 
-Template.Account.helpers({
+Template.Account_2.helpers({
     subdate(date) {
         return moment(date).format('YYYY-MM-DD HH:MM');
     },
@@ -61,9 +61,8 @@ Template.Account.helpers({
         return found.slot && found.slot;
     },
 });
-Template.Account.events({
+Template.Account_2.events({
     'click .setaddress' (event) {
-        event.stopPropagation();
         event.preventDefault();
         var i = (event.target.id);
         Meteor.call('userdata.setMainAddress', i);
@@ -116,7 +115,6 @@ Template.Account.events({
         );
     },
     'click .changeAddress' (event) {
-        event.stopPropagation();
         event.preventDefault();
         var i = (event.target.id);
         bootbox.dialog({

@@ -4,6 +4,8 @@ import { BlazeLayout } from 'meteor/kadira:blaze-layout';
 // if you have the js file you don't need the html file????? see input. not imported
 import '../../ui/layouts/Account.html';
 import '../../ui/layouts/Account.js';
+import '../../ui/layouts/Account_2.html';
+import '../../ui/layouts/Account_2.js';
 import '../../ui/layouts/Booking.html';
 import '../../ui/layouts/Booking.js';
 import '../../ui/layouts/Changepwd.html';
@@ -71,6 +73,18 @@ FlowRouter.route('/account', {
     }],
     action() {
         BlazeLayout.render('MainLayout', {main: 'Account'})
+    }
+});
+FlowRouter.route('/account2', {
+    name: 'account2',
+    triggersEnter: [function() {
+        if (Meteor.user() == null) {
+            // if user is not logged in
+            // FlowRouter.go('login');
+        }
+    }],
+    action() {
+        BlazeLayout.render('MainLayout', {main: 'Account_2'})
     }
 });
 
