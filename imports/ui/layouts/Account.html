@@ -3,8 +3,8 @@
     {{#with userdata}}
       <section id="custdetails-sec-1" class="bg-light-gray">
         <div class="container">
-        <div class="col-centered col-md-8">
-          <div class="row bordered-section">
+        <div class="col-centered col-md-10">
+          <div class="row section-panel bordered-section">
           <h1>Account Details</h1>
             <div class="col-md-6">
               <div class="profile-image">
@@ -21,7 +21,7 @@
           </div>
 
           <!-- addresses -->
-          <div class="row bordered-section">
+          <div class="row section-panel bordered-section">
             <h1>Addresses</h1>
             <p class="sec-heading">Add up to 3 addresses.<br></p>
             <!-- TODO: set a margin (css) -->
@@ -29,42 +29,33 @@
             <br>
 
             <div class="row">
-              <div class="panel-group">
-                <div class="panel cursor-link
-                {{#if user_address.[0]}}
-                panel-info
-                {{else}}
-                panel-default
-                {{/if}}
-                " data-toggle="collapse" href="#collapse0">
-
-                  <div class="panel-heading">
-                    <h4 class="panel-title">
-                      Main Address
-                      <span class="sec-heading">
-                        <button class="btn btn-sm btn-default changeAddress" id="0">
-                          {{#if user_address.[0]}}
-                          Modify
-                          {{else}}
-                          Add
-                          {{/if}}
-                        </button>
-                      </span>
-                    </h4>
-                  </div>
-                  <div id="collapse0" class="panel-collapse collapse in">
-                    <div class="panel-body">
-                      {{#with user_address.[0]}}
-                      <p class="sec-value">{{street}}<br></p>
-                      <p class="sec-value">{{city}}<br></p>
-                      <p class="sec-value">{{state}}<br></p>
-                      <p class="sec-value">{{zip}}<br></p>
+              <div class="address-main-box">
+                <h4>
+                  Main Address
+                  <span class="sec-heading">
+                    <button class="btn btn-sm btn-default changeAddress" id="0">
+                      {{#if user_address.[0]}}
+                      Modify
                       {{else}}
-                      None Found
-                      {{/with}}
-                    </div>
-                  </div>
-                </div> <!-- /panel panel-default -->
+                      Add
+                      {{/if}}
+                    </button>
+                  </span>
+                </h4>
+                {{#with user_address.[0]}}
+                  <p class="sec-value">{{street}}<br></p>
+                  <p class="sec-value">{{city}}<br></p>
+                  <p class="sec-value">{{state}}<br></p>
+                  <p class="sec-value">{{zip}}<br></p>
+                {{else}}
+                  None Found
+                {{/with}}
+              </div>
+            </div>
+            <div class="row">
+              <div class="panel-group">
+
+                <!-- panel 2 -->
                 <div class="panel cursor-link
                 {{#if user_address.[1]}}
                 panel-info
@@ -72,7 +63,6 @@
                 panel-default
                 {{/if}}
                 " data-toggle="collapse" href="#collapse1">
-
                   <div class="panel-heading">
                     <h4 class="panel-title">
                       Address 2
@@ -142,7 +132,7 @@
           </div>
 
 
-          <div class="row bordered-section">
+          <div class="row section-panel bordered-section">
             <h1>Sessions & Bookings</h1>
 
             <p class="sec-heading">Recent Sessions</p>
