@@ -34,6 +34,7 @@ Meteor.publish('userdata', function(){
         // also, their own userdata
         return Userdata.find({_id: {$in: r}});
     } else if (this.userId) {
+        // if not vendor, allow only their own data
         return Userdata.find({_id: this.userId});
     } else {
         this.ready();

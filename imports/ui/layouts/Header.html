@@ -16,11 +16,13 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         {{#if currentUser}}
-          {{#if userdata.user_name}}
-            <li><a href="{{pathFor 'account'}}">Welcome, {{userdata.user_name}}</a></li>
-          {{else}}
-            <li><a href="{{pathFor 'account'}}">Welcome, {{currentUser.emails.[0].address}}</a></li>
-          {{/if}}
+          {{#with getuserdata}}
+            {{#if user_name}}
+              <li><a href="{{pathFor 'account'}}">Welcome, {{user_name}}</a></li>
+            {{else}}
+              <li><a href="{{pathFor 'account'}}">Welcome, {{currentUser.emails.[0].address}}</a></li>
+            {{/if}}
+          {{/with}}
         {{/if}}
         {{> NavbarUserControl}}
         <!-- <li class="divider-vertical"></li> -->

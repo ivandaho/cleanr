@@ -52,7 +52,7 @@
                 {{#each sesses this}}
                 <tr>
                   <td><a href="/vendorsessiondetails/{{_id}}">{{_id}}</a></td>
-                  <td>{{d date}} {{s timeslot}}</td>
+                  <td>{{formatdate date}} {{getslotbynum timeslot}}</td>
                   <td><a href="/booking/{{bookingID}}">{{bookingID}}</a></td>
                   <td>$mc</td>
                   <td>$cc</td>

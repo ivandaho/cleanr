@@ -2,17 +2,10 @@ import './Header.html';
 
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
-import { Userdata } from '../../api/userdata/Userdata.js';
 
 
 Template.Header.onCreated(function AccountOnCreated() {
     Meteor.subscribe('userdata');
-});
-
-Template.Header.helpers({
-    userdata() {
-        return Userdata.findOne({_id: Meteor.userId()});
-    },
 });
 
 Template.Header.events({

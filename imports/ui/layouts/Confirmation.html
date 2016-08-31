@@ -42,15 +42,17 @@
                   <div class="col-md-6 col-sm-height">
                       <div class="info">
                           <p class="sec-heading">Customer Details:<br></p>
-                          <p class="sec-value">{{userdata.user_name}}</p>
-                          <p class="sec-value">{{userdata.user_tel}}</p>
-                          <p class="sec-value">{{userdata.user_email}}</p>
+                          {{#with getuserdata}}
+                            <p class="sec-value">{{user_name}}</p>
+                            <p class="sec-value">{{user_tel}}</p>
+                            <p class="sec-value">{{user_email}}</p>
 
-                          <p class="sec-heading">Cleaning Location:<br></p>
-                          <p class="sec-value">{{userdata.user_address.[0].street}}<br></p>
-                          <p class="sec-value">{{userdata.user_address.[0].city}}<br></p>
-                          <p class="sec-value">{{userdata.user_address.[0].state}}<br></p>
-                          <p class="sec-value">{{userdata.user_address.[0].zip}}<br></p>
+                            <p class="sec-heading">Cleaning Location:<br></p>
+                            <p class="sec-value">{{user_address.[0].street}}<br></p>
+                            <p class="sec-value">{{user_address.[0].city}}<br></p>
+                            <p class="sec-value">{{user_address.[0].state}}<br></p>
+                            <p class="sec-value">{{user_address.[0].zip}}<br></p>
+                          {{/with}}
                       </div>
                       <!-- this placeholderthing is to offset some space for the button to appear at the bottom of the column -->
                       <!-- check css for details -->

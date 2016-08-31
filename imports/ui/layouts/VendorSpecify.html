@@ -1,0 +1,69 @@
+<template name="VendorSpecify">
+  <header class="header-vendor">
+    <div class="container headertext">
+      <h1>Manage your Available Slots.</h1>
+      <p>Placeholder text.</p>
+    </div>
+  </header>
+  <section>
+    <div class="container">
+      <h2>Thank you for selecting your available slots.<br>
+          We auto generate your schedule for the next y weeks<br>
+          based on the information you have provided us.<br></h2>
+        If you have additional exceptions to your normal schedule,<br>
+        please indicate them here.<br>
+      <button class="btn prevweekbtn">Previous Week</button>
+      <button class="btn resetweekbtn">Jump To Current Week</button>
+      <button class="btn nextweekbtn">Next Week</button>
+
+      <p>Click to change the number of teams you have available for the individual time slots.</p>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Time Slots</th>
+              <th class="text-center sched-cols">Monday <br> {{weekdates 0}}</th>
+              <th class="text-center sched-cols">Tuesday <br> {{weekdates 1}}</th>
+              <th class="text-center sched-cols">Wednesday <br> {{weekdates 2}}</th>
+              <th class="text-center sched-cols">Thursday <br> {{weekdates 3}}</th>
+              <th class="text-center sched-cols">Friday <br> {{weekdates 4}}</th>
+              <th class="text-center sched-cols">Saturday <br> {{weekdates 5}}</th>
+              <th class="text-center sched-cols">Sunday <br> {{weekdates 6}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{>vcalschedtable timeslots}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!-- <button type="submit" class="btn btn-success newbtn">Proceed</button> -->
+  </section>
+</template>
+
+<template name="vcalschedtable">
+{{#each this}} <!-- will iterate over each timeslot -->
+    <tr>
+      <td>{{slot}}</td>
+      {{>vcaleachslot days num}}
+    </tr>
+  {{/each}}
+</template>
+
+<template name="vcaleachslot">
+  {{#each this}}
+    {{#if datenotover date n}}
+      <td class="text-center">
+      <i class="fa fa-minus-circle slotdecrease noselect" id="{{date}} {{n}}"></i>
+      <span style="font-size:1.5em;">{{hasopen date n}}</span>
+      <i class="fa fa-plus-circle slotincrease noselect" id="{{date}} {{n}}"></i>
+      <!-- <button class="btn btn-disabled slotclose" id="{{date}} {{n}}">Toggle this slot</button> -->
+      </td>
+    {{else}}
+      <td class="text-center">
+      <i class="fa fa-ban noselect"></i>
+        Slot passed
+      </td>
+    {{/if}}
+  {{/each}}
+</template>

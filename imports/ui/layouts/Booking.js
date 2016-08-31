@@ -46,9 +46,6 @@ Template.Booking.helpers({
 
         return found.slot && found.slot;
     },
-    userdata() {
-        return Userdata.findOne({});
-    },
 });
 Template.Booking.events({
     'click .morebtn' (event) {

@@ -45,9 +45,13 @@ import '../../ui/layouts/VendorWorkSchedule.html';
 import '../../ui/layouts/VendorWorkSchedule.js';
 import '../../ui/layouts/VendorSessionDetails.html';
 import '../../ui/layouts/VendorSessionDetails.js';
+import '../../ui/layouts/VendorSpecify.html';
+import '../../ui/layouts/VendorSpecify.js';
 // need to import the js file, for subscriptions
 
 import '../../ui/components/jobitem.html';
+
+import '../../ui/components/globalhelpers.js';
 
 FlowRouter.route('/', {
     name: 'home',
@@ -165,6 +169,13 @@ FlowRouter.route('/vendorcp', {
     name: 'vendorcp',
     action() {
         BlazeLayout.render('MainLayout', {main: 'VendorCP'})
+    }
+});
+
+FlowRouter.route('/vendorspecify', {
+    name: 'vendorspecify',
+    action() {
+        BlazeLayout.render('MainLayout', {main: 'VendorSpecify'})
     }
 });
 

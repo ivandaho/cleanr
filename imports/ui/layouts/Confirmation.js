@@ -10,7 +10,6 @@ import './Confirmation.html';
 
 // this is for meteor session variables, not cleaning session
 import { Session } from 'meteor/session';
-import { Userdata } from '../../api/userdata/Userdata.js';
 
 Template.Confirmation.onCreated(function ConfirmationOnCreated() {
     Meteor.subscribe('jobs');
@@ -21,9 +20,6 @@ Template.Confirmation.onCreated(function ConfirmationOnCreated() {
 
 
 Template.Confirmation.helpers({
-    userdata() {
-        return Userdata.findOne({});
-    },
     schedSlotTime() {
         // time slot
         var slot = parseInt(FlowRouter.getQueryParam('slot'));

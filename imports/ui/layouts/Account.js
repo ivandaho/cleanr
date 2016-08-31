@@ -3,7 +3,6 @@ import { Template } from 'meteor/templating';
 import './Account.html';
 
 // this is for meteor session variables, not cleaning session
-import { Userdata } from '../../api/userdata/Userdata.js';
 import { Sessions } from '../../api/sessions/Sessions.js';
 import { Timeslots } from '../../api/timeslots/Timeslots.js';
 import { Bookings } from '../../api/bookings/Bookings.js';
@@ -20,6 +19,13 @@ Template.Account.onCreated(function AccountOnCreated() {
 
 
 Template.Account.helpers({
+    parsess(status) {
+        if (status == 1) {
+            return true;
+        } else if (status == 0) {
+            return false;
+        }
+    },
     subdate(date) {
         return moment(date).format('YYYY-MM-DD HH:MM');
     },
@@ -45,9 +51,6 @@ Template.Account.helpers({
                 return found;
               }
             }
-    },
-    userdata() { // TODO: is this secure? #22
-        return Userdata.findOne({_id: Meteor.userId()});
     },
     sesses() { // TODO: is this secure? #22
         return Sessions.find({custID: Meteor.userId()});

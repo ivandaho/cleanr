@@ -205,7 +205,7 @@ Template.VendorSessionDetails.events({
             value: oldcomment,
             callback: function(result) {
                 if (result === null) {
-                    console.log("Prompt dismissed");                              
+                    console.log("Prompt dismissed");
                 } else {
                     Meteor.call('sessions.custEditComment', sid, oldcomment, result);
                 }
@@ -221,7 +221,7 @@ Template.VendorSessionDetails.events({
             value: oldcomment,
             callback: function(result) {
                 if (result === null) {
-                    console.log("Prompt dismissed");                              
+                    console.log("Prompt dismissed");
                 } else {
                     Meteor.call('sessions.vendEditComment', sid, oldcomment, result);
                 }
@@ -244,7 +244,7 @@ Template.VendorSessionDetails.events({
             title: "Add Comment",
             callback: function(result) {
                 if (result === null) {
-                    console.log("Prompt dismissed");                              
+                    console.log("Prompt dismissed");
                 } else {
                     Meteor.call('sessions.custAddComment', sid, result);
                 }
@@ -257,7 +257,7 @@ Template.VendorSessionDetails.events({
             title: "Add Comment",
             callback: function(result) {
                 if (result === null) {
-                    console.log("Prompt dismissed");                              
+                    console.log("Prompt dismissed");
                 } else {
                     Meteor.call('sessions.vendAddComment', sid, result);
                 }

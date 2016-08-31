@@ -1,69 +1,116 @@
 <template name="VendorCP">
-  <header class="header-vendor">
-    <div class="container headertext">
-      <h1>Manage your Available Slots.</h1>
-      <p>Placeholder text.</p>
-    </div>
-  </header>
-  <section>
-    <div class="container">
-      <h2>Thank you for selecting your available slots.<br>
-          We auto generate your schedule for the next y weeks<br>
-          based on the information you have provided us.<br></h2>
-        If you have additional exceptions to your normal schedule,<br>
-        please indicate them here.<br>
-      <button class="btn prevweekbtn">Previous Week</button>
-      <button class="btn resetweekbtn">Jump To Current Week</button>
-      <button class="btn nextweekbtn">Next Week</button>
+  {{#if currentUser}}
+    {{#with getuserdata}}
+      <section class="bg-light-gray">
+        <div class="container">
+          <div class="col-centered col-md-10">
 
-      <p>Click to change the number of teams you have available for the individual time slots.</p>
-      <div class="table-responsive">
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Time Slots</th>
-              <th class="text-center sched-cols">Monday <br> {{weekdates 0}}</th>
-              <th class="text-center sched-cols">Tuesday <br> {{weekdates 1}}</th>
-              <th class="text-center sched-cols">Wednesday <br> {{weekdates 2}}</th>
-              <th class="text-center sched-cols">Thursday <br> {{weekdates 3}}</th>
-              <th class="text-center sched-cols">Friday <br> {{weekdates 4}}</th>
-              <th class="text-center sched-cols">Saturday <br> {{weekdates 5}}</th>
-              <th class="text-center sched-cols">Sunday <br> {{weekdates 6}}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {{>vcalschedtable timeslots}}
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <!-- <button type="submit" class="btn btn-success newbtn">Proceed</button> -->
-  </section>
-</template>
+            <div class="row section-panel bordered-section">
+              <h1>Vendor Account Details</h1>
+              <div class="col-md-6">
+                <div class="profile-image">
+                  placeholder for profile image perhaps
+                </div>
+              </div>
+              <div class="col-md-6">
+                <p class="sec-heading">{{_id}}<br></p>
+                <p class="sec-value">{{user_name}}<br></p>
+                <p class="sec-value gethover">{{user_email}} <i class="fa fa-edit editicon changeEmail"></i></p>
+                <p class="sec-value gethover">{{user_tel}} <i class="fa fa-edit editicon changeTel"></i></p>
+                <p class="sec-value"><a href='/changepwd' class="btn btn-default">Change Password</a><br></p>
+              </div>
+            </div>
 
-<template name="vcalschedtable">
-{{#each this}} <!-- will iterate over each timeslot -->
-    <tr>
-      <td>{{slot}}</td>
-      {{>vcaleachslot days num}}
-    </tr>
-  {{/each}}
-</template>
+            <div class="row section-panel bordered-section">
+              <h1>Sessions & Bookings</h1>
 
-<template name="vcaleachslot">
-  {{#each this}}
-    {{#if datenotover date n}}
-      <td class="text-center">
-      <i class="fa fa-minus-circle slotdecrease noselect" id="{{date}} {{n}}"></i>
-      <span style="font-size:1.5em;">{{hasopen date n}}</span>
-      <i class="fa fa-plus-circle slotincrease noselect" id="{{date}} {{n}}"></i>
-      <!-- <button class="btn btn-disabled slotclose" id="{{date}} {{n}}">Toggle this slot</button> -->
-      </td>
-    {{else}}
-      <td class="text-center">
-      <i class="fa fa-ban noselect"></i>
-        Slot passed
-      </td>
-    {{/if}}
-  {{/each}}
+              <p class="sec-heading">Today's Sessions</p>
+              <br>
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th class="text-center">Session ID</th>
+                    <th class="text-center">Date / Time</th>
+                    <th class="text-center">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {{#each todaysesses this}}
+                    <tr>
+                      <td><a href="/vendorsessiondetails/{{_id}}">{{_id}}</a></td>
+                      <td>{{formatdate date}} {{getslotbynum timeslot}}</td>
+                      <td>
+                        {{#if parsess sessionstatus}}
+                          Completed | <button id="{{_id}}" class="btn btn-xs btn-success"> Give feedback </button>
+                        {{else}}
+                        Pending | <button id="{{_id}}" class="btn btn-xs btn-success markComplete"> Mark Complete</button>
+
+                        {{/if}}
+                      </td>
+                    </tr>
+                  {{/each}}
+                </tbody>
+              </table>
+
+              <p class="sec-heading">More Upcoming Sessions</p>
+              <br>
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th class="text-center">Session ID</th>
+                    <th class="text-center">Date / Time</th>
+                    <!-- TODO: cancel prodcedure and button -->
+                    <th class="text-center">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {{#each upcomingsesses this}}
+                    <tr>
+                      <td><a href="/vendorsessiondetails/{{_id}}">{{_id}}</a></td>
+                      <td>{{formatdate date}} {{getslotbynum timeslot}}</td>
+                      <td>
+                          Pending | <button id="{{_id}}" class="btn btn-xs btn-danger"> Cancel</button>
+                      </td>
+                    </tr>
+                  {{/each}}
+                </tbody>
+              </table>
+              <p class="sec-value"><a href='#' class="btn btn-default">View More</a></p>
+
+              <p class="sec-heading">Past Sessions</p>
+              <br>
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th class="text-center">Session ID</th>
+                    <th class="text-center">Date / Time</th>
+                    <!-- TODO: cancel prodcedure and button -->
+                    <th class="text-center">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {{#each pastsesses this}}
+                    <tr>
+                      <td><a href="/vendorsessiondetails/{{_id}}">{{_id}}</a></td>
+                      <td>{{formatdate date}} {{getslotbynum timeslot}}</td>
+                      <td>
+                        {{#if parsess sessionstatus}}
+                          Completed | <button id="{{_id}}" class="btn btn-xs btn-success"> Give feedback </button>
+                        {{else}}
+                        Pending | <button id="{{_id}}" class="btn btn-xs btn-success markComplete"> Mark Complete</button>
+
+                        {{/if}}
+                      </td>
+                    </tr>
+                  {{/each}}
+                </tbody>
+              </table>
+              <p class="sec-value"><a href='#' class="btn btn-default">View More</a></p>
+            </div>
+          </div>
+        </div>
+      </section>
+      {{else}}
+    {{/with}}
+  {{/if}}
 </template>

@@ -1,11 +1,11 @@
 <template name="Account">
   {{#if currentUser}}
-    {{#with userdata}}
+    {{#with getuserdata}}
       <section id="custdetails-sec-1" class="bg-light-gray">
         <div class="container">
         <div class="col-centered col-md-10">
           <div class="row section-panel bordered-section">
-          <h1>Account Details</h1>
+            <h1>Account Details</h1>
             <div class="col-md-6">
               <div class="profile-image">
                 placeholder for profile image perhaps
@@ -141,7 +141,7 @@
               <thead>
                 <tr>
                   <th class="text-center">Session ID</th>
-                  <th class="text-center">Time Slot</th>
+                  <th class="text-center">Date / Time</th>
                   <th class="text-center">Status</th>
                 </tr>
               </thead>
@@ -150,7 +150,13 @@
                   <tr>
                     <td><a href="/vendorsessiondetails/{{_id}}">{{_id}}</a></td>
                     <td>{{d date}} {{s timeslot}}</td>
-                    <td>{{sessionstatus}}</td>
+                    <td>
+                      {{#if parsess sessionstatus}}
+                        Completed | <button class="btn btn-xs btn-success"> Give feedback </button>
+                      {{else}}
+                        Pending
+                      {{/if}}
+                    </td>
                   </tr>
                 {{/each}}
               </tbody>
