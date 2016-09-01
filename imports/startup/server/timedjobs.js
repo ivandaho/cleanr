@@ -29,7 +29,7 @@ var timed_UpdateWeeks = function() {
     vd = Vendordata.find({});
     // vd = Vendordata.find({_id: "6WXGGorhWRTGvdEfW"});
 
-    var today = moment();
+    var today = moment.utc();
     var y = 5; // how many weeks in advance
     var twm = today.clone().startOf('week').add(1,'day'); // this week monday
     for (var w = 0; w <= y; w++) {
@@ -40,7 +40,7 @@ var timed_UpdateWeeks = function() {
         var thisweekadded = false;
         for (var x = 0; x < 7; x++) {
 
-            var currday = moment(jywm).clone().add(x, 'days'); // start from...
+            var currday = moment.utc(jywm).clone().add(x, 'days'); // start from...
             if (x == 0) {
                 gi = Generatedweeks.find({mondayDate: currday.clone().toDate()});
                 // if found one of this week

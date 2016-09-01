@@ -10,7 +10,7 @@ import { Bookings } from '../../api/bookings/Bookings.js';
 import { Sessions } from '../../api/sessions/Sessions.js';
 
 Template.VendorCustomerList.onCreated(function VendorCustomerListOnCreated() {
-    var mdate = moment().startOf('week').add(1, 'days'); // this week's monday
+    var mdate = moment.utc().startOf('week').add(1, 'days'); // this week's monday
     var jdate = mdate.toDate();
     Session.set('currweek', jdate);
     Meteor.subscribe('userdata');
@@ -45,7 +45,7 @@ Template.VendorCustomerList.helpers({
         });
 
         if (arr.length > 0) {
-            return moment(arr[0].date).format('YYYY-MM-DD');
+            return moment.utc(arr[0].date).format('YYYY-MM-DD');
         }
         return 'None found';
     },

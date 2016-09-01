@@ -12,7 +12,7 @@ import { Userdata } from '../../api/userdata/Userdata.js';
 Template.VendorWorkSchedule.onCreated(function VendorWorkScheduleOnCreated() {
     Meteor.subscribe('timeslots');
     Meteor.subscribe('vendorslots');
-    var mdate = moment().startOf('week').add(1, 'days'); // this week's monday
+    var mdate = moment.utc().startOf('week').add(1, 'days'); // this week's monday
     var jdate = mdate.toDate();
     Session.set('currweek', jdate);
     tss = Timeslots.find({});
@@ -30,7 +30,7 @@ Template.VendorWorkSchedule.helpers({
     },
     weekdates(i) {
         var jdate = Session.get('currweek');
-        var mdate = moment(jdate);
+        var mdate = moment.utc(jdate);
         return mdate.add(i, 'days').format("DD-MM");
     },
 });
@@ -39,7 +39,7 @@ Template.vwschedtable.helpers({
     days(num) {
 
         var jdate = Session.get('currweek');
-        var mdate = moment(jdate);
+        var mdate = moment.utc(jdate);
 
         var mondate = mdate.clone().add(0, 'days');
         var tuedate = mdate.clone().add(1, 'days');
@@ -63,7 +63,7 @@ Template.vwschedtable.helpers({
 
 Template.vssession.helpers({
     dateover(sess) {
-        if (moment(sess.date) < moment()) {
+        if (moment.utc(sess.date) < moment.utc()) {
             return 'vs-passdate-cust';
         }
     },
@@ -83,7 +83,7 @@ Template.vssession.helpers({
 });
 Template.vweachslot.helpers({
     getsess(date, n) {
-        var jdate = moment(date).toDate();
+        var jdate = moment.utc(date).toDate();
         var sess = Sessions.findOne({
                                     date: jdate,
                                     timeslot: parseInt(n),
@@ -101,9 +101,9 @@ Template.vsempty.helpers({
     dateover(date, n) {
         //console.log(n);
         var endtime = Timeslots.findOne({num: n});
-        datestr = moment(date).format('YYYY-MM-DD');
+        datestr = moment.utc(date).format('YYYY-MM-DD');
         checkstr = datestr + ' ' + endtime.timeend;
-        if (moment(checkstr, 'YYYY-MM-DD HHmm') < moment()) {
+        if (moment.utc(checkstr, 'YYYY-MM-DD HHmm') < moment.utc()) {
             return 'vs-passdate';
         }
         return 'test';
@@ -114,7 +114,7 @@ Template.VendorWorkSchedule.events({
     'click .prevweekbtn' (event) {
         event.preventDefault();
         var tempjdate = Session.get('currweek');
-        var mdate = moment(tempjdate).subtract(1, 'weeks'); // monday
+        var mdate = moment.utc(tempjdate).subtract(1, 'weeks'); // monday
         tempjdate = mdate.toDate();
         Session.set('currweek', tempjdate);
         /* disabled the limit backwards, so vendors can view their history
@@ -127,16 +127,16 @@ Template.VendorWorkSchedule.events({
     },
     'click .resetweekbtn' (event) {
         event.preventDefault();
-        var mdate = moment().startOf('week').add(1, 'days');
+        var mdate = moment.utc().startOf('week').add(1, 'days');
         tempjdate = mdate.toDate();
         Session.set('currweek', tempjdate);
     },
     'click .nextweekbtn' (event) {
         event.preventDefault();
         var tempjdate = Session.get('currweek');
-        var mdate = moment(tempjdate).add(1, 'weeks'); // monday
+        var mdate = moment.utc(tempjdate).add(1, 'weeks'); // monday
         tempjdate = mdate.toDate();
-        if (tempjdate > moment().add(5, 'weeks')) {
+        if (tempjdate > moment.utc().add(5, 'weeks')) {
             return;
         } else {
             Session.set('currweek', tempjdate);

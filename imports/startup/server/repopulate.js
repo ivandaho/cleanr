@@ -1,6 +1,6 @@
 import { Timeslots } from '/imports/api/timeslots/Timeslots.js';
 
-    var refreshslots = false;
+    var refreshslots = true;
 
     if (refreshslots) {
         console.log('refreshing Timeslots');

@@ -10,7 +10,7 @@ import { Vendorslots } from '../../api/vendorslots/Vendorslots.js';
 Template.Schedule.onCreated(function ScheduleOnCreated() {
     Meteor.subscribe('timeslots');
     Meteor.subscribe('vendorslots');
-    var mdate = moment().startOf('week').add(1, 'days'); // this week's monday
+    var mdate = moment.utc().startOf('week').add(1, 'days'); // this week's monday
     var jdate = mdate.toDate();
     Session.set('currweek', jdate);
     tss = Timeslots.find({}, {sort: {num: 1}});
@@ -27,7 +27,7 @@ Template.Schedule.helpers({
     },
     weekdates(i) {
         var jdate = Session.get('currweek');
-        var mdate = moment(jdate);
+        var mdate = moment.utc(jdate);
         return mdate.add(i, 'days').format("DD-MM");
     },
 });
@@ -36,7 +36,7 @@ Template.schedtable.helpers({
     days(num) {
 
         var jdate = Session.get('currweek');
-        var mdate = moment(jdate);
+        var mdate = moment.utc(jdate);
         // var d =  mdate.add(i, 'days').format("YYYY-MM-DD");
 
         return [
@@ -52,12 +52,12 @@ Template.schedtable.helpers({
 
 Template.eachslot.helpers({
     hasopen(date, n) {
-        var jdate = moment(date).toDate();
+        var jdate = moment.utc(date).toDate();
         //console.log(n);
         var starttime = Timeslots.findOne({num: n});
-        datestr = moment(date).format('YYYY-MM-DD');
+        datestr = moment.utc(date).format('YYYY-MM-DD');
         checkstr = datestr + ' ' + starttime.timeend;
-        if (moment(checkstr, 'YYYY-MM-DD HHmm') < moment().add(2, 'days')) {
+        if (moment.utc(checkstr, 'YYYY-MM-DD HHmm') < moment.utc().add(2, 'days')) {
             // if date passed
             return false;
         }
@@ -90,7 +90,7 @@ Template.Schedule.events({
 
         // query params
         var qp = {date: date, slot: slot};
-        mdate = moment(date);
+        mdate = moment.utc(date);
         msg_day = mdate.format('dddd ');
         msg_date = mdate.format('MMMM D');
         var ts = Timeslots.findOne({num: parseInt(slot)});
@@ -144,9 +144,9 @@ Template.Schedule.events({
     'click .prevweekbtn' (event) {
         event.preventDefault();
         var tempjdate = Session.get('currweek');
-        var mdate = moment(tempjdate).subtract(1, 'weeks'); // monday
+        var mdate = moment.utc(tempjdate).subtract(1, 'weeks'); // monday
         tempjdate = mdate.toDate();
-        if (tempjdate < moment().subtract(1, 'weeks')) {
+        if (tempjdate < moment.utc().subtract(1, 'weeks')) {
             return;
         } else {
             Session.set('currweek', tempjdate);
@@ -155,16 +155,16 @@ Template.Schedule.events({
     },
     'click .resetweekbtn' (event) {
         event.preventDefault();
-        var mdate = moment().startOf('week').add(1, 'days');
+        var mdate = moment.utc().startOf('week').add(1, 'days');
         tempjdate = mdate.toDate();
         Session.set('currweek', tempjdate);
     },
     'click .nextweekbtn' (event) {
         event.preventDefault();
         var tempjdate = Session.get('currweek');
-        var mdate = moment(tempjdate).add(1, 'weeks'); // monday
+        var mdate = moment.utc(tempjdate).add(1, 'weeks'); // monday
         tempjdate = mdate.toDate();
-        if (tempjdate > moment().add(5, 'weeks')) {
+        if (tempjdate > moment.utc().add(5, 'weeks')) {
             return;
         } else {
             Session.set('currweek', tempjdate);

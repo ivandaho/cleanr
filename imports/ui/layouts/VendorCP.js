@@ -26,7 +26,7 @@ Template.VendorCP.helpers({
                             );
     },
     todaysesses() { // TODO: is this secure? #22
-        todaydate = moment().startOf('day').add(2, 'days').toDate();
+        todaydate = moment.utc().startOf('day').add(2, 'days').toDate();
 
         return Sessions.find(
                                 {
@@ -41,7 +41,7 @@ Template.VendorCP.helpers({
                             );
     },
     upcomingsesses() {
-        tmrdate = moment().startOf('day').add(1, 'days').toDate();
+        tmrdate = moment.utc().startOf('day').add(1, 'days').toDate();
         return Sessions.find(
                                 {
                                     vendorID: Meteor.userId(),
@@ -51,7 +51,7 @@ Template.VendorCP.helpers({
                             );
     },
     pastsesses() {
-        todaydate = moment().startOf('day').toDate();
+        todaydate = moment.utc().startOf('day').toDate();
         return Sessions.find(
                                 {
                                     vendorID: Meteor.userId(),

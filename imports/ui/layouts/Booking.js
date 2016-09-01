@@ -32,14 +32,14 @@ Template.Booking.helpers({
     },
     sesses(booking) {
         // gets sessions more recent than 6 months old
-        var d = moment().subtract(6, 'months').toDate();
+        var d = moment.utc().subtract(6, 'months').toDate();
         return Sessions.find({bookingID: booking._id, date: {$gt: d}}, {sort: {date: -1}});
     },
     subdate(date) {
-        return moment(date).format('YYYY-MM-DD HH:MM');
+        return moment.utc(date).format('YYYY-MM-DD HH:MM');
     },
     d(p) {
-        return moment(p).format('YYYY-MM-DD');
+        return moment.utc(p).format('YYYY-MM-DD');
     },
     s(p) {
         var found = Timeslots.findOne({num: parseInt(p)}) || {};

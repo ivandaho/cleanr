@@ -34,7 +34,7 @@ Template.Confirmation.helpers({
     },
     schedSlotDay() {
         var date = FlowRouter.getQueryParam('date');
-        var mdate = moment(date);
+        var mdate = moment.utc(date);
         if (mdate != undefined) {
             var str = 'Every ' + mdate.format('dddd');
             return str;
@@ -44,7 +44,7 @@ Template.Confirmation.helpers({
     },
     schedSlotDate() {
         var date = FlowRouter.getQueryParam('date');
-        var mdate = moment(date);
+        var mdate = moment.utc(date);
         if (mdate != undefined) {
             var str = mdate.format('YYYY-MM-DD');
             return str;
@@ -131,7 +131,7 @@ Template.Confirmation.events({
         }
     },
     'click #proceedPayment' () {
-        var date = moment(FlowRouter.getQueryParam('date')).toDate();
+        var date = moment.utc(FlowRouter.getQueryParam('date')).toDate();
         var slot = FlowRouter.getQueryParam('slot');
         var repeat;
         if (FlowRouter.getQueryParam('repeat') == 'true') {

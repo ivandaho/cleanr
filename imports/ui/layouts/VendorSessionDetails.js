@@ -37,13 +37,13 @@ Template.VendorSessionDetails.helpers({
         // get sessiond date and slot
         var sd = sess.date;
         var ss = sess.timeslot;
-        strdate = moment(sd).format('YYYY-MM-DD');
+        strdate = moment.utc(sd).format('YYYY-MM-DD');
         thetimeslot = Timeslots.findOne({num: parseInt(ss)});
         slotend = thetimeslot.timeend;
         strcheck = strdate + ' ' + slotend;
 
-        var check = moment(strcheck, 'YYYY-MM-DD HHmm');
-        if (moment() > check) {
+        var check = moment.utc(strcheck, 'YYYY-MM-DD HHmm');
+        if (moment.utc() > check) {
             return true;
         }
     },
@@ -58,7 +58,7 @@ Template.VendorSessionDetails.helpers({
         }
     },
     formatdate(d) {
-        return moment(d).format('YYYY-MM-DD');
+        return moment.utc(d).format('YYYY-MM-DD');
     },
     thebooking(sess) {
         var found = Bookings.findOne({_id: sess.bookingID}) || {};
@@ -75,10 +75,10 @@ Template.VendorSessionDetails.helpers({
         return found;
     },
     sess_day(sess) {
-        return moment(sess.date).format('dddd');
+        return moment.utc(sess.date).format('dddd');
     },
     sess_date(sess) {
-        return moment(sess.date).format('YYYY-MM-DD');
+        return moment.utc(sess.date).format('YYYY-MM-DD');
     },
     sess_slotstr(sess) {
         var ts = Timeslots.findOne({num: parseInt(sess.timeslot)}) || {};
@@ -94,7 +94,7 @@ Template.VendorSessionDetails.helpers({
         });
 
         if (arr.length > 0) {
-            return moment(arr[0].date).format('YYYY-MM-DD');
+            return moment.utc(arr[0].date).format('YYYY-MM-DD');
         }
     },
     nextsessid(sess, direction) {
@@ -122,7 +122,7 @@ Template.vwschedtable.helpers({
     days(num) {
 
         var jdate = Session.get('currweek');
-        var mdate = moment(jdate);
+        var mdate = moment.utc(jdate);
 
         var mondate = mdate.clone().add(0, 'days');
         var tuedate = mdate.clone().add(1, 'days');
@@ -146,7 +146,7 @@ Template.vwschedtable.helpers({
 
 Template.vweachslot.helpers({
     testsess(date, n) {
-        var jdate = moment(date).toDate();
+        var jdate = moment.utc(date).toDate();
         // find a session that is assigned to this vendor
         var sess = Sessions.findOne({
                                     date: jdate,
@@ -181,16 +181,16 @@ Template.VendorSessionDetails.events({
     },
     'click .resetweekbtn' (event) {
         event.preventDefault();
-        var mdate = moment().startOf('week').add(1, 'days');
+        var mdate = moment.utc().startOf('week').add(1, 'days');
         tempjdate = mdate.toDate();
         Session.set('currweek', tempjdate);
     },
     'click .nextweekbtn' (event) {
         event.preventDefault();
         var tempjdate = Session.get('currweek');
-        var mdate = moment(tempjdate).add(1, 'weeks'); // monday
+        var mdate = moment.utc(tempjdate).add(1, 'weeks'); // monday
         tempjdate = mdate.toDate();
-        if (tempjdate > moment().add(5, 'weeks')) {
+        if (tempjdate > moment.utc().add(5, 'weeks')) {
             return;
         } else {
             Session.set('currweek', tempjdate);

@@ -22,7 +22,7 @@ Template.VendorCustomer.helpers({
     },
     sesses(cust) {
         // gets sessions more recent than 6 months old
-        var d = moment().subtract(6, 'months').toDate();
+        var d = moment.utc().subtract(6, 'months').toDate();
         return Sessions.find({custID: cust._id, date: {$gt: d}}, {sort: {date: -1}});
     },
 });

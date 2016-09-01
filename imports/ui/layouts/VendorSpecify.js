@@ -14,7 +14,7 @@ Template.VendorSpecify.onCreated(function VendorSpecifyOnCreated() {
     Meteor.subscribe('vendordata');
     Meteor.subscribe('vendorslots');
     Meteor.subscribe('generatedweeks');
-    var mdate = moment().startOf('week').add(1, 'days');
+    var mdate = moment.utc().startOf('week').add(1, 'days');
     var jdate = mdate.toDate();
     Session.set('currweek', jdate);
     tss = Timeslots.find({});
@@ -31,7 +31,7 @@ Template.VendorSpecify.helpers({
     },
     weekdates(i) {
         var jdate = Session.get('currweek');
-        var mdate = moment(jdate);
+        var mdate = moment.utc(jdate);
         return mdate.add(i, 'days').format("DD-MM");
     },
 
@@ -41,7 +41,7 @@ Template.vcalschedtable.helpers({
     days(num) {
 
         var jdate = Session.get('currweek');
-        var mdate = moment(jdate);
+        var mdate = moment.utc(jdate);
         // var d =  mdate.add(i, 'days').format("YYYY-MM-DD");
 
         return [
@@ -57,19 +57,19 @@ Template.vcalschedtable.helpers({
 
 Template.vcaleachslot.helpers({
     datenotover(date, n) {
-        var jdate = moment(date).toDate();
+        var jdate = moment.utc(date).toDate();
         //console.log(n);
         var starttime = Timeslots.findOne({num: n});
-        datestr = moment(date).format('YYYY-MM-DD');
+        datestr = moment.utc(date).format('YYYY-MM-DD');
         checkstr = datestr + ' ' + starttime.timestart;
-        if (moment(checkstr, 'YYYY-MM-DD HHmm') < moment().add(2, 'days')) {
+        if (moment.utc(checkstr, 'YYYY-MM-DD HHmm') < moment.utc().add(2, 'days')) {
             // if date passed
             return false;
         }
         return true;
     },
     hasopen(date, n) {
-        var jdate = moment(date).toDate();
+        var jdate = moment.utc(date).toDate();
         var ds = Vendorslots.find({
                                     $and: [
                                         {d: new Date(jdate)},
@@ -95,14 +95,14 @@ Template.VendorSpecify.events({
     'click .slotincrease' (event) {
         event.preventDefault();
         str = event.target.id;
-        jdate = moment(str.substring(0,10)).toDate();
+        jdate = moment.utc(str.substring(0,10)).toDate();
         slot = str.substring(11,12);
         Meteor.call('vendorslots.addSlot', jdate, slot);
     },
     'click .slotdecrease' (event) {
         event.preventDefault();
         str = event.target.id;
-        jdate = moment(str.substring(0,10)).toDate();
+        jdate = moment.utc(str.substring(0,10)).toDate();
         slot = str.substring(11,12);
         Meteor.call('vendorslots.removeSlot', jdate, slot);
     },
@@ -141,9 +141,9 @@ Template.VendorSpecify.events({
     'click .prevweekbtn' (event) {
         event.preventDefault();
         var tempjdate = Session.get('currweek');
-        var mdate = moment(tempjdate).subtract(1, 'weeks'); // monday
+        var mdate = moment.utc(tempjdate).subtract(1, 'weeks'); // monday
         tempjdate = mdate.toDate();
-        if (tempjdate < moment().subtract(1, 'weeks')) {
+        if (tempjdate < moment.utc().subtract(1, 'weeks')) {
             return;
         } else {
             Session.set('currweek', tempjdate);
@@ -152,16 +152,16 @@ Template.VendorSpecify.events({
     },
     'click .resetweekbtn' (event) {
         event.preventDefault();
-        var mdate = moment().startOf('week').add(1, 'days');
+        var mdate = moment.utc().startOf('week').add(1, 'days');
         tempjdate = mdate.toDate();
         Session.set('currweek', tempjdate);
     },
     'click .nextweekbtn' (event) {
         event.preventDefault();
         var tempjdate = Session.get('currweek');
-        var mdate = moment(tempjdate).add(1, 'weeks'); // monday
+        var mdate = moment.utc(tempjdate).add(1, 'weeks'); // monday
         tempjdate = mdate.toDate();
-        if (tempjdate > moment().add(5, 'weeks')) {
+        if (tempjdate > moment.utc().add(5, 'weeks')) {
             return;
         } else {
             Session.set('currweek', tempjdate);

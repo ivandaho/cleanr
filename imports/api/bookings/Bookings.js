@@ -83,7 +83,7 @@ Meteor.methods({
 
         for (var x = 0; x <= y; x++) { // generate for 3 more weeks
             if (!error) {
-                var newdate = moment(date).add(x, 'weeks').toDate();
+                var newdate = moment.utc(date).add(x, 'weeks').toDate();
                 var found = Vendorslots.find({d: newdate, s: slot})
                 var onesess = Meteor.call('sessions.createSession',
                         newdate, slot, this.userId, 1, 0, '--', null);
@@ -114,7 +114,7 @@ Meteor.methods({
                 pcc = cc;
             }
             // create doc for booking
-            var daystr = moment(date).clone().format('ddd').toLowerCase();
+            var daystr = moment.utc(date).clone().format('ddd').toLowerCase();
             var js; // weekly subscription
             if (repeat) {
                 js = 3; // subscription active
@@ -155,7 +155,7 @@ Meteor.methods({
             var able = sess.length;
             var sessword = 'sessions';
             var slotstr = Timeslots.findOne({num: parseInt(slot)}).slot;
-            var day = moment(date).format('dddd');
+            var day = moment.utc(date).format('dddd');
             if (able == 1) {
                 var sessword =  'session';
             }

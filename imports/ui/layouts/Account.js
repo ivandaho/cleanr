@@ -27,7 +27,7 @@ Template.Account.helpers({
         }
     },
     subdate(date) {
-        return moment(date).format('YYYY-MM-DD HH:MM');
+        return moment.utc(date).format('YYYY-MM-DD HH:MM');
     },
     substatus(booking) {
         var ss = booking.jobstatus;
@@ -41,7 +41,7 @@ Template.Account.helpers({
     },
     booking() {
         // get most recent booking with active subscription
-        var d = moment().subtract(6, 'months').toDate();
+        var d = moment.utc().subtract(6, 'months').toDate();
         var mrs = Sessions.findOne({custID: Meteor.userId(),
                                     date: {$gt: d}},
                                     {sort: {date: -1}}) || {};
@@ -56,7 +56,7 @@ Template.Account.helpers({
         return Sessions.find({custID: Meteor.userId()});
     },
     d(p) {
-        return moment(p).format('YYYY-MM-DD');
+        return moment.utc(p).format('YYYY-MM-DD');
     },
     s(p) {
         var found = Timeslots.findOne({num: parseInt(p)}) || {};
