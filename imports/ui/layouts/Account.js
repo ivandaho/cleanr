@@ -74,6 +74,7 @@ Template.Account.events({
     'click .changeEmail' (event) {
         event.preventDefault();
         bootbox.dialog({
+                size: "small",
                 title: "Change E-mail",
                 message:
                     // TODO: change account login also
@@ -81,7 +82,7 @@ Template.Account.events({
                   '<div class="col-centered col-md-12">' +
                     '<form class="form-horizontal register">' +
                       '<div class="form-group">' +
-                        '<div class="col-centered col-sm-6">' +
+                        '<div class="col-centered col-sm-12">' +
                           '<input type="text" id="mail" placeholder="Enter new e-mail address" class="form-control">' +
                         '</div>' +
                       '</div>' +
@@ -105,13 +106,14 @@ Template.Account.events({
     'click .changeTel' (event) {
         event.preventDefault();
         bootbox.dialog({
+                size: "small",
                 title: "Change Phone Number",
                 message:
                 '<div class="row">' +
                   '<div class="col-centered col-md-12">' +
                     '<form class="form-horizontal register">' +
                       '<div class="form-group">' +
-                        '<div class="col-centered col-sm-6">' +
+                        '<div class="col-centered col-sm-12">' +
                           '<input type="text" id="tel" placeholder="Enter new phone number" class="form-control">' +
                         '</div>' +
                       '</div>' +
@@ -137,6 +139,7 @@ Template.Account.events({
         event.preventDefault();
         var i = (event.target.id);
         bootbox.dialog({
+                size: "small",
                 title: "Change Address",
                 message:
 
@@ -144,22 +147,22 @@ Template.Account.events({
                   '<div class="col-centered col-md-12">' +
                     '<form class="form-horizontal register">' +
                       '<div class="form-group">' +
-                        '<div class="col-centered col-sm-6">' +
+                        '<div class="col-centered col-sm-12">' +
                           '<input type="text" id="street" placeholder="Street" class="form-control">' +
                         '</div>' +
                       '</div>' +
                       '<div class="form-group">' +
-                        '<div class="col-centered col-sm-6">' +
+                        '<div class="col-centered col-sm-12">' +
                           '<input type="text" id="city" placeholder="City" class="form-control">' +
                         '</div>' +
                       '</div>' +
                       '<div class="form-group">' +
-                        '<div class="col-centered col-sm-6">' +
+                        '<div class="col-centered col-sm-12">' +
                           '<input type="text" id="state" placeholder="State" class="form-control">' +
                         '</div>' +
                       '</div>' +
                       '<div class="form-group">' +
-                        '<div class="col-centered col-sm-6">' +
+                        '<div class="col-centered col-sm-12">' +
                           '<input type="text" id="zip" placeholder="ZIP" class="form-control">' +
                         '</div>' +
                       '</div>' +

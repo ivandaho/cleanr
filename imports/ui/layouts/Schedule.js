@@ -12,7 +12,9 @@ Template.Schedule.onCreated(function ScheduleOnCreated() {
     Meteor.subscribe('vendorslots');
     var mdate = moment.utc().startOf('week').add(1, 'days'); // this week's monday
     var jdate = mdate.toDate();
-    Session.set('currweek', jdate);
+    if (!Session.get('currweek')) {
+        Session.set('currweek', jdate);
+    }
     tss = Timeslots.find({}, {sort: {num: 1}});
     //Meteor.subscribe('sessions');
 });
