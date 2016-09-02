@@ -77,11 +77,17 @@ Template.Account.events({
                 title: "Change E-mail",
                 message:
                     // TODO: change account login also
-                  '<div class="row">  ' +
-                    '<div class="col-md-4"> ' +
-                      '<input id="mail" name="street" placeholder="enter new email" type="text" class="input-street"> ' +
-                    '</div>' +
-                  '</div>',
+                '<div class="row">' +
+                  '<div class="col-centered col-md-12">' +
+                    '<form class="form-horizontal register">' +
+                      '<div class="form-group">' +
+                        '<div class="col-centered col-sm-6">' +
+                          '<input type="text" id="mail" placeholder="Enter new e-mail address" class="form-control">' +
+                        '</div>' +
+                      '</div>' +
+                    '</form>' +
+                  '</div>' +
+                '</div>',
                 buttons: {
                     success: {
                         label: "Save",
@@ -91,7 +97,8 @@ Template.Account.events({
                             Meteor.call('userdata.changeEmail', newmail);
                         }
                     }
-                }
+                },
+                onEscape: function() {}
             }
         );
     },
@@ -100,11 +107,17 @@ Template.Account.events({
         bootbox.dialog({
                 title: "Change Phone Number",
                 message:
-                  '<div class="row">  ' +
-                    '<div class="col-md-4"> ' +
-                      '<input id="tel" name="street" placeholder="enter new phone number" type="text" class="input-street"> ' +
-                    '</div>' +
-                  '</div>',
+                '<div class="row">' +
+                  '<div class="col-centered col-md-12">' +
+                    '<form class="form-horizontal register">' +
+                      '<div class="form-group">' +
+                        '<div class="col-centered col-sm-6">' +
+                          '<input type="text" id="tel" placeholder="Enter new phone number" class="form-control">' +
+                        '</div>' +
+                      '</div>' +
+                    '</form>' +
+                  '</div>' +
+                '</div>',
                 buttons: {
                     success: {
                         label: "Save",
@@ -114,7 +127,8 @@ Template.Account.events({
                             Meteor.call('userdata.changeTel', newtel);
                         }
                     }
-                }
+                },
+                onEscape: function() {}
             }
         );
     },
@@ -125,14 +139,34 @@ Template.Account.events({
         bootbox.dialog({
                 title: "Change Address",
                 message:
-                  '<div class="row">  ' +
-                    '<div class="col-md-4"> ' +
-                      '<input id="street" name="street" placeholder="Street" type="text" class="input-street"> ' +
-                      '<input id="city" name="city" placeholder="City" type="text" class="input-street"> ' +
-                      '<input id="state" name="state" placeholder="State" type="text" class="input-street"> ' +
-                      '<input id="zip" name="zip" placeholder="ZIP" type="text" class="input-street"> ' +
-                    '</div>' +
-                  '</div>',
+
+                '<div class="row">' +
+                  '<div class="col-centered col-md-12">' +
+                    '<form class="form-horizontal register">' +
+                      '<div class="form-group">' +
+                        '<div class="col-centered col-sm-6">' +
+                          '<input type="text" id="street" placeholder="Street" class="form-control">' +
+                        '</div>' +
+                      '</div>' +
+                      '<div class="form-group">' +
+                        '<div class="col-centered col-sm-6">' +
+                          '<input type="text" id="city" placeholder="City" class="form-control">' +
+                        '</div>' +
+                      '</div>' +
+                      '<div class="form-group">' +
+                        '<div class="col-centered col-sm-6">' +
+                          '<input type="text" id="state" placeholder="State" class="form-control">' +
+                        '</div>' +
+                      '</div>' +
+                      '<div class="form-group">' +
+                        '<div class="col-centered col-sm-6">' +
+                          '<input type="text" id="zip" placeholder="ZIP" class="form-control">' +
+                        '</div>' +
+                      '</div>' +
+                    '</form>' +
+                  '</div>' +
+                '</div>',
+
                 buttons: {
                     success: {
                         label: "Save",
@@ -146,7 +180,8 @@ Template.Account.events({
                             Meteor.call('userdata.changeAddress', index, street, city, state, zip);
                         }
                     }
-                }
+                },
+                onEscape: function() {}
             }
         );
     },

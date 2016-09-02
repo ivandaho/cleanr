@@ -33,6 +33,7 @@ Template.Resetpassword.events({
                 Bert.alert(error.reason, 'danger');
             } else {
                 Bert.alert('Password changed', 'success');
+                FlowRouter.go('account');
             }
         });
     }

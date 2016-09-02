@@ -26,16 +26,18 @@
         {{/if}}
         {{> NavbarUserControl}}
         <!-- <li class="divider-vertical"></li> -->
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Vendor Actions<span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="/vendorcp">Control Panel</a></li>
-            <li><a href="/vendorworkschedule">Schedule</a></li>
-            <li><a href="/vendorcustomers">Customers</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="/vendorregistration">Set Default Schedule</a></li>
-          </ul>
-        </li>
+        {{#if isInRole 'vendor'}}
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Vendor Actions<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="/vendorcp">Control Panel</a></li>
+              <li><a href="/vendorworkschedule">Schedule</a></li>
+              <li><a href="/vendorcustomers">Customers</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="/vendorregistration">Set Default Schedule</a></li>
+            </ul>
+          </li>
+        {{/if}}
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
