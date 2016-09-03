@@ -1,5 +1,6 @@
-import { Timeslots } from '../../api/timeslots/Timeslots.js';
-import { Userdata } from '../../api/userdata/Userdata.js';
+import { Timeslots } from '/imports/api/timeslots/Timeslots.js';
+import { Userdata } from '/imports/api/userdata/Userdata.js';
+
 Template.registerHelper("formatdate", function(d) {
 
     return moment.utc(d).format('YYYY-MM-DD');
