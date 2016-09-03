@@ -130,6 +130,8 @@ Template.VendorWorkSchedule.events({
         var mdate = moment.utc().startOf('week').add(1, 'days');
         tempjdate = mdate.toDate();
         Session.set('currweek', tempjdate);
+        $("td").velocity("stop");
+        $("td").velocity("callout.emerge");
     },
     'click .nextweekbtn' (event) {
         event.preventDefault();

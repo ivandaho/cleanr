@@ -5,7 +5,6 @@ import { Template } from 'meteor/templating';
 
 import { Timeslots } from '../../api/timeslots/Timeslots.js';
 import { Vendorslots } from '../../api/vendorslots/Vendorslots.js';
-    //Meteor.subscribe('recipes');
 
 Template.Schedule.onCreated(function ScheduleOnCreated() {
     Meteor.subscribe('timeslots');
@@ -149,9 +148,11 @@ Template.Schedule.events({
         var mdate = moment.utc(tempjdate).subtract(1, 'weeks'); // monday
         tempjdate = mdate.toDate();
         if (tempjdate < moment.utc().subtract(1, 'weeks')) {
+            $("th").velocity("callout.blink");
             return;
         } else {
             Session.set('currweek', tempjdate);
+            // $(".tsbtn").velocity("callout.emerge");
         }
 
     },
@@ -160,6 +161,8 @@ Template.Schedule.events({
         var mdate = moment.utc().startOf('week').add(1, 'days');
         tempjdate = mdate.toDate();
         Session.set('currweek', tempjdate);
+        $(".tsbtn").velocity("stop");
+        $(".tsbtn").velocity("callout.emerge");
     },
     'click .nextweekbtn' (event) {
         event.preventDefault();
@@ -167,9 +170,11 @@ Template.Schedule.events({
         var mdate = moment.utc(tempjdate).add(1, 'weeks'); // monday
         tempjdate = mdate.toDate();
         if (tempjdate > moment.utc().add(5, 'weeks')) {
+            $("th").velocity("callout.blink");
             return;
         } else {
             Session.set('currweek', tempjdate);
+            // $(".tsbtn").velocity("callout.emerge");
         }
 
     },
