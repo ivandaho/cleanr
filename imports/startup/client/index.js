@@ -32,4 +32,4 @@ import '/imports/ui/layouts/VendorSpecify.js';
 // additional configuration on client
 import './config/bert_config.js';
 import './config/globalhelpers.js';
-import './config/velocity_callouts.js';
+// import './config/velocity_callouts.js';

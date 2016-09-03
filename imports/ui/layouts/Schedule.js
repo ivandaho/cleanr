@@ -6,6 +6,8 @@ import { Template } from 'meteor/templating';
 import { Timeslots } from '../../api/timeslots/Timeslots.js';
 import { Vendorslots } from '../../api/vendorslots/Vendorslots.js';
 
+import '/imports/startup/client/config/velocity_callouts.js';
+
 Template.Schedule.onCreated(function ScheduleOnCreated() {
     Meteor.subscribe('timeslots');
     Meteor.subscribe('vendorslots');
