@@ -137,16 +137,17 @@
 
             <p class="sec-heading">Recent Sessions</p>
             <br>
-            <table class="table table-bordered">
-              <thead>
-                <tr>
-                  <th class="text-center">Session ID</th>
-                  <th class="text-center">Date / Time</th>
-                  <th class="text-center">Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {{#each sesses this}}
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th class="text-center">Session ID</th>
+                    <th class="text-center">Date / Time</th>
+                    <th class="text-center">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {{#each sesses this}}
                   <tr>
                     <td><a href="/vendorsessiondetails/{{_id}}">{{_id}}</a></td>
                     <td>{{d date}} {{s timeslot}}</td>
@@ -158,29 +159,32 @@
                       {{/if}}
                     </td>
                   </tr>
-                {{/each}}
-              </tbody>
-            </table>
+                  {{/each}}
+                </tbody>
+              </table>
+            </div>
             <p class="sec-value"><a href='#' class="btn btn-default">View More</a></p>
             <p class="sec-heading">Recent Bookings</p>
-            <table class="table table-bordered">
-              <thead>
-                <tr>
-                  <th class="text-center">Booking ID</th>
-                  <th class="text-center">Time Slot</th>
-                  <th class="text-center">Last Session</th>
-                </tr>
-              </thead>
-              <tbody>
-                {{#each morebookings}}
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th class="text-center">Booking ID</th>
+                    <th class="text-center">Time Slot</th>
+                    <th class="text-center">Last Session</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {{#each morebookings}}
                   <tr>
                     <td><a href="/booking/{{_id}}">{{_id}}</a></td>
                     <td>{{s timeslot}} every {{day}}</td>
                     <td>$ended</td>
                   </tr>
-                {{/each}}
-              </tbody>
-            </table>
+                  {{/each}}
+                </tbody>
+              </table>
+            </div>
             <p class="sec-value"><a href='#' class="btn btn-default">View More</a></p>
           </div>
         </div>

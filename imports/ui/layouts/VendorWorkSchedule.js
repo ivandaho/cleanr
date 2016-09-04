@@ -8,6 +8,7 @@ import { Vendorslots } from '../../api/vendorslots/Vendorslots.js';
 import { Sessions } from '../../api/sessions/Sessions.js';
 import { Userdata } from '../../api/userdata/Userdata.js';
     //Meteor.subscribe('recipes');
+import '/imports/startup/client/config/velocity_callouts.js';
 
 Template.VendorWorkSchedule.onCreated(function VendorWorkScheduleOnCreated() {
     Meteor.subscribe('timeslots');

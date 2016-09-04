@@ -26,7 +26,7 @@ Template.VendorCP.helpers({
                             );
     },
     todaysesses() { // TODO: is this secure? #22
-        todaydate = moment.utc().startOf('day').add(2, 'days').toDate();
+        todaydate = moment.utc().startOf('day').toDate();
 
         return Sessions.find(
                                 {

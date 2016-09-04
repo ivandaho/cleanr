@@ -26,16 +26,17 @@
 
               <p class="sec-heading">Today's Sessions</p>
               <br>
-              <table class="table table-bordered">
-                <thead>
-                  <tr>
-                    <th class="text-center">Session ID</th>
-                    <th class="text-center">Date / Time</th>
-                    <th class="text-center">Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {{#each todaysesses this}}
+              <div class="table-responsive">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th class="text-center">Session ID</th>
+                      <th class="text-center">Date / Time</th>
+                      <th class="text-center">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {{#each todaysesses this}}
                     <tr>
                       <td><a href="/vendorsessiondetails/{{_id}}">{{_id}}</a></td>
                       <td>{{formatdate date}} {{getslotbynum timeslot}}</td>
@@ -43,53 +44,57 @@
                         {{#if parsess sessionstatus}}
                           Completed | <button id="{{_id}}" class="btn btn-xs btn-success"> Give feedback </button>
                         {{else}}
-                        Pending | <button id="{{_id}}" class="btn btn-xs btn-success markComplete"> Mark Complete</button>
+                          Pending | <button id="{{_id}}" class="btn btn-xs btn-success markComplete"> Mark Complete</button>
 
                         {{/if}}
                       </td>
                     </tr>
-                  {{/each}}
-                </tbody>
-              </table>
+                    {{/each}}
+                  </tbody>
+                </table>
+              </div>
 
               <p class="sec-heading">More Upcoming Sessions</p>
               <br>
-              <table class="table table-bordered">
-                <thead>
-                  <tr>
-                    <th class="text-center">Session ID</th>
-                    <th class="text-center">Date / Time</th>
-                    <!-- TODO: cancel prodcedure and button -->
-                    <th class="text-center">Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {{#each upcomingsesses this}}
+              <div class="table-responsive">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th class="text-center">Session ID</th>
+                      <th class="text-center">Date / Time</th>
+                      <!-- TODO: cancel prodcedure and button -->
+                      <th class="text-center">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {{#each upcomingsesses this}}
                     <tr>
                       <td><a href="/vendorsessiondetails/{{_id}}">{{_id}}</a></td>
                       <td>{{formatdate date}} {{getslotbynum timeslot}}</td>
                       <td>
-                          Pending | <button id="{{_id}}" class="btn btn-xs btn-danger"> Cancel</button>
+                        Pending | <button id="{{_id}}" class="btn btn-xs btn-danger"> Cancel</button>
                       </td>
                     </tr>
-                  {{/each}}
-                </tbody>
-              </table>
+                    {{/each}}
+                  </tbody>
+                </table>
+              </div>
               <p class="sec-value"><a href='#' class="btn btn-default">View More</a></p>
 
               <p class="sec-heading">Past Sessions</p>
               <br>
-              <table class="table table-bordered">
-                <thead>
-                  <tr>
-                    <th class="text-center">Session ID</th>
-                    <th class="text-center">Date / Time</th>
-                    <!-- TODO: cancel prodcedure and button -->
-                    <th class="text-center">Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {{#each pastsesses this}}
+              <div class="table-responsive">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th class="text-center">Session ID</th>
+                      <th class="text-center">Date / Time</th>
+                      <!-- TODO: cancel prodcedure and button -->
+                      <th class="text-center">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {{#each pastsesses this}}
                     <tr>
                       <td><a href="/vendorsessiondetails/{{_id}}">{{_id}}</a></td>
                       <td>{{formatdate date}} {{getslotbynum timeslot}}</td>
@@ -97,14 +102,14 @@
                         {{#if parsess sessionstatus}}
                           Completed | <button id="{{_id}}" class="btn btn-xs btn-success"> Give feedback </button>
                         {{else}}
-                        Pending | <button id="{{_id}}" class="btn btn-xs btn-success markComplete"> Mark Complete</button>
-
+                          Pending | <button id="{{_id}}" class="btn btn-xs btn-success markComplete"> Mark Complete</button>
                         {{/if}}
                       </td>
                     </tr>
-                  {{/each}}
-                </tbody>
-              </table>
+                    {{/each}}
+                  </tbody>
+                </table>
+              </div>
               <p class="sec-value"><a href='#' class="btn btn-default">View More</a></p>
             </div>
           </div>
