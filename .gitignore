@@ -7,4 +7,6 @@ ngrok.exe
 .eslintrc.json
 .tern-project
 mup.js
+mup.json
 settings.json
+/dump
