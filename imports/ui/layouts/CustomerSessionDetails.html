@@ -1,0 +1,190 @@
+<template name="CustomerSessionDetails">
+  <section id="sess" class="bg-light-gray">
+    <div class="container">
+    {{#if sess}}
+      <div class="row text-center">
+        <div class="col-lg-12">
+          <h2>Session Details</h2>
+            <p>{{sess._id}}</p>
+        </div>
+      </div>
+      <div class="row bordered">
+        <div class="row">
+          <div class="col-md-12 text-center bighdr">
+            Session Details
+          </div>
+        </div>
+        <div class="row-same-height">
+          <div class="col-md-6 col-sm-height">
+            <div class="hdr">
+              Session Status
+            </div>
+            <div class="value">
+              {{#with getsessionstatus sess}}
+                <!-- if session not completed -->
+                Not Completed
+              {{else}}
+                Completed
+              {{/with}}
+            </div>
+            <br>
+            <div class="hdr">
+              Next Session
+            </div>
+            <div class="value">
+              {{#with sess_nextsessdate sess}}
+                {{this}}
+              {{else}}
+                None
+              {{/with}}
+            </div>
+            <div class="btndiv2">
+              {{#with nextsessid sess 'prv'}}
+              <a href="/vendorsessiondetails/{{this}}" class="btn btn-default nextprevbtn">Previous session</a>
+              {{else}}
+              <a href="#" class="btn btn-default nextprevbtn disabled">No Earlier Session</a>
+              {{/with}}
+              {{#with nextsessid sess 'nxt'}}
+              <a href="/vendorsessiondetails/{{this}}" class="btn btn-default nextprevbtn">Next session</a>
+              {{else}}
+              <a href="#" class="btn btn-default nextprevbtn disabled">No Next Session</a>
+              {{/with}}
+            </div>
+          </div>
+          <div class="col-md-6 col-sm-height padded">
+            <div class="hdr">
+              Date
+            </div>
+            <div class="value">
+              {{datetoday sess.date}}, {{sess_date sess}}
+            </div>
+            <div class="hdr">
+              Time
+            </div>
+            <div class="value">
+              {{slotstr sess.timeslot}}
+            </div>
+            <div class="placeholderthing">
+            </div>
+          </div>
+        </div>
+      </div>
+      {{#with thebooking sess}}
+      <div class="row bordered">
+        <div class="row">
+          <div class="col-md-12 text-center bighdr">
+            Booking Details
+            <p>Every {{this.day}} {{slotstr this.timeslot}}</p>
+          </div>
+        </div>
+        <div class="row-same-height">
+          <div class="col-md-6 col-sm-height">
+            <div class="hdr">
+              Booking ID
+            </div>
+            <div class="value">
+              <a href="/booking/{{_id}}">{{_id}}</a>
+            </div>
+            <div class="hdr">
+              Package
+            </div>
+            <div class="value">
+              $_2 maids for 2 hours
+            </div>
+            <div class="hdr">
+              Additional Services
+            </div>
+            <div class="value">
+              {{#if mc}}Mattress Cleaning<br>{{/if}}
+              {{#if cc}}Carpet Cleaning<br>{{/if}}
+            </div>
+            <div class="placeholderthing">
+            </div>
+          </div>
+          <div class="col-md-6 col-sm-height padded">
+            <div class="hdr">
+              Date Booked
+            </div>
+            <div class="value">
+              {{formatdate subdate}}
+            </div>
+            <div class="hdr">
+              Sessions Completed
+            </div>
+            <div class="value">
+              {{#if completed}}{{this}}{{else}}$completed{{/if}}
+            </div>
+            <div class="hdr">
+              Subscription Status
+            </div>
+            <div class="value">
+              {{#with getsubstatus this}}
+                Active
+                <a class="btn btn-sm btn-danger btn-cancel-sub" id="{{../_id}}">Cancel</a>
+              {{else}}
+                Not Active
+                <a class="btn btn-sm btn-success btn-re-sub" id="{{this._id}}">Subscribe</a>
+              {{/with}}
+            </div>
+          </div>
+        </div>
+      </div>
+      {{/with}}
+      <div class="row bordered">
+        <div class="row">
+          <div class="col-md-12 text-center bighdr">
+            Remarks
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="hdr">
+              Customer Remarks:
+            </div>
+            <ol>
+            {{#each custremarkfound sess}}
+              <div class="value">
+                <li>
+                  {{this}}
+                  {{#if iscustomer sess}}
+                  <button type="button" class="btn btn-xs btn-warning cedit" id="{{this}}">Edit</button>
+                  <button type="button" class="btn btn-xs btn-danger crm" id="{{this}}">Remove</button>
+                  {{/if}}
+                </li>
+              </div>
+            {{/each}}
+            {{#if iscustomer sess}}
+            <button type="button" class="btn btn-xs cadd">Add a remark</button>
+            {{/if}}
+            </ol>
+          </div>
+          <div class="col-md-4 col-sm-height padded">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="hdr">
+              Cleaner Remarks:
+            </div>
+            <ol>
+            {{#each vendremarkfound sess}}
+              <div class="value">
+                <li>
+                  {{this}}
+                </li>
+              </div>
+            {{/each}}
+            </ol>
+          </div>
+        </div>
+      </div>
+        {{else}}
+          <div class="col-md-4 col-sm-height text-center padded">
+            We couldn't find that session. Either the URL is invalid, or you are unauthorized to view session details for this session.
+          </div>
+
+        {{/if}}
+    </div>
+  </section>
+</template>
+

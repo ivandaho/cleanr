@@ -174,13 +174,28 @@ Meteor.methods({
         // LATER:
         // notify vendor
     },
-    'bookings.stopSubscription' (bid) {
+    'bookings.reSubscribe' (bid) {
         // find the booking
-        console.log(bid);
         var thebooking = Bookings.findOne({_id: bid});
 
         if (thebooking.custID == Meteor.userId()) {
-            console.log('authorized to cancel');
+            // booking's owner is the logged in customer. ok to resub
+            var newstatus;
+
+            if (thebooking.jobstatus == 0) {
+                newstatus = 2;
+            } else if (thebooking.jobstatus == 1) {
+                newstatus = 3;
+            }
+            Bookings.update(thebooking, {$set: {jobstatus: newstatus}});
+        }
+    },
+    'bookings.stopSubscription' (bid) {
+        // find the booking
+        var thebooking = Bookings.findOne({_id: bid});
+
+        if (thebooking.custID == Meteor.userId()) {
+            // booking's owner is the logged in customer. ok to cancel
             var newstatus;
 
             if (thebooking.jobstatus == 2) {

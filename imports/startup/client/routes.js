@@ -157,6 +157,13 @@ FlowRouter.route('/changepwd',{
     }
 });
 
+FlowRouter.route('/customersessiondetails/:sessid', {
+    name: 'customersessiondetails',
+    action: function(params, queryParams) {
+        BlazeLayout.render('MainLayout', {main: 'CustomerSessionDetails'})
+    }
+});
+
 FlowRouter.route('/reset-password/:token',{
     action (params) {
         BlazeLayout.render('MainLayout', {main: 'Resetpassword'})

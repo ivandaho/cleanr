@@ -26,6 +26,12 @@
     font-weight: bold;
 }
 
+.btndiv2 {
+    margin:0 auto;
+    margin-top: 30px;
+    bottom:0;
+}
+
 .vs-btndiv {
     position:absolute;
     margin:0 auto;
@@ -38,7 +44,7 @@
     min-height:70px;
 }
 
-.newbtn {
+.nextprevbtn {
     width:100%;
     white-space:normal;
 }

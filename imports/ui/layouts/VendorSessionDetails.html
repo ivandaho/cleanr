@@ -82,16 +82,15 @@
             <div clas="text-center">
               <div class="vs-btndiv">
                 {{#with nextsessid sess 'prv'}}
-                  <a href="/vendorsessiondetails/{{this}}" class="btn btn-default newbtn">Previous session</a>
+                  <a href="/vendorsessiondetails/{{this}}" class="btn btn-default nextprevbtn">Previous session</a>
                 {{else}}
-                  <a href="#" class="btn btn-default newbtn disabled">No Earlier Session</a>
+                  <a href="#" class="btn btn-default nextprevbtn disabled">No Earlier Session</a>
                 {{/with}}
                 {{#with nextsessid sess 'nxt'}}
-                <a href="/vendorsessiondetails/{{this}}" class="btn btn-default newbtn">Next session</a>
+                <a href="/vendorsessiondetails/{{this}}" class="btn btn-default nextprevbtn">Next session</a>
                 {{else}}
-                  <a href="#" class="btn btn-default newbtn disabled">No Next Session</a>
+                  <a href="#" class="btn btn-default nextprevbtn disabled">No Next Session</a>
                 {{/with}}
-                  <!-- <button type="button" class="btn newbtn nextsess">Go to corresponding session (if assigned to vendor)</button> -->
               </div>
             </div>
           </div>
@@ -131,7 +130,7 @@
             </div>
             <div class="text-center">
               <div class="vs-btndiv">
-                <a href="/booking/{{_id}}" class="btn btn-default newbtn">View Details</a>
+                <a href="/booking/{{_id}}" class="btn btn-default nextprevbtn">View Details</a>
               </div>
             </div>
           </div>
@@ -215,7 +214,7 @@
               Customer Remarks:
             </div>
             <ol>
-            {{#each custremarkfound sess}} 
+            {{#each custremarkfound sess}}
               <div class="value">
                 <li>
                   {{this}}
@@ -240,7 +239,7 @@
               Cleaner Remarks:
             </div>
             <ol>
-            {{#each vendremarkfound sess}} 
+            {{#each vendremarkfound sess}}
               <div class="value">
                 <li>
                   {{this}}
@@ -264,7 +263,7 @@
           <div class="col-md-4 col-sm-height text-center padded">
             We couldn't find that session. Either the URL is invalid, or you are unauthorized to view session details for this session.
           </div>
-        
+
         {{/if}}
     </div>
   </section>

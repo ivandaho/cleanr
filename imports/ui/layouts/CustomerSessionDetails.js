@@ -1,4 +1,4 @@
-import './VendorSessionDetails.html';
+import './CustomerSessionDetails.html';
 
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
@@ -9,7 +9,7 @@ import { Userdata } from '../../api/userdata/Userdata.js';
 import { Bookings } from '../../api/bookings/Bookings.js';
     //Meteor.subscribe('recipes');
 
-Template.VendorSessionDetails.onCreated(function VendorSessionDetailsOnCreated() {
+Template.CustomerSessionDetails.onCreated(function CustomerSessionDetailsOnCreated() {
     Meteor.subscribe('timeslots');
     Meteor.subscribe('sessions');
     Meteor.subscribe('userdata');
@@ -20,9 +20,11 @@ Template.VendorSessionDetails.onCreated(function VendorSessionDetailsOnCreated()
 
 var tss;
 
-Template.VendorSessionDetails.helpers({
-    isvendor(sess) {
-        return Meteor.call('userdata.checkIsVendor', sess) || {};
+Template.CustomerSessionDetails.helpers({
+    getsubstatus(booking) {
+        if (booking.jobstatus == 2 || booking.jobstatus == 3) {
+            return true;
+        }
     },
     iscustomer(sess) {
         return Meteor.call('userdata.checkIsCustomer', sess) || {};
@@ -74,14 +76,14 @@ Template.VendorSessionDetails.helpers({
         var found = Sessions.findOne({_id: sid}); //  || {};
         return found;
     },
-    sess_day(sess) {
-        return moment.utc(sess.date).format('dddd');
+    datetoday(date) {
+        return moment.utc(date).format('dddd');
     },
     sess_date(sess) {
         return moment.utc(sess.date).format('YYYY-MM-DD');
     },
-    sess_slotstr(sess) {
-        var ts = Timeslots.findOne({num: parseInt(sess.timeslot)}) || {};
+    slotstr(slotnum) {
+        var ts = Timeslots.findOne({num: parseInt(slotnum)}) || {};
         return ts.slot;
     },
     sess_nextsessdate(sess) {
@@ -118,14 +120,18 @@ Template.VendorSessionDetails.helpers({
     },
 });
 
-Template.VendorSessionDetails.events({
-    'click .btn-mark-completed' (event) {
+Template.CustomerSessionDetails.events({
+    'click .btn-cancel-sub' (event) {
         event.preventDefault();
-        Meteor.call('sessions.markCompleted', FlowRouter.getParam('sessid'));
+        var bid = event.target.id;
+
+        Meteor.call('bookings.stopSubscription', bid);
     },
-    'click .btn-mark-not-completed' (event) {
+    'click .btn-re-sub' (event) {
         event.preventDefault();
-        Meteor.call('sessions.markNotCompleted', FlowRouter.getParam('sessid'));
+        var bid = event.target.id;
+
+        Meteor.call('bookings.reSubscribe', bid);
     },
     'click .cedit' (event) {
         event.preventDefault();
@@ -197,4 +203,5 @@ Template.VendorSessionDetails.events({
     },
 
 });
+
 

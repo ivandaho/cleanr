@@ -13,6 +13,7 @@ import '/imports/ui/layouts/Account_2.js';
 import '/imports/ui/layouts/Booking.js';
 import '/imports/ui/layouts/Changepwd.js';
 import '/imports/ui/layouts/Confirmation.js';
+import '/imports/ui/layouts/CustomerSessionDetails.js';
 import '/imports/ui/layouts/Header.js';
 import '/imports/ui/layouts/Login.js';
 import '/imports/ui/layouts/NavbarUserControl.js';
