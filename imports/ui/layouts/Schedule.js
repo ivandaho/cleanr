@@ -127,6 +127,8 @@ Template.Schedule.events({
                     callback: function() {
                         qp.repeat = false;
                         FlowRouter.go('/confirmation', null, qp);
+                        // fix for param changing (don't scroll to top)
+                        $('body').animate({scrollTop: 0}, 0);
                         return true;
                     }
                 },
@@ -136,6 +138,8 @@ Template.Schedule.events({
                     callback: function() {
                         qp.repeat = true;
                         FlowRouter.go('/confirmation', null, qp);
+                        // fix for param changing (don't scroll to top)
+                        $('body').animate({scrollTop: 0}, 0);
                         return true;
                     }
                 }

@@ -1,3 +1,65 @@
+import '/imports/startup/client/config/velocity_callouts.js';
+
+previousPathsObj = {};
+exemptPaths = ['/place/']; // these are the paths that we don't want to remember the scroll position for.
+function thisIsAnExemptPath(path) {
+    var exemptPath = false;
+    _.forEach(exemptPaths, function (d) {
+        if (path.indexOf(d) >= 0) {
+            exemptPath = true;
+            return exemptPath;
+        }
+    });
+    return exemptPath;
+}
+function saveScrollPosition(context) {
+    var exemptPath = thisIsAnExemptPath(context.path);
+    if (!exemptPath) {
+        // add / update path
+        previousPathsObj[context.path] = $('body').scrollTop();
+    }
+}
+function jumpToPrevScrollPosition(context) {
+
+    // var path = context.path;
+    var path = window.location.pathname;
+    var scrollPosition = 0;
+    if (!_.isUndefined(previousPathsObj[path])) {
+        // previousPathsObj[context.path]
+        scrollPosition = previousPathsObj[path];
+    }
+    if (scrollPosition === 0) {
+        // we can scroll right away since we don't need to wait for rendering
+        $('body').animate({scrollTop: scrollPosition}, 0);
+    } else {
+        $("body").css("opacity", 0);
+        // Now we need to wait a bit for blaze/react does rendering.
+        // We assume, there's subs-manager and we've previous page's data.
+        // Here 10 millis delay is a arbitrary value with some testing.
+        setTimeout(function () {
+            $("html").velocity("scroll",
+                    {offset: scrollPosition, duration:1});
+            $("body").velocity("callout.fadeInAlt");
+            // $('body').animate({scrollTop: scrollPosition}, 0);
+        }, 10);
+    }
+}
+
+function scrollToTop() {
+    if (FlowRouter.current().context.pathname != '/confirmation') {
+        $('body').animate({scrollTop: 0}, 0);
+    }
+};
+
+FlowRouter.triggers.exit([saveScrollPosition]);
+
+// FlowRouter.triggers.enter([jumpToPrevScrollPosition]);
+FlowRouter.triggers.enter([scrollToTop], {except: ["confirmation"]});
+
+$(window).on('popstate', function(event) {
+    jumpToPrevScrollPosition();
+});
+
 FlowRouter.route('/', {
     name: 'home',
     action() {

@@ -17,4 +17,12 @@ $.Velocity.RegisterEffect("callout.emerge", {
     ]
 });
 
+$.Velocity.RegisterEffect("callout.fadeAlt", {
+    defaultDuration: 300,
+    calls: [
+        [{opacity: 1}, 1]
+    ],
+    queue: false
+});
+
 
