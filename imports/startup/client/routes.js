@@ -46,9 +46,7 @@ function jumpToPrevScrollPosition(context) {
 }
 
 function scrollToTop() {
-    if (FlowRouter.current().context.pathname != '/confirmation') {
-        $('body').animate({scrollTop: 0}, 0);
-    }
+    $('body').animate({scrollTop: 0}, 0);
 };
 
 FlowRouter.triggers.exit([saveScrollPosition]);

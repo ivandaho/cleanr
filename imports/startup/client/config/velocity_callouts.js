@@ -17,7 +17,7 @@ $.Velocity.RegisterEffect("callout.emerge", {
     ]
 });
 
-$.Velocity.RegisterEffect("callout.fadeAlt", {
+$.Velocity.RegisterEffect("callout.fadeInAlt", {
     defaultDuration: 300,
     calls: [
         [{opacity: 1}, 1]
