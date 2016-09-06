@@ -1,11 +1,11 @@
 <template name="CustomerSessionDetails">
   <section id="sess" class="bg-light-gray">
     <div class="container">
-    {{#if sess}}
+    {{#with sess}}
       <div class="row text-center">
         <div class="col-lg-12">
           <h2>Session Details</h2>
-            <p>{{sess._id}}</p>
+            <p>{{_id}}</p>
         </div>
       </div>
       <div class="row bordered">
@@ -15,66 +15,63 @@
           </div>
         </div>
         <div class="row-same-height">
+          <div class="col-md-6 col-sm-height padded">
+            <div class="hdr">
+              Date
+            </div>
+            <div class="value">
+              {{dateToDay date}}, {{dateFormat date}}
+            </div>
+            <div class="hdr">
+              Time
+            </div>
+            <div class="value">
+              {{getslotbynum timeslot}}
+            </div>
+          </div>
           <div class="col-md-6 col-sm-height">
             <div class="hdr">
               Session Status
             </div>
             <div class="value">
-              {{#with getsessionstatus sess}}
+              {{#with getsessionstatus this}}
                 <!-- if session not completed -->
                 Not Completed
               {{else}}
                 Completed
               {{/with}}
             </div>
-            <br>
             <div class="hdr">
               Next Session
             </div>
             <div class="value">
-              {{#with sess_nextsessdate sess}}
+              {{#with sess_nextsessdate this}}
                 {{this}}
               {{else}}
                 None
               {{/with}}
             </div>
-            <div class="btndiv2">
-              {{#with nextsessid sess 'prv'}}
-              <a href="/vendorsessiondetails/{{this}}" class="btn btn-default nextprevbtn">Previous session</a>
+            <div class="btndiv2 noselect">
+              {{#with nextsessid this 'prv'}}
+              <a href="/customersessiondetails/{{this}}" class="btn btn-default nextprevbtn">Previous session</a>
               {{else}}
               <a href="#" class="btn btn-default nextprevbtn disabled">No Earlier Session</a>
               {{/with}}
-              {{#with nextsessid sess 'nxt'}}
-              <a href="/vendorsessiondetails/{{this}}" class="btn btn-default nextprevbtn">Next session</a>
+              {{#with nextsessid this 'nxt'}}
+              <a href="/customersessiondetails/{{this}}" class="btn btn-default nextprevbtn">Next session</a>
               {{else}}
               <a href="#" class="btn btn-default nextprevbtn disabled">No Next Session</a>
               {{/with}}
             </div>
           </div>
-          <div class="col-md-6 col-sm-height padded">
-            <div class="hdr">
-              Date
-            </div>
-            <div class="value">
-              {{datetoday sess.date}}, {{sess_date sess}}
-            </div>
-            <div class="hdr">
-              Time
-            </div>
-            <div class="value">
-              {{slotstr sess.timeslot}}
-            </div>
-            <div class="placeholderthing">
-            </div>
-          </div>
         </div>
       </div>
-      {{#with thebooking sess}}
+      {{#with thebooking this}}
       <div class="row bordered">
         <div class="row">
           <div class="col-md-12 text-center bighdr">
             Booking Details
-            <p>Every {{this.day}} {{slotstr this.timeslot}}</p>
+            <p>Every {{this.day}} {{getslotbynum this.timeslot}}</p>
           </div>
         </div>
         <div class="row-same-height">
@@ -98,8 +95,6 @@
               {{#if mc}}Mattress Cleaning<br>{{/if}}
               {{#if cc}}Carpet Cleaning<br>{{/if}}
             </div>
-            <div class="placeholderthing">
-            </div>
           </div>
           <div class="col-md-6 col-sm-height padded">
             <div class="hdr">
@@ -112,7 +107,7 @@
               Sessions Completed
             </div>
             <div class="value">
-              {{#if completed}}{{this}}{{else}}$completed{{/if}}
+              $completed
             </div>
             <div class="hdr">
               Subscription Status
@@ -142,19 +137,19 @@
               Customer Remarks:
             </div>
             <ol>
-            {{#each custremarkfound sess}}
+            {{#each custremarks}}
               <div class="value">
                 <li>
                   {{this}}
-                  {{#if iscustomer sess}}
-                  <button type="button" class="btn btn-xs btn-warning cedit" id="{{this}}">Edit</button>
-                  <button type="button" class="btn btn-xs btn-danger crm" id="{{this}}">Remove</button>
+                  {{#if iscustomer this}}
+                    <button type="button" class="btn btn-xs btn-warning cedit" id="{{this}}">Edit</button>
+                    <button type="button" class="btn btn-xs btn-danger crm" id="{{this}}">Remove</button>
                   {{/if}}
                 </li>
               </div>
             {{/each}}
-            {{#if iscustomer sess}}
-            <button type="button" class="btn btn-xs cadd">Add a remark</button>
+            {{#if iscustomer this}}
+              <button type="button" class="btn btn-xs cadd">Add a remark</button>
             {{/if}}
             </ol>
           </div>
@@ -167,7 +162,7 @@
               Cleaner Remarks:
             </div>
             <ol>
-            {{#each vendremarkfound sess}}
+            {{#each vendremarkfound this}}
               <div class="value">
                 <li>
                   {{this}}
@@ -180,10 +175,10 @@
       </div>
         {{else}}
           <div class="col-md-4 col-sm-height text-center padded">
-            We couldn't find that session. Either the URL is invalid, or you are unauthorized to view session details for this session.
+            We couldn't find this session. Either the URL is invalid, or you are unauthorized to view session details for this session.
           </div>
 
-        {{/if}}
+        {{/with}}
     </div>
   </section>
 </template>

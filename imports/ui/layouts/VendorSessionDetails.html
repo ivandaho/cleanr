@@ -1,14 +1,11 @@
 <template name="VendorSessionDetails">
   <section id="sess" class="bg-light-gray">
     <div class="container">
-    {{#if sess}}
+    {{#with sess}}
       <div class="row text-center">
         <div class="col-lg-12">
-          <h2 class="quick-view-rpts-h2">Session Details</h2>
-          <p class="quick-view-rpts-p">--</p>
-        </div>
-        <div class="col-lg-3">
-          <a href="/vendorworkschedule" class="btn btn-default">Back to Schedule</a>
+          <h2>Session Details</h2>
+          <p>{{_id}}</p>
         </div>
       </div>
       <div class="row bordered">
@@ -18,21 +15,35 @@
           </div>
         </div>
         <div class="row-same-height">
-          <div class="col-md-4 col-sm-height">
+          <div class="col-md-4 col-sm-height padded">
+            <div class="hdr">
+              Date
+            </div>
+            <div class="value">
+              {{dateToDay date}}, {{dateFormat date}}
+            </div>
+            <div class="hdr">
+              Time
+            </div>
+            <div class="value">
+              {{getslotbynum timeslot}}
+            </div>
             <div class="hdr">
               Team
             </div>
             <div class="value">
               $_Alpha <button type="button" class="btn btn-default">Change</button>
             </div>
+          </div>
+          <div class="col-md-4 col-sm-height">
             <div class="hdr">
               Session Status
             </div>
             <div class="value">
-              {{#with getsessionstatus sess}}
+              {{#with getsessionstatus this}}
                 <!-- if session not completed -->
                 Not Completed
-                {{#with overdate sess}}
+                {{#with overdate ..}}
                   <button type="button" class="btn btn-success btn-mark-completed">Mark as Completed</button>
                 {{/with}}
               {{else}}
@@ -40,71 +51,47 @@
                 <button type="button" class="btn btn-warning btn-mark-not-completed">Mark as Incomplete</button>
               {{/with}}
             </div>
-            <br>
-            <div class="placeholderthing">
-            </div>
-          </div>
-          <div class="col-md-4 col-sm-height padded">
-            <div class="hdr">
-              Date
-            </div>
-            <div class="value">
-              {{sess_day sess}}, {{sess_date sess}}
-            </div>
-            <div class="hdr">
-              Time
-            </div>
-            <div class="value">
-              {{sess_slotstr sess}}
-            </div>
-            <div class="hdr">
-              Session ID
-            </div>
-            <div class="value">
-              {{sess._id}}
-            </div>
-            <div class="placeholderthing">
-            </div>
-          </div>
-          <div class="col-md-4 col-sm-height">
             <div class="hdr">
               Next Session
             </div>
             <div class="value">
-              {{#with sess_nextsessdate sess}}
+              {{#with sess_nextsessdate this}}
                 {{this}}
               {{else}}
                 None
               {{/with}}
             </div>
-            <div class="placeholderthing">
-            </div>
-            <div clas="text-center">
-              <div class="vs-btndiv">
-                {{#with nextsessid sess 'prv'}}
-                  <a href="/vendorsessiondetails/{{this}}" class="btn btn-default nextprevbtn">Previous session</a>
-                {{else}}
-                  <a href="#" class="btn btn-default nextprevbtn disabled">No Earlier Session</a>
-                {{/with}}
-                {{#with nextsessid sess 'nxt'}}
-                <a href="/vendorsessiondetails/{{this}}" class="btn btn-default nextprevbtn">Next session</a>
-                {{else}}
-                  <a href="#" class="btn btn-default nextprevbtn disabled">No Next Session</a>
-                {{/with}}
-              </div>
+            <div class="btndiv2 noselect">
+              {{#with nextsessid this 'prv'}}
+              <a href="/vendorsessiondetails/{{this}}" class="btn btn-default nextprevbtn">Previous session</a>
+              {{else}}
+              <a href="#" class="btn btn-default nextprevbtn disabled">No Earlier Session</a>
+              {{/with}}
+              {{#with nextsessid this 'nxt'}}
+              <a href="/vendorsessiondetails/{{this}}" class="btn btn-default nextprevbtn">Next session</a>
+              {{else}}
+              <a href="#" class="btn btn-default nextprevbtn disabled">No Next Session</a>
+              {{/with}}
             </div>
           </div>
         </div>
       </div>
-      {{#with thebooking sess}}
+      {{#with thebooking this}}
       <div class="row bordered">
         <div class="row">
           <div class="col-md-12 text-center bighdr">
             Booking Details
+            <p>Every {{this.day}} {{getslotbynum this.timeslot}}</p>
           </div>
         </div>
         <div class="row-same-height">
-          <div class="col-md-4 col-sm-height">
+          <div class="col-md-6 col-sm-height">
+            <div class="hdr">
+              Booking ID
+            </div>
+            <div class="value">
+              <a href="/booking/{{_id}}">{{_id}}</a>
+            </div>
             <div class="hdr">
               Package
             </div>
@@ -118,23 +105,8 @@
               {{#if mc}}Mattress Cleaning<br>{{/if}}
               {{#if cc}}Carpet Cleaning<br>{{/if}}
             </div>
-            <div class="placeholderthing">
-            </div>
           </div>
-          <div class="col-md-4 col-sm-height padded"> <!-- padded?? -->
-            <div class="hdr">
-              Booking ID
-            </div>
-            <div class="value">
-              {{_id}}
-            </div>
-            <div class="text-center">
-              <div class="vs-btndiv">
-                <a href="/booking/{{_id}}" class="btn btn-default nextprevbtn">View Details</a>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4 col-sm-height padded">
+          <div class="col-md-6 col-sm-height padded">
             <div class="hdr">
               Date Booked
             </div>
@@ -145,19 +117,24 @@
               Sessions Completed
             </div>
             <div class="value">
-              {{#if completed}}{{this}}{{else}}$completed{{/if}}
+              $completed
             </div>
             <div class="hdr">
               Subscription Status
             </div>
             <div class="value">
-              {{#if substatus}}{{this}}{{else}}$substatus{{/if}}
+              {{#with getsubstatus this}}
+                Active
+              {{else}}
+                Not Active
+              {{/with}}
             </div>
           </div>
         </div>
       </div>
+ 
       {{/with}}
-      {{#with cust sess}}
+      {{#with cust this}}
       <div class="row bordered">
         <div class="row">
           <div class="col-md-12 text-center bighdr">
@@ -166,7 +143,13 @@
           </div>
         </div>
         <div class="row-same-height">
-          <div class="col-md-4 col-sm-height">
+          <div class="col-md-6 col-sm-height">
+            <div class="hdr">
+              Customer ID
+            </div>
+            <div class="value">
+              {{_id}}
+            </div>
             <div class="hdr">
               Name
             </div>
@@ -180,7 +163,7 @@
               {{user_tel}}
             </div>
           </div>
-          <div class="col-md-4 col-sm-height padded">
+          <div class="col-md-6 col-sm-height padded">
             <div class="hdr">
               Address
             </div>
@@ -191,17 +174,10 @@
               {{user_address.[0].zip}}
             </div>
           </div>
-          <div class="col-md-4 col-sm-height">
-            <div class="hdr">
-              Customer ID
-            </div>
-            <div class="value">
-              {{_id}}
-            </div>
-          </div>
         </div>
       </div>
       {{/with}}
+     
       <div class="row bordered">
         <div class="row">
           <div class="col-md-12 text-center bighdr">
@@ -214,20 +190,13 @@
               Customer Remarks:
             </div>
             <ol>
-            {{#each custremarkfound sess}}
+            {{#each custremarkfound this}}
               <div class="value">
                 <li>
                   {{this}}
-                  {{#if iscustomer sess}}
-                  <button type="button" class="btn btn-xs btn-warning cedit" id="{{this}}">Edit</button>
-                  <button type="button" class="btn btn-xs btn-danger crm" id="{{this}}">Remove</button>
-                  {{/if}}
                 </li>
               </div>
             {{/each}}
-            {{#if iscustomer sess}}
-            <button type="button" class="btn btn-xs cadd">Add a remark</button>
-            {{/if}}
             </ol>
           </div>
           <div class="col-md-4 col-sm-height padded">
@@ -239,32 +208,31 @@
               Cleaner Remarks:
             </div>
             <ol>
-            {{#each vendremarkfound sess}}
+            {{#each vendremarkfound this}}
               <div class="value">
                 <li>
                   {{this}}
-                  {{#if isvendor sess}}
+                  {{#if isvendor this}}
                     <button type="button" class="btn btn-xs btn-warning vedit" id="{{this}}">Edit</button>
                     <button type="button" class="btn btn-xs btn-danger vrm" id="{{this}}">Remove</button>
                   {{/if}}
                 </li>
               </div>
             {{/each}}
-            {{#if isvendor sess}}
-            <button type="button" class="btn btn-xs vadd">Add a remark</button>
+            {{#if isvendor this}}
+              <button type="button" class="btn btn-xs vadd">Add a remark</button>
             {{/if}}
             </ol>
           </div>
-          <div class="col-md-4 col-sm-height padded">
-          </div>
         </div>
       </div>
+ 
         {{else}}
           <div class="col-md-4 col-sm-height text-center padded">
-            We couldn't find that session. Either the URL is invalid, or you are unauthorized to view session details for this session.
+            We couldn't find this session. Either the URL is invalid, or you are unauthorized to view session details for this session.
           </div>
 
-        {{/if}}
+        {{/with}}
     </div>
   </section>
 </template>
