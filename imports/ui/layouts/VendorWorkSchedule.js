@@ -64,6 +64,15 @@ Template.vwschedtable.helpers({
 
 Template.vssession.helpers({
     dateover(sess) {
+        var endtime = Timeslots.findOne({num: parseInt(sess.n)});
+        datestr = moment.utc(sess.date).format('YYYY-MM-DD');
+        checkstr = datestr + ' ' + endtime.timeend;
+
+        if (moment.utc(checkstr, 'YYYY-MM-DD HHmm') < moment.utc()) {
+            return 'vs-passdate-cust';
+        }
+        return 'test';
+
         if (moment.utc(sess.date) < moment.utc()) {
             return 'vs-passdate-cust';
         }
