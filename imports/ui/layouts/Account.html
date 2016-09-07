@@ -35,9 +35,9 @@
                   <span class="sec-heading">
                     <button class="btn btn-sm btn-default changeAddress" id="0">
                       {{#if user_address.[0]}}
-                      Modify
+                        Modify
                       {{else}}
-                      Add
+                        Add
                       {{/if}}
                     </button>
                   </span>
@@ -58,9 +58,9 @@
                 <!-- panel 2 -->
                 <div class="panel cursor-link
                 {{#if user_address.[1]}}
-                panel-info
+                  panel-info
                 {{else}}
-                panel-default
+                  panel-default
                 {{/if}}
                 " data-toggle="collapse" href="#collapse1">
                   <div class="panel-heading">
@@ -69,33 +69,38 @@
                       <span class="sec-heading">
                         <button class="btn btn-sm btn-default changeAddress" id="1">
                           {{#if user_address.[1]}}
-                          Modify
+                            Modify
                           {{else}}
-                          Add
+                            Add
                           {{/if}}
                         </button>
+                        {{#if user_address.[1]}}
+                          <button class="btn btn-sm btn-default delAddress" id="1">
+                            Remove
+                          </button>
+                        {{/if}}
                       </span>
                     </h4>
                   </div>
                   <div id="collapse1" class="panel-collapse collapse">
                     <div class="panel-body">
                       {{#with user_address.[1]}}
-                      <p class="sec-value">{{street}}<br></p>
-                      <p class="sec-value">{{city}}<br></p>
-                      <p class="sec-value">{{state}}<br></p>
-                      <p class="sec-value">{{zip}}<br></p>
-                      <button class="btn btn-default setaddress" id="1">Use This Address as my Main Address</button>
+                        <p class="sec-value">{{street}}<br></p>
+                        <p class="sec-value">{{city}}<br></p>
+                        <p class="sec-value">{{state}}<br></p>
+                        <p class="sec-value">{{zip}}<br></p>
+                        <button class="btn btn-default setaddress" id="1">Use This Address as my Main Address</button>
                       {{else}}
-                      None Found
+                        None Found
                       {{/with}}
                     </div>
                   </div>
                 </div> <!-- /panel panel-default -->
                 <div class="panel cursor-link
                 {{#if user_address.[2]}}
-                panel-info
+                  panel-info
                 {{else}}
-                panel-default
+                  panel-default
                 {{/if}}
                 " data-toggle="collapse" href="#collapse2">
 
@@ -105,24 +110,29 @@
                       <span class="sec-heading">
                         <button class="btn btn-sm btn-default changeAddress" id="2">
                           {{#if user_address.[2]}}
-                          Modify
+                            Modify
                           {{else}}
-                          Add
+                            Add
                           {{/if}}
                         </button>
+                        {{#if user_address.[2]}}
+                          <button class="btn btn-sm btn-default delAddress" id="2">
+                            Remove
+                          </button>
+                        {{/if}}
                       </span>
                     </h4>
                   </div>
                   <div id="collapse2" class="panel-collapse collapse">
                     <div class="panel-body">
                       {{#with user_address.[2]}}
-                      <p class="sec-value">{{street}}<br></p>
-                      <p class="sec-value">{{city}}<br></p>
-                      <p class="sec-value">{{state}}<br></p>
-                      <p class="sec-value">{{zip}}<br></p>
-                      <button class="btn btn-default setaddress" id="2">Use This Address as my Main Address</button>
+                        <p class="sec-value">{{street}}<br></p>
+                        <p class="sec-value">{{city}}<br></p>
+                        <p class="sec-value">{{state}}<br></p>
+                        <p class="sec-value">{{zip}}<br></p>
+                        <button class="btn btn-default setaddress" id="2">Use This Address as my Main Address</button>
                       {{else}}
-                      None Found
+                        None Found
                       {{/with}}
                     </div>
                   </div>

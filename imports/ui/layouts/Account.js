@@ -6,6 +6,7 @@ import './Account.html';
 import { Sessions } from '../../api/sessions/Sessions.js';
 import { Timeslots } from '../../api/timeslots/Timeslots.js';
 import { Bookings } from '../../api/bookings/Bookings.js';
+import { Userdata } from '../../api/userdata/Userdata.js';
 /*
 import { Session } from 'meteor/session';
 */
@@ -142,7 +143,6 @@ Template.Account.events({
                 size: "small",
                 title: "Change Address",
                 message:
-
                 '<div class="row">' +
                   '<div class="col-centered col-md-12">' +
                     '<form class="form-horizontal register">' +
@@ -169,7 +169,6 @@ Template.Account.events({
                     '</form>' +
                   '</div>' +
                 '</div>',
-
                 buttons: {
                     success: {
                         label: "Save",
@@ -187,6 +186,24 @@ Template.Account.events({
                 onEscape: function() {}
             }
         );
+    },
+    'click .delAddress' (event) {
+        event.stopPropagation();
+        event.preventDefault();
+        var i = (event.target.id);
+
+        var index = parseInt(i);
+
+        var usr = Userdata.findOne({_id: Meteor.userId()});
+        var adds = [];
+        adds = usr.user_address;
+        delthis = adds[i];
+
+        var street = delthis.street;
+        var city = delthis.city;
+        var state = delthis.state;
+        var zip = delthis.zip;
+        Meteor.call('userdata.delAddress', index, street, city, state, zip);
     },
     'click .lessbtn' (event) {
         event.preventDefault();

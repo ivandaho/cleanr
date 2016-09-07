@@ -51,11 +51,11 @@ Meteor.methods({
         Userdata.update({_id: this.userId},
             {$set: {user_email: newmail}});
     },
-    'userdata.changeTel' (newmail){
+    'userdata.changeTel' (newmail) {
         Userdata.update({_id: this.userId},
             {$set: {user_tel: newmail}});
     },
-    'userdata.setMainAddress' (i){
+    'userdata.setMainAddress' (i) {
         var theuser = Userdata.findOne({_id: this.userId});
 
 
@@ -101,7 +101,7 @@ Meteor.methods({
             {$set: x_set});
 
     },
-    'userdata.changeAddress' (i, st, c, stt, zc){
+    'userdata.changeAddress' (i, st, c, stt, zc) {
         var str_street = "user_address." + i + ".street";
         var str_city = "user_address." + i + ".city";
         var str_state = "user_address." + i + ".state";
@@ -115,6 +115,26 @@ Meteor.methods({
         //NOTE: this is how you update a field based on variables
         Userdata.update({_id: this.userId},
             {$set: set});
+    },
+    'userdata.delAddress' (i, st, c, stt, zc) {
+        var str_street = "user_address." + i + ".street";
+        var str_city = "user_address." + i + ".city";
+        var str_state = "user_address." + i + ".state";
+        var str_zip = "user_address." + i + ".zip";
+        var set = {};
+        delthis = {"street": st,
+                   "city": c,
+                   "state": stt,
+                   "zip": zc
+        };
+
+        set[str_street] = st;
+        set[str_city] = c;
+        set[str_state] = stt;
+        set[str_zip] = zc;
+        Userdata.update({_id: this.userId},
+            {$pull: {"user_address": delthis}}
+        );
     },
     'userdata.registerNewUser' (userObject) {
         Accounts.createUser(userObject, (error) => {

@@ -4,6 +4,7 @@ import { ReactiveDict } from 'meteor/reactive-dict';
 import { Jobs } from '../../api/jobs/Jobs.js';
 import { Timeslots } from '../../api/timeslots/Timeslots.js';
 import { Sessions } from '../../api/sessions/Sessions.js';
+import { Userdata } from '../../api/userdata/Userdata.js';
 
 import '../../api/jobs/Jobs.js';
 import './Confirmation.html';
@@ -73,18 +74,79 @@ Template.Confirmation.helpers({
 Template.Confirmation.events({
     'click .changeAddress' (event) {
         event.preventDefault();
+        var usr = Userdata.findOne({_id: Meteor.userId()});
+        var show = 0;
+        var count = 0;
+        var street = "street placeholder";
+        var city = "city placeholder";
+        var state = "state placeholder";
+        var zip = "zip placeholder";
+        var add1str = "";
+        if (usr.user_address[1]) {
+            add1str = usr.user_address[1].street + "<br>" +
+                      usr.user_address[1].city + "<br>" +
+                      usr.user_address[1].state + "<br>" +
+                      usr.user_address[1].zip;
+            count++;
+        }
+        if (usr.user_address[2]) {
+            add2str = usr.user_address[2].street + "<br>" +
+                      usr.user_address[2].city + "<br>" +
+                      usr.user_address[2].state + "<br>" +
+                      usr.user_address[2].zip;
+            count++;
+        }
+
+        var moreadds = '';
+        if (count == 1) {
+              moreadds = 
+              '<div class="row text-center padded">' +
+                'Or choose another address:' +
+              '</div>' +
+              '<div class="row">' +
+                '<div class="col-sm-12">' +
+                  '<div class="col-sm-6">' +
+                    add1str +
+                  '</div>' + 
+                '</div>' + 
+              '</div>';
+        } else if (count == 2) {
+              moreadds = 
+              '<div class="row text-center padded">' +
+                'Or choose another address:' +
+              '</div>' +
+              '<div class="row">' +
+                '<div class="col-sm-12 nopadding">' +
+                  '<div class="col-sm-6 modal-box modal-box-left">' +
+                    add1str + '<br>' +
+                    '<button class="btn btn-success btn-xs btn-block" id="1">' +
+                      'Choose' +
+                    '</button>' +
+                  '</div>' + 
+                  '<div class="col-sm-6 modal-box modal-box-right">' +
+                    add2str + '<br>' +
+                    '<button class="btn btn-success btn-xs btn-block" id="2">' +
+                      'Choose' +
+                    '</button>' +
+                  '</div>' + 
+                '</div>' + 
+              '</div>';
+        }
+
         var i = (event.target.id);
         bootbox.dialog({
                 title: "Change Address",
                 message:
-                  '<div class="row">  ' +
-                    '<div class="col-md-4"> ' +
-                      '<input id="street" name="street" placeholder="Street" type="text" class="input-street"> ' +
-                      '<input id="city" name="city" placeholder="City" type="text" class="input-street"> ' +
-                      '<input id="state" name="state" placeholder="State" type="text" class="input-street"> ' +
-                      '<input id="zip" name="zip" placeholder="ZIP" type="text" class="input-street"> ' +
-                    '</div>' +
-                  '</div>',
+                    '<div class="container-fluid">' +
+                      '<div class="row">' +
+                        '<form class="form-horizontal register">' +
+                          '<input type="text" id="street" placeholder="Street" class="formpad form-control">' +
+                          '<input type="text" id="city" placeholder="City" class="formpad form-control">' +
+                          '<input type="text" id="state" placeholder="State" class="formpad form-control">' +
+                          '<input type="text" id="zip" placeholder="ZIP" class="formpad form-control">' +
+                        '</form>' +
+                      '</div>' + moreadds +
+                    '</div>',
                 buttons: {
                     success: {
                         label: "Save",
@@ -98,7 +160,8 @@ Template.Confirmation.events({
                             Meteor.call('userdata.changeAddress', index, street, city, state, zip);
                         }
                     }
-                }
+                },
+                onEscape: function() {}
             }
         );
     },

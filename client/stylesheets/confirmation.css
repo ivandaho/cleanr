@@ -161,3 +161,31 @@
     margin-top:20px;
     margin-bottom:20px;
 }
+.formpad {
+    margin-top:5px;
+    margin-bottom:5px;
+}
+.modal-box {
+    border-radius: 4px;
+    border-style: solid;
+    border-width: 1px;
+    border-color:#cccccc;
+    margin-top: 0;
+    margin-bottom: 0;
+    width: 49%;
+    padding-left:12px;
+    padding-right:12px;
+    padding-top:6px;
+    padding-bottom:6px;
+}
+.modal-box-left {
+    margin-left: 0%;
+    margin-right: 1%;
+}
+.modal-box-right {
+    margin-left: 1%;
+    margin-right: 0;
+}
+.nopadding {
+    padding:0px;
+}
