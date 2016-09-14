@@ -154,7 +154,6 @@ Meteor.methods({
     'userdata.giveUserRole' () {
         var role = Meteor.user().profile.acc;
         console.log(role);
-        //console.log(users.findOne({})); //CONTINUE
          Roles.addUsersToRoles(Meteor.userId(), role);
     },
     'userdata.addUserInfo' (name, tel, address1, address2, address3, address4) {

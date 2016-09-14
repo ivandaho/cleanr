@@ -37,7 +37,7 @@ Template.VendorCP.helpers({
                                     // or $lte
                                     date: {$eq: todaydate},
                                 },
-                                {sort: {date: -1}}
+                                {sort: {timeslot: 1}}
                             );
     },
     upcomingsesses() {

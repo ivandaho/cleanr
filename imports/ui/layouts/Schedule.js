@@ -16,6 +16,7 @@ Template.Schedule.onCreated(function ScheduleOnCreated() {
     if (!Session.get('currweek')) {
         Session.set('currweek', jdate);
     }
+    Session.set('currweek', jdate);
     tss = Timeslots.find({}, {sort: {num: 1}});
     //Meteor.subscribe('sessions');
 });
@@ -158,6 +159,7 @@ Template.Schedule.events({
             return;
         } else {
             Session.set('currweek', tempjdate);
+            $(".active").removeClass("active");
             // $(".tsbtn").velocity("callout.emerge");
         }
 
@@ -165,6 +167,18 @@ Template.Schedule.events({
     'click .resetweekbtn' (event) {
         event.preventDefault();
         var mdate = moment.utc().startOf('week').add(1, 'days');
+        tempjdate = mdate.toDate();
+        Session.set('currweek', tempjdate);
+        $(".tsbtn").velocity("stop");
+        $(".tsbtn").velocity("callout.emerge");
+    },
+    'click .changeweekbtn' (event) {
+        event.preventDefault();
+        $(".active").removeClass("active");
+        $(event.target.parentElement).addClass("active");
+
+        i = parseInt(event.target.parentElement.id.substring(4,5)) - 1;
+        var mdate = moment.utc().startOf('week').add(i, 'weeks').add(1, 'days');
         tempjdate = mdate.toDate();
         Session.set('currweek', tempjdate);
         $(".tsbtn").velocity("stop");
@@ -180,6 +194,7 @@ Template.Schedule.events({
             return;
         } else {
             Session.set('currweek', tempjdate);
+            $(".active").removeClass("active");
             // $(".tsbtn").velocity("callout.emerge");
         }
 
