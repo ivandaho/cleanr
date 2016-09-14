@@ -27,9 +27,6 @@ Template.Account.helpers({
             return false;
         }
     },
-    subdate(date) {
-        return moment.utc(date).format('YYYY-MM-DD HH:MM');
-    },
     substatus(booking) {
         var ss = booking.jobstatus;
         if (ss == 2 || ss == 3) {
@@ -66,6 +63,38 @@ Template.Account.helpers({
     },
 });
 Template.Account.events({
+    'click #demobtn' (event) {
+        console.log('rsdf');
+        event.preventDefault();
+        var tour = {
+            showCloseButton: false,
+            id: "acctour",
+            i18n:{stepNums: ["", "", "", "", "", "", ""]},
+            steps: [
+            {
+                content: "Mouseover account details and click the edit icon to change account details",
+                target: "#useremail",
+                placement: "left"
+            },
+            {
+                content: "Change your password here",
+                target: "#changepwd",
+                placement: "left"
+            },
+            {
+                content: "View, add, edit, or swap your addresses here",
+                target: "#useradds",
+                placement: "top"
+            },
+            {
+                content: "View your sessions & bookings here",
+                target: "#usersbs",
+                placement: "top"
+            }
+            ]
+        };
+        hopscotch.startTour(tour);
+    },
     'click .setaddress' (event) {
         event.stopPropagation();
         event.preventDefault();
@@ -124,7 +153,7 @@ Template.Account.events({
                 buttons: {
                     success: {
                         label: "Save",
-                        className: "btn-success",
+                        className: "btn-success btn-primary",
                         callback: function () {
                             var newtel = $("#tel").val();
                             Meteor.call('userdata.changeTel', newtel);

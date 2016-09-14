@@ -9,7 +9,7 @@
           {{#with cust custID}}
             <p class="sec-heading"><a href="/vendorcustomer/{{_id}}/">{{user_name}}</a></p>
           {{/with}}
-          <p class="sec-value">Submitted on {{subdate subdate}}</p>
+          <p class="sec-value">Submitted on {{dateFormat subdate}}</p>
             <p class="sec-heading">Subscription status:</p>
             {{#with getsubstatus this}}
               <p class="sec-value">Active

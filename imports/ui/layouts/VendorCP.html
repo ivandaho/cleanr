@@ -39,7 +39,7 @@
                     {{#each todaysesses this}}
                     <tr>
                       <td><a href="/vendorsessiondetails/{{_id}}">{{_id}}</a></td>
-                      <td>{{formatdate date}} {{getslotbynum timeslot}}</td>
+                      <td>{{dateFormat date}} {{getslotbynum timeslot}}</td>
                       <td>
                         {{#if parsess sessionstatus}}
                           Completed | <button id="{{_id}}" class="btn btn-xs btn-success"> Give feedback </button>
@@ -70,7 +70,7 @@
                     {{#each upcomingsesses this}}
                     <tr>
                       <td><a href="/vendorsessiondetails/{{_id}}">{{_id}}</a></td>
-                      <td>{{formatdate date}} {{getslotbynum timeslot}}</td>
+                      <td>{{dateFormat date}} {{getslotbynum timeslot}}</td>
                       <td>
                         Pending | <button id="{{_id}}" class="btn btn-xs btn-danger"> Cancel</button>
                       </td>
@@ -97,7 +97,7 @@
                     {{#each pastsesses this}}
                     <tr>
                       <td><a href="/vendorsessiondetails/{{_id}}">{{_id}}</a></td>
-                      <td>{{formatdate date}} {{getslotbynum timeslot}}</td>
+                      <td>{{dateFormat date}} {{getslotbynum timeslot}}</td>
                       <td>
                         {{#if parsess sessionstatus}}
                           Completed | <button id="{{_id}}" class="btn btn-xs btn-success"> Give feedback </button>

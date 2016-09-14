@@ -23,4 +23,42 @@ Template.Header.events({
         Meteor.call('jobs.pending', date, package);
         */
     },
+    'click #demobtn' (event) {
+        console.log('rsdf');
+        event.preventDefault();
+        var tour = {
+            showCloseButton: false,
+            id: "nt",
+            i18n:{stepNums: ["", "", "", "", "", "", ""]},
+            steps: [
+            {
+                title: "View the schedule for available slots",
+                target: "#booknowbtn",
+                fixedElement: true,
+                placement: "bottom"
+            },
+            {
+                title: "Log In",
+                content: "You can use 'testuser@site.com' with the password 'newtourcleanr' to demo features",
+                target: "#loginlink",
+                fixedElement: true,
+                placement: "bottom"
+            },
+            {
+                title: "Account Control Panel",
+                content: "View account details, past sessions, and bookings. Additional Vendor features will be enabled if the account is a Vendor account.",
+                target: "#accountcp",
+                fixedElement: true,
+                placement: "bottom"
+            },
+            {
+                title: "Access Vendor Options",
+                target: "#vendormenu",
+                fixedElement: true,
+                placement: "bottom"
+            }
+            ]
+        };
+        hopscotch.startTour(tour);
+    },
 });

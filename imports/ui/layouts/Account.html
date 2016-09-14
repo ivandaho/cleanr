@@ -5,7 +5,10 @@
         <div class="container">
         <div class="col-centered col-md-10">
           <div class="row section-panel bordered-section">
-            <h1>Account Details</h1>
+            <h1>
+              Account Details
+              <button class="btn btn-sm btn-info" id="demobtn">Demo</button>
+            </h1>
             <div class="col-md-6">
               <div class="profile-image">
                 placeholder for profile image perhaps
@@ -14,15 +17,15 @@
             <div class="col-md-6">
               <p class="sec-heading">{{_id}}<br></p>
               <p class="sec-value">{{user_name}}<br></p>
-              <p class="sec-value gethover">{{user_email}} <i class="fa fa-edit editicon changeEmail"></i></p>
+              <p id="useremail" class="sec-value gethover">{{user_email}} <i class="fa fa-edit editicon changeEmail"></i></p>
               <p class="sec-value gethover">{{user_tel}} <i class="fa fa-edit editicon changeTel"></i></p>
-              <p class="sec-value"><a href='/changepwd' class="btn btn-default">Change Password</a><br></p>
+              <p class="sec-value"><a id="changepwd" href="/changepwd" class="btn btn-default">Change Password</a><br></p>
             </div>
           </div>
 
           <!-- addresses -->
           <div class="row section-panel bordered-section">
-            <h1>Addresses</h1>
+            <h1 id="useradds">Addresses</h1>
             <p class="sec-heading">Add up to 3 addresses.<br></p>
             <!-- TODO: set a margin (css) -->
             <br>
@@ -143,7 +146,7 @@
 
 
           <div class="row section-panel bordered-section">
-            <h1>Sessions & Bookings</h1>
+            <h1 id="usersbs">Sessions & Bookings</h1>
 
             <p class="sec-heading">Recent Sessions</p>
             <br>

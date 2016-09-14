@@ -35,9 +35,6 @@ Template.Booking.helpers({
         var d = moment.utc().subtract(6, 'months').toDate();
         return Sessions.find({bookingID: booking._id, date: {$gt: d}}, {sort: {date: -1}});
     },
-    subdate(date) {
-        return moment.utc(date).format('YYYY-MM-DD HH:MM');
-    },
     d(p) {
         return moment.utc(p).format('YYYY-MM-DD');
     },

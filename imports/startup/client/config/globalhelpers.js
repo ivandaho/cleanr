@@ -3,11 +3,6 @@ import { Userdata } from '/imports/api/userdata/Userdata.js';
 import { Sessions } from '/imports/api/sessions/Sessions.js';
 import { Bookings } from '/imports/api/bookings/Bookings.js';
 
-Template.registerHelper("formatdate", function(d) {
-
-    return moment.utc(d).format('YYYY-MM-DD');
-});
-
 Template.registerHelper("getslotbynum", function(s) {
     var ts = Timeslots.findOne({num: parseInt(s)}) || {};
     return ts.slot;

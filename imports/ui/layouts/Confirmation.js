@@ -99,7 +99,7 @@ Template.Confirmation.events({
 
         var moreadds = '';
         if (count == 1) {
-              moreadds = 
+              moreadds =
               '<div class="row text-center padded">' +
                 'Or choose another address:' +
               '</div>' +
@@ -107,11 +107,11 @@ Template.Confirmation.events({
                 '<div class="col-sm-12">' +
                   '<div class="col-sm-6">' +
                     add1str +
-                  '</div>' + 
-                '</div>' + 
+                  '</div>' +
+                '</div>' +
               '</div>';
         } else if (count == 2) {
-              moreadds = 
+              moreadds =
               '<div class="row text-center padded">' +
                 'Or choose another address:' +
               '</div>' +
@@ -122,14 +122,14 @@ Template.Confirmation.events({
                     '<button class="btn btn-success btn-xs btn-block" id="1">' +
                       'Choose' +
                     '</button>' +
-                  '</div>' + 
+                  '</div>' +
                   '<div class="col-sm-6 modal-box modal-box-right">' +
                     add2str + '<br>' +
                     '<button class="btn btn-success btn-xs btn-block" id="2">' +
                       'Choose' +
                     '</button>' +
-                  '</div>' + 
-                '</div>' + 
+                  '</div>' +
+                '</div>' +
               '</div>';
         }
 
@@ -194,6 +194,23 @@ Template.Confirmation.events({
         }
     },
     'click #proceedPayment' () {
+        if(!Meteor.userId()) {
+            bootbox.dialog({
+                title: "Please Log In",
+                message: "Hi there! Please log in or register to continue with the booking process. Thank you.",
+                buttons: {
+                    'LogIn': {
+                        label: 'Log In',
+                        className: 'btn-success',
+                        callback: function() {
+                            FlowRouter.go('/login');
+                        }
+                    },
+                },
+                onEscape: function() {} // allows for esc to close modal
+            });
+            return;
+        }
         var date = moment.utc(FlowRouter.getQueryParam('date')).toDate();
         var slot = FlowRouter.getQueryParam('slot');
         var repeat;

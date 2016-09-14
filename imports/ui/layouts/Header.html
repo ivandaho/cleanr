@@ -18,7 +18,7 @@
         {{#if currentUser}}
           {{#with getuserdata}}
             {{#if user_name}}
-              <li><a href="{{pathFor 'account'}}">Welcome, {{user_name}}</a></li>
+              <li id="accountcp"><a href="{{pathFor 'account'}}">Welcome, {{user_name}}</a></li>
             {{else}}
               <li><a href="{{pathFor 'account'}}">Welcome, {{currentUser.emails.[0].address}}</a></li>
             {{/if}}
@@ -27,14 +27,14 @@
         {{> NavbarUserControl}}
         <!-- <li class="divider-vertical"></li> -->
         {{#if isInRole 'vendor'}}
-          <li class="dropdown">
+          <li id="vendormenu" class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Vendor Actions<span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a href="/vendorcp">Control Panel</a></li>
-              <li><a href="/vendorworkschedule">Schedule</a></li>
-              <li><a href="/vendorcustomers">Customers</a></li>
+              <li id="vendorcp"><a href="/vendorcp">Control Panel</a></li>
+              <li id="vendorws"><a href="/vendorworkschedule">Schedule</a></li>
+              <li id="vendorcl"><a href="/vendorcustomers">Customers</a></li>
               <li role="separator" class="divider"></li>
-              <li><a href="/vendorregistration">Set Default Schedule</a></li>
+              <li id="vendorsds"><a href="/vendorregistration">Set Default Schedule</a></li>
             </ul>
           </li>
         {{/if}}
@@ -42,7 +42,12 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
           <p class="navbar-btn-fix">
-            <a href='/schedule' class='btn btn-lg btn-success'>Book Now</a>
+            <button id="demobtn" class='btn btn-lg btn-info'>Demo</button>
+          </p>
+        </li>
+        <li>
+          <p class="navbar-btn-fix">
+            <a href='/schedule' id="booknowbtn" class='btn btn-lg btn-success'>Book Now</a>
           </p>
         </li>
       </ul>
