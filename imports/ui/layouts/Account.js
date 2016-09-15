@@ -16,6 +16,8 @@ Template.Account.onCreated(function AccountOnCreated() {
     Meteor.subscribe('sessions');
     Meteor.subscribe('timeslots');
     Meteor.subscribe('bookings');
+    Session.set('rslimit', 5);
+    Session.set('mblimit', 5);
 });
 
 
@@ -28,18 +30,37 @@ Template.Account.helpers({
         }
     },
     substatus(booking) {
-        var ss = booking.jobstatus;
+        const ss = booking.jobstatus;
         if (ss == 2 || ss == 3) {
             return "Active";
         }
         return "Inactive";
     },
     morebookings() {
-        return Bookings.find({custID: Meteor.userId()});
+        var mblimit = Session.get('mblimit');
+        var thing = Bookings.find({
+                                custID: Meteor.userId()
+                            },
+                            {
+                                sort: {subdate: 1, timeslot: 1},
+                                limit: mblimit
+                            });
+        // counts the number of sessions found
+        var newcount = thing.count();
+        // sets the number of sessions found
+        Session.set('mbcount', newcount);
+
+        // if the new count is same as the old count
+        if (newcount < Session.get('mblimit')) {
+            Session.set('mbmaxed', true);
+        } else {
+            Session.set('mbmaxed', false);
+        }
+        return thing;
     },
     booking() {
         // get most recent booking with active subscription
-        var d = moment.utc().subtract(6, 'months').toDate();
+        const d = moment.utc().subtract(6, 'months').toDate();
         var mrs = Sessions.findOne({custID: Meteor.userId(),
                                     date: {$gt: d}},
                                     {sort: {date: -1}}) || {};
@@ -51,18 +72,67 @@ Template.Account.helpers({
             }
     },
     sesses() { // TODO: is this secure? #22
-        return Sessions.find({custID: Meteor.userId()});
-    },
-    d(p) {
-        return moment.utc(p).format('YYYY-MM-DD');
-    },
-    s(p) {
-        var found = Timeslots.findOne({num: parseInt(p)}) || {};
+        var rslimit = Session.get('rslimit');
+        var thing = Sessions.find({
+                                custID: Meteor.userId()
+                            },
+                            {
+                                sort: {date: 1, timeslot: 1},
+                                limit: rslimit
+                            });
+        // counts the number of sessions found
+        var newcount = thing.count();
+        // sets the number of sessions found
+        Session.set('rscount', newcount);
 
-        return found.slot && found.slot;
+        // if the new count is same as the old count
+        if (newcount < Session.get('rslimit')) {
+            Session.set('rsmaxed', true);
+        } else {
+            Session.set('rsmaxed', false);
+        }
+        return thing;
     },
 });
 Template.Account.events({
+    'click .vm-rs' (event) {
+        event.preventDefault();
+        var newrslimit = Session.get('rslimit') + 5;
+        if (Session.get('rsmaxed') != true) {
+            Session.set('rslimit', Session.get('rslimit') + 5);
+            setTimeout(function () {
+            $(".rs-row").velocity("stop");
+            $(".rs-row").velocity("callout.emerge", {stagger: 5});
+            }, 10);
+        }
+    },
+    'click .vl-rs' (event) {
+        event.preventDefault();
+        if (Session.get('rslimit') - 5 < 5) {
+            Session.set('rslimit', 5)
+        } else {
+            Session.set('rslimit', Session.get('rslimit') - 5);
+        }
+    },
+    'click .vm-mb' (event) {
+        event.preventDefault();
+        var newmblimit = Session.get('mblimit') + 5;
+        if (Session.get('mbmaxed') != true) {
+            Session.set('mblimit', Session.get('mblimit') + 5);
+            setTimeout(function () {
+            $(".mb-row").velocity("stop");
+            $(".mb-row").velocity("callout.emerge", {stagger: 5});
+            }, 10);
+        }
+    },
+    'click .vl-mb' (event) {
+        event.preventDefault();
+        if (Session.get('mblimit') - 5 < 5) {
+            Session.set('mblimit', 5)
+        } else {
+            Session.set('mblimit', Session.get('mblimit') - 5);
+        }
+    },
     'click #demobtn' (event) {
         console.log('rsdf');
         event.preventDefault();

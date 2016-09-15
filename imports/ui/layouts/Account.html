@@ -161,22 +161,23 @@
                 </thead>
                 <tbody>
                   {{#each sesses this}}
-                  <tr>
-                    <td><a href="/customersessiondetails/{{_id}}">{{_id}}</a></td>
-                    <td>{{d date}} {{s timeslot}}</td>
-                    <td>
-                      {{#if parsess sessionstatus}}
-                        Completed | <button class="btn btn-xs btn-success"> Give feedback </button>
-                      {{else}}
-                        Pending
-                      {{/if}}
-                    </td>
-                  </tr>
+                    <tr class="rs-row">
+                      <td><a href="/customersessiondetails/{{_id}}">{{_id}}</a></td>
+                      <td>{{dateFormat date}} {{getslotbynum timeslot}}</td>
+                      <td>
+                        {{#if parsess sessionstatus}}
+                          Completed | <button class="btn btn-xs btn-success"> Give feedback </button>
+                        {{else}}
+                          Pending
+                        {{/if}}
+                      </td>
+                    </tr>
                   {{/each}}
                 </tbody>
               </table>
             </div>
-            <p class="sec-value"><a href='#' class="btn btn-default">View More</a></p>
+              <span class="sec-value"><button class="btn btn-default vm-rs">View More</button></span>
+              <span class="sec-value"><button class="btn btn-default vl-rs">View Less</button></span>
             <p class="sec-heading">Recent Bookings</p>
             <div class="table-responsive">
               <table class="table table-bordered">
@@ -184,21 +185,22 @@
                   <tr>
                     <th class="text-center">Booking ID</th>
                     <th class="text-center">Time Slot</th>
-                    <th class="text-center">Last Session</th>
+                    <th class="text-center">Date Booked</th>
                   </tr>
                 </thead>
                 <tbody>
                   {{#each morebookings}}
-                  <tr>
-                    <td><a href="/booking/{{_id}}">{{_id}}</a></td>
-                    <td>{{s timeslot}} every {{day}}</td>
-                    <td>$ended</td>
-                  </tr>
+                    <tr class="mb-row">
+                      <td><a href="/booking/{{_id}}">{{_id}}</a></td>
+                      <td>{{getslotbynum timeslot}} every {{day}}</td>
+                      <td>{{dateFormat subdate}}</td>
+                    </tr>
                   {{/each}}
                 </tbody>
               </table>
             </div>
-            <p class="sec-value"><a href='#' class="btn btn-default">View More</a></p>
+              <span class="sec-value"><button class="btn btn-default vm-mb">View More</button></span>
+              <span class="sec-value"><button class="btn btn-default vl-mb">View Less</button></span>
           </div>
         </div>
         </div> <!-- /container -->

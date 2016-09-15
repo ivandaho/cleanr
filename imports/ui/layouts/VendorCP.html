@@ -68,7 +68,7 @@
                   </thead>
                   <tbody>
                     {{#each upcomingsesses this}}
-                    <tr>
+                    <tr class="us-row">
                       <td><a href="/vendorsessiondetails/{{_id}}">{{_id}}</a></td>
                       <td>{{dateFormat date}} {{getslotbynum timeslot}}</td>
                       <td>
@@ -79,7 +79,8 @@
                   </tbody>
                 </table>
               </div>
-              <p class="sec-value"><a href='#' class="btn btn-default">View More</a></p>
+              <span class="sec-value"><button class="btn btn-default vm-us">View More</button></span>
+              <span class="sec-value"><button class="btn btn-default vl-us">View Less</button></span>
 
               <p class="sec-heading">Past Sessions</p>
               <br>
@@ -95,7 +96,7 @@
                   </thead>
                   <tbody>
                     {{#each pastsesses this}}
-                    <tr>
+                    <tr class="ps-row">
                       <td><a href="/vendorsessiondetails/{{_id}}">{{_id}}</a></td>
                       <td>{{dateFormat date}} {{getslotbynum timeslot}}</td>
                       <td>
@@ -110,7 +111,8 @@
                   </tbody>
                 </table>
               </div>
-              <p class="sec-value"><a href='#' class="btn btn-default">View More</a></p>
+              <span class="sec-value"><button class="btn btn-default vm-ps">View More</button></span>
+              <span class="sec-value"><button class="btn btn-default vl-ps">View Less</button></span>
             </div>
           </div>
         </div>
