@@ -233,6 +233,7 @@ Template.Account.events({
         var state = delthis.state;
         var zip = delthis.zip;
         Meteor.call('userdata.delAddress', index, street, city, state, zip);
+        $(event.target.parentElement.parentElement.parentElement.parentElement).removeClass("panel-info");
     },
     'click .lessbtn' (event) {
         event.preventDefault();
