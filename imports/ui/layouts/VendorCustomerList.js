@@ -25,7 +25,8 @@ Template.VendorCustomerList.helpers({
         const instance = Template.instance();
         var re = new RegExp(instance.state.get('filtertext'), "ig");
         return Userdata.find({
-            user_name: { $in: [re] }
+            user_name: { $in: [re] },
+            _id: { $nin: [Meteor.userId()] }
         });
     },
     recentbooking(cust) {

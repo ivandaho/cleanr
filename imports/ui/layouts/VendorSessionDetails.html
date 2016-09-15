@@ -2,6 +2,7 @@
   <section id="sess" class="bg-light-gray">
     <div class="container">
     {{#with sess}}
+    {{#if sess._id}}
       <div class="row text-center">
         <div class="col-lg-12">
           <h2>Session Details</h2>
@@ -226,13 +227,16 @@
           </div>
         </div>
       </div>
- 
-        {{else}}
-          <div class="col-md-4 col-sm-height text-center padded">
-            We couldn't find this session. Either the URL is invalid, or you are unauthorized to view session details for this session.
-          </div>
-
-        {{/with}}
+      {{else}}
+        <div class="col-md-4 col-sm-height text-center padded">
+          We couldn't find this session. Either the URL is invalid, or you are unauthorized to view session details for this session.
+        </div>
+      {{/if}}
+      {{else}}
+        <div class="col-md-4 col-sm-height text-center padded">
+          We couldn't find this session. Either the URL is invalid, or you are unauthorized to view session details for this session.
+        </div>
+      {{/with}}
     </div>
   </section>
 </template>

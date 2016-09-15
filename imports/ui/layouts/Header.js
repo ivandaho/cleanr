@@ -39,7 +39,7 @@ Template.Header.events({
             },
             {
                 title: "Log In",
-                content: "You can use 'testuser@site.com' with the password 'newtourcleanr' to demo features",
+                content: "You can log in with the following example users to demo features:<br>e-mail: 'vendor@site.com' | 'verygoodvendorpassword'<br>e-mail: 'vendor2@site.com' | 'verygoodvendorpassword'<br>e-mail: 'cust1@site.com' | 'verygoodcustpassword'<br>e-mail: 'cust2@site.com'  | 'verygoodcustpassword'",
                 target: "#loginlink",
                 fixedElement: true,
                 placement: "bottom"

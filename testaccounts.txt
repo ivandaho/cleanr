@@ -1,0 +1,5 @@
+vendor@site.com | verygoodvendorpassword
+vendor2@site.com | verygoodvendorpassword
+cust1@site.com | verygoodcustpassword | repeated sessions wed 3
+cust2@site.com | verygoodcustpassword | repeated sessions sun 1
+cust3@site.com | verygoodcustpassword | repeated sessions thu 3
