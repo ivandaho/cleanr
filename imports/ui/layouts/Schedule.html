@@ -51,8 +51,25 @@
 
 <template name="eachslot">
   {{#each this}}
-    <td>
-      <button class="btn tsbtn {{#if hasopen date n}}btn-success bookbtn{{else}}btn-disabled{{/if}}" id="{{date}} {{n}}">Book this slot</button>
+    <td class="tsbtn">
+      {{#if dateover date n}}
+        <button class="btn btn-disabled">
+          Too late
+        </button>
+      {{else}}
+        {{#if hasopen date n}}
+          <button class="btn
+            btn-success bookbtn"
+          id="{{date}} {{n}}">
+                Book this slot
+          </button>
+        {{else}}
+          <button class="btn
+            btn-disabled">
+            Not available
+          </button>
+        {{/if}}
+      {{/if}}
     </td>
   {{/each}}
 </template>

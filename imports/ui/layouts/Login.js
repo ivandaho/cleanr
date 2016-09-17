@@ -13,7 +13,13 @@ Template.Login.events({
             if (error) {
                 Bert.alert(error.reason, 'danger');
             } else {
-                FlowRouter.go('account');
+                if (Roles.userIsInRole(Meteor.userId(), 'customer')) {
+                    FlowRouter.go('account');
+                } else if (Roles.userIsInRole(Meteor.userId(), 'vendor')) {
+                    FlowRouter.go('vendorcp');
+                } else {
+                    FlowRouter.go('account');
+                }
             }
         });
     }

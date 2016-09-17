@@ -23,29 +23,28 @@ Template.VendorCP.helpers({
             return false;
         }
     },
-    sesses() { // TODO: is this secure? #22
-        return Sessions.find(
-                                {vendorID: Meteor.userId()},
-                                {sort: {date: -1}}
-                            );
-    },
     todaysesses() { // TODO: is this secure? #22
         const todaydate = moment.utc().startOf('day').toDate();
 
-        return Sessions.find(
-                                {
-                                    vendorID: Meteor.userId(),
-                                    // TODO: might have time zone errors
-                                    // down the road if this is set to
-                                    // $eq instead of something like $gte
-                                    // or $lte
-                                    date: {$eq: todaydate},
-                                },
-                                {sort: {timeslot: 1}}
-                            );
+        const thing = Sessions.find(
+                                    {
+                                        vendorID: Meteor.userId(),
+                                        // TODO: might have time zone errors
+                                        // down the road if this is set to
+                                        // $eq instead of something like $gte
+                                        // or $lte
+                                        date: {$eq: todaydate},
+                                    },
+                                    {sort: {timeslot: 1}}
+                                );
+        if (thing.count() != 0) {
+            return thing;
+        } else {
+            return false;
+        }
     },
     upcomingsesses() {
-        const tmrdate = moment.utc().startOf('day').add(1, 'days').toDate();
+        const tmrdate = moment.utc().startOf('day').toDate();
         const uslimit = Session.get('uslimit');
         const thing = Sessions.find(
                                 {
@@ -68,7 +67,11 @@ Template.VendorCP.helpers({
         } else {
             Session.set('usmaxed', false);
         }
-        return thing;
+        if (thing.count() != 0) {
+            return thing;
+        } else {
+            return false;
+        }
     },
     pastsesses() {
         const todaydate = moment.utc().startOf('day').toDate();
@@ -94,7 +97,11 @@ Template.VendorCP.helpers({
         } else {
             Session.set('psmaxed', false);
         }
-        return thing;
+        if (thing.count() != 0) {
+            return thing;
+        } else {
+            return false;
+        }
     },
 });
 

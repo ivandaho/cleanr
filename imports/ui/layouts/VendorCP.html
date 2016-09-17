@@ -49,6 +49,12 @@
                         {{/if}}
                       </td>
                     </tr>
+                    {{else}}
+                      <tr>
+                        <td colspan="3" class="text-center">
+                          None found
+                        </td>
+                      </tr>
                     {{/each}}
                   </tbody>
                 </table>
@@ -75,12 +81,22 @@
                         Pending | <button id="{{_id}}" class="btn btn-xs btn-danger"> Cancel</button>
                       </td>
                     </tr>
+                    {{else}}
+                      <tr class="us-row">
+                        <td colspan="3" class="text-center">
+                          None found
+                        </td>
+                      </tr>
                     {{/each}}
                   </tbody>
                 </table>
               </div>
-              <span class="sec-value"><button class="btn btn-default vm-us">View More</button></span>
-              <span class="sec-value"><button class="btn btn-default vl-us">View Less</button></span>
+              {{#if upcomingsesses this}}
+              <div class="divmarginbtm">
+                <span class="sec-value"><button class="btn btn-default vm-us">View More</button></span>
+                <span class="sec-value"><button class="btn btn-default vl-us">View Less</button></span>
+              </div>
+                {{/if}}
 
               <p class="sec-heading">Past Sessions</p>
               <br>
@@ -107,12 +123,22 @@
                         {{/if}}
                       </td>
                     </tr>
+                    {{else}}
+                      <tr class="ps-row">
+                        <td colspan="3" class="text-center">
+                          None found
+                        </td>
+                      </tr>
                     {{/each}}
                   </tbody>
                 </table>
               </div>
-              <span class="sec-value"><button class="btn btn-default vm-ps">View More</button></span>
-              <span class="sec-value"><button class="btn btn-default vl-ps">View Less</button></span>
+              {{#if pastsesses this}}
+              <div class="divmarginbtm">
+                <span class="sec-value"><button class="btn btn-default vm-ps">View More</button></span>
+                <span class="sec-value"><button class="btn btn-default vl-ps">View Less</button></span>
+              </div>
+              {{/if}}
             </div>
           </div>
         </div>

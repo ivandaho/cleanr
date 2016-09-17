@@ -55,18 +55,17 @@ Template.schedtable.helpers({
 });
 
 Template.eachslot.helpers({
+    dateover(date, n) {
+        var thets = Timeslots.findOne({num: n});
+        datestr = moment.utc(date).format('YYYY-MM-DD');
+        checkstr = datestr + ' ' + thets.timestart;
+        if (moment.utc(checkstr, 'YYYY-MM-DD HHmm') < moment.utc().add(2, 'days')) {
+            return true;
+        }
+        return false;
+    },
     hasopen(date, n) {
         var jdate = moment.utc(date).toDate();
-        //console.log(n);
-        var starttime = Timeslots.findOne({num: n});
-        datestr = moment.utc(date).format('YYYY-MM-DD');
-        checkstr = datestr + ' ' + starttime.timeend;
-        if (moment.utc(checkstr, 'YYYY-MM-DD HHmm') < moment.utc().add(2, 'days')) {
-            // if date passed
-            return false;
-        }
-
-        // console.log(date + ' ' + jdate);
 
         //var ds = Vendorslots.find({d: new Date(jdate)});
         var ds = Vendorslots.find({

@@ -31,6 +31,32 @@ Template.CustomerSessionDetails.helpers({
 });
 
 Template.CustomerSessionDetails.events({
+    'click #demobtn' (event) {
+        event.preventDefault();
+        var tour = {
+            showCloseButton: false,
+            id: "custsessdtour",
+            i18n:{stepNums: ["", "", "", "", "", "", ""]},
+            steps: [
+            {
+                content: "View Session details in this window; go to the previous/next session (if the session is part of a multi-session booking) with these buttons.",
+                target: ".nextprevbtn",
+                placement: "left"
+            },
+            {
+                content: "View details for the corresponding booking here. Click this link to view all sessions in the corresponding booking.",
+                target: ".bookingidhdr",
+                placement: "top"
+            },
+            {
+                content: "View, add, or edit any remarks if needed. Both customers and vendors can utilize this section.",
+                target: ".remarkshdr",
+                placement: "bottom"
+            }
+            ]
+        };
+        hopscotch.startTour(tour);
+    },
     'click .btn-cancel-sub' (event) {
         event.preventDefault();
         var bid = event.target.id;

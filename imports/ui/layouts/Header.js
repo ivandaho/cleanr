@@ -24,7 +24,6 @@ Template.Header.events({
         */
     },
     'click #demobtn' (event) {
-        console.log('rsdf');
         event.preventDefault();
         var tour = {
             showCloseButton: false,

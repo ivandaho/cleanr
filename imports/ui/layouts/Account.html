@@ -7,7 +7,7 @@
           <div class="row section-panel bordered-section">
             <h1>
               Account Details
-              <button class="btn btn-sm btn-info" id="demobtn">Demo</button>
+              <button class="btn btn-sm btn-info" id="demobtn"><i class="fa fa-question-circle fa-2x"></i></button>
             </h1>
             <div class="col-md-6">
               <div class="profile-image">
@@ -172,12 +172,22 @@
                         {{/if}}
                       </td>
                     </tr>
+                    {{else}}
+                      <tr class="rs-row">
+                        <td colspan="3" class="text-center">
+                          None found
+                        </td>
+                      </tr>
                   {{/each}}
                 </tbody>
               </table>
             </div>
-              <span class="sec-value"><button class="btn btn-default vm-rs">View More</button></span>
-              <span class="sec-value"><button class="btn btn-default vl-rs">View Less</button></span>
+            {{#if sesses this}}
+              <div class="divmarginbtm">
+                <span class="sec-value"><button class="btn btn-default vm-rs">View More</button></span>
+                <span class="sec-value"><button class="btn btn-default vl-rs">View Less</button></span>
+              </div>
+            {{/if}}
             <p class="sec-heading">Recent Bookings</p>
             <div class="table-responsive">
               <table class="table table-bordered">
@@ -195,12 +205,22 @@
                       <td>{{getslotbynum timeslot}} every {{day}}</td>
                       <td>{{dateFormat subdate}}</td>
                     </tr>
+                    {{else}}
+                      <tr class="rs-row">
+                        <td colspan="3" class="text-center">
+                          None found
+                        </td>
+                      </tr>
                   {{/each}}
                 </tbody>
               </table>
             </div>
-              <span class="sec-value"><button class="btn btn-default vm-mb">View More</button></span>
-              <span class="sec-value"><button class="btn btn-default vl-mb">View Less</button></span>
+            {{#if morebookings this}}
+              <div class="divmarginbtm">
+                <span class="sec-value"><button class="btn btn-default vm-mb">View More</button></span>
+                <span class="sec-value"><button class="btn btn-default vl-mb">View Less</button></span>
+              </div>
+            {{/if}}
           </div>
         </div>
         </div> <!-- /container -->

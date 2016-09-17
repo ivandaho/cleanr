@@ -56,7 +56,11 @@ Template.Account.helpers({
         } else {
             Session.set('mbmaxed', false);
         }
-        return thing;
+        if (thing.count() != 0) {
+            return thing;
+        } else {
+            return false;
+        }
     },
     booking() {
         // get most recent booking with active subscription
@@ -91,7 +95,11 @@ Template.Account.helpers({
         } else {
             Session.set('rsmaxed', false);
         }
-        return thing;
+        if (thing.count() != 0) {
+            return thing;
+        } else {
+            return false;
+        }
     },
 });
 Template.Account.events({
@@ -134,7 +142,6 @@ Template.Account.events({
         }
     },
     'click #demobtn' (event) {
-        console.log('rsdf');
         event.preventDefault();
         var tour = {
             showCloseButton: false,
