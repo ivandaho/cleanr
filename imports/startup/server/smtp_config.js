@@ -53,10 +53,37 @@ Mailer.config({
 });
 
 this.Templates = {};
-Templates.test = {
-    path: "bookingSuccess.html",
+const date = moment.utc(date);
+const b = 'ugkiCxYeuNkEGFZx2';
+const sid = 'owgQyXG56kBn3z6MA';
+
+Templates.bookingSuccess_cust = {
+    path: "bookingSuccess_cust.html",
     route: {
-        path: '/test/'
+        path: '/bookingSuccess_cust/',
+        data: function() {
+            return {
+                d: date,
+                s: 1,
+                r: false,
+                bid: b,
+                sessid: sid
+            };
+        }
+    },
+    css: 'email.css'
+}
+
+const mocksesses = ['TqKPfBTj7sP2f3v9K','3Y68HEJfz5mgRDnTc','62PAycFr482P7zpZv'];
+Templates.bookingSuccess_vend = {
+    path: "bookingSuccess_vend.html",
+    route: {
+        path: '/bookingSuccess_vend/',
+        data: function() {
+            return {
+                sesses: mocksesses
+            };
+        }
     },
     css: 'email.css'
 }

@@ -231,10 +231,14 @@ Template.Confirmation.events({
         } else {
             mc = false;
         }
-        let ids;
+        let bid;
+        let sid;
         Meteor.call('bookings.insert', date, slot, repeat, mc, cc, function(error, result){
-            ids = result;
-            Meteor.call('email.bookingSuccess', date, slot, repeat, ids);
+            bid = result.b;
+            sid = result.s[0];
+
+            Meteor.call('email.bookingSuccess_cust', date, slot, repeat, bid, sid);
+            Meteor.call('email.bookingSuccess_vend', bid, sid);
             bootbox.alert('Success!');
         });
     },

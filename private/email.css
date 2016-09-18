@@ -39,7 +39,24 @@ img {
     margin-top: 3px;
     margin-bottom: 3px;
 }
-.btn {
+.floatright{
+    float: right;
+}
+
+.btn-right {
+    position: relative;
+    color: #fff;
+    background-color: #419c41;
+    border-color: #98a39;
+    text-align: center;
+    cursor: pointer;
+    padding: 8px 10px;
+    font-size: 14px;
+    /* line-height: 12.6; */
+    border-radius: 4px;
+    text-decoration: none;
+}
+.btn-block {
     color: #fff;
     background-color: #419c41;
     border-color: #98a39;

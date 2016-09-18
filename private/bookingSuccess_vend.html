@@ -1,0 +1,30 @@
+<html>
+  <head>
+    <title>
+      test title
+      </title>
+  </head>
+  <body>
+    <div class="container">
+      <div>
+        <a href="{{baseUrl '/'}}">
+          <img src="/res/img/cleanr-logo.png" class="navbar-brand-logo">
+        </a>
+      </div>
+      <div class="title">
+        <h1>We have new session(s) for you.</h1>
+        <h2>Session Details:</h2>
+      </div>
+      {{#each sesses}}
+        <div class="darken">
+          <div class="field">
+            {{dateToDay date}}, {{dateFormat date}} from {{getslotbynum timeslot}}
+            <div class="floatright">
+              <a class="btn-right" href="{{baseUrl '/vendorsessiondetails/'}}{{_id}}">View More Details</a>
+            </div>
+          </div>
+        </div>
+      {{/each}}
+    </div>
+  </body>
+</html>
