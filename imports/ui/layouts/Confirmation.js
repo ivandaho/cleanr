@@ -231,8 +231,12 @@ Template.Confirmation.events({
         } else {
             mc = false;
         }
-        Meteor.call('bookings.insert', date, slot, repeat, mc, cc);
-        bootbox.alert('success!');
+        let ids;
+        Meteor.call('bookings.insert', date, slot, repeat, mc, cc, function(error, result){
+            ids = result;
+            Meteor.call('email.bookingSuccess', date, slot, repeat, ids);
+            bootbox.alert('Success!');
+        });
     },
 });
 

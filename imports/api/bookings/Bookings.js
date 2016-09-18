@@ -75,7 +75,6 @@ Meteor.methods({
         // check for weekly schedule
         var y = 0;
         if (repeat) {
-            console.log('repeat');
             y = 3;
         }
 
@@ -131,7 +130,7 @@ Meteor.methods({
                   }
 
             // create booking
-            Bookings.insert(doc);
+            let bid = Bookings.insert(doc);
 
             // get bookingID
             var bookingid = Bookings.findOne(doc)._id;
@@ -139,18 +138,28 @@ Meteor.methods({
             // each Booking
 
             // add Sessions
+            let sids = [];
+
             sess.forEach(function(each) {
                 // add booking id into session array
                 each.bookingID = bookingid;
                 // add to session Collection
-                Sessions.insert(each);
+                sids.push(Sessions.insert(each));
+                // CONTINUE:
+
+                // COMMENTED OUT FOR EASY DEV PROCESS
                 // remove vendorslot
-                Vendorslots.remove({
-                    ownerID: each.vendorID,
-                    d: each.date,
-                    s: each.timeslot
-                    });
+                // Vendorslots.remove({
+                //     ownerID: each.vendorID,
+                //     d: each.date,
+                //     s: each.timeslot
+                //     });
             });
+            const returnobj = {
+                b: bid,
+                s: sids
+            };
+            return returnobj;
         } else {
             var able = sess.length;
             var sessword = 'sessions';

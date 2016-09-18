@@ -1,0 +1,15 @@
+<html>
+  <head>
+    <title>
+      test title
+      </title>
+  </head>
+  <body>
+    <h2>
+      Your session is scheduled for the {{getslotbynum s}} time slot on {{dateToDay d}}, {{dateFormat d}}.
+    </h2>
+    <a href="{{baseUrl '/customersessiondetails/'}}{{sessid}}">View Session Details</a>
+    <br>
+    <a href="{{baseUrl '/booking/'}}{{bid}}">View Booking Details</a>
+  </body>
+</html>

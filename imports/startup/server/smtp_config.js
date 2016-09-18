@@ -1,3 +1,5 @@
+import { Timeslots } from '/imports/api/timeslots/Timeslots.js';
+
 Accounts.emailTemplates.siteName = "Cleanr.my";
 Accounts.emailTemplates.from     = "Cleanr <admin@site.com>";
 
@@ -40,4 +42,40 @@ Meteor.methods({
             return Accounts.sendVerificationEmail(userId);
         }
     },
+});
+
+Mailer.config({
+    from: 'Cleanr <admin@site.com>',
+    baseUrl: 'http://localhost:3000/',
+    replyTo: 'Cleanr <admin@site.com>'
+});
+
+this.Templates = {};
+Templates.test = {
+    path: "bookingSuccess.html",
+    route: {
+        path: '/test/'
+    }
+}
+
+this.TemplateHelpers = {
+    dateToDay(date) {
+        return moment.utc(date).format('dddd');
+    },
+    dateFormat(date) {
+        return moment.utc(date).format('YYYY-MM-DD');
+    },
+    getslotbynum(s) {
+        var ts = Timeslots.findOne({num: parseInt(s)}) || {};
+        return ts.slot;
+    }
+};
+
+
+Meteor.startup(() => {
+
+    Mailer.init({
+        templates: Templates,     // Global Templates namespace, see lib/templates.js.
+        helpers: TemplateHelpers
+    });
 });
