@@ -5,11 +5,48 @@
       </title>
   </head>
   <body>
-    <h2>
-      Your session is scheduled for the {{getslotbynum s}} time slot on {{dateToDay d}}, {{dateFormat d}}.
-    </h2>
-    <a href="{{baseUrl '/customersessiondetails/'}}{{sessid}}">View Session Details</a>
-    <br>
-    <a href="{{baseUrl '/booking/'}}{{bid}}">View Booking Details</a>
+    <div class="container">
+      <div>
+        <a href="{{baseUrl '/'}}">
+          <img src="/res/img/cleanr-logo.png" class="navbar-brand-logo">
+        </a>
+      </div>
+      <div class="title">
+        <h1>Thank you for booking with us.</h1>
+      </div>
+      <div class="darken">
+        <h2>Booking Details
+        </h2>
+        {{#with booking bid}}
+          <div class="field">
+            ID:
+            <div class="value">
+              {{_id}}
+            </div>
+          </div>
+          <div class="field">
+            Your time slot:
+            <div class="value">
+              Every {{day}} from {{getslotbynum timeslot}}
+            </div>
+          </div>
+        {{/with}}
+      </div>
+
+      {{#with getnextsess bid}}
+        <div class="darken">
+          <div class="field">
+            First Session Date:
+            <div class="value">
+              {{dateToDay date}}, {{dateFormat date}}
+            </div>
+          </div>
+        </div>
+      {{/with}}
+
+      <div class="inside">
+        <a class="btn" href="{{baseUrl '/booking/'}}{{bid}}">View More Details</a>
+      </div>
+    </div>
   </body>
 </html>

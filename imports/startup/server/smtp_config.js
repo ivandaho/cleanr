@@ -1,4 +1,6 @@
 import { Timeslots } from '/imports/api/timeslots/Timeslots.js';
+import { Sessions } from '/imports/api/sessions/Sessions.js';
+import { Bookings } from '/imports/api/bookings/Bookings.js';
 
 Accounts.emailTemplates.siteName = "Cleanr.my";
 Accounts.emailTemplates.from     = "Cleanr <admin@site.com>";
@@ -55,10 +57,32 @@ Templates.test = {
     path: "bookingSuccess.html",
     route: {
         path: '/test/'
-    }
+    },
+    css: 'email.css'
 }
 
 this.TemplateHelpers = {
+    getsessionstatus(sess) {
+        if (thesess.sessionstatus == 0) {
+            return true;
+        }
+    },
+    getnextsess(bid) {
+        // for testing purposes
+        // let b = 'sphkuR7Phq2y2axb8';
+        let s = Sessions.findOne({bookingID: bid}, {sort: {date: 1}});
+        return s;
+    },
+    booking(bid) {
+        // for testing purposes
+        // let b = 'sphkuR7Phq2y2axb8';
+        var found = Bookings.findOne({_id: bid});
+        return found;
+    },
+    sess(sid) {
+            var found = Sessions.findOne({_id: sid});
+        return found;
+    },
     dateToDay(date) {
         return moment.utc(date).format('dddd');
     },
@@ -73,7 +97,6 @@ this.TemplateHelpers = {
 
 
 Meteor.startup(() => {
-
     Mailer.init({
         templates: Templates,     // Global Templates namespace, see lib/templates.js.
         helpers: TemplateHelpers
