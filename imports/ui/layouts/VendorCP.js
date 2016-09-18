@@ -148,7 +148,13 @@ Template.VendorCP.events({
     'click .markComplete' (event) {
         event.preventDefault();
         const sid = event.target.id;
-        Meteor.call('sessions.markCompleted', sid);
+        Meteor.call('sessions.markCompleted', sid, function(error) {
+            if (error) {
+                console.log(error);
+            } else {
+                Meteor.call('email.markCompleted', sid);
+            }
+        });
 
     },
 });

@@ -53,9 +53,25 @@ Mailer.config({
 });
 
 this.Templates = {};
+// for tests...
 const date = moment.utc(date);
 const b = 'ugkiCxYeuNkEGFZx2';
-const sid = 'owgQyXG56kBn3z6MA';
+const sid = 'f5k6THHQiBDqCCNHS';
+const testsess = Sessions.findOne({_id: sid});
+
+Templates.sessionCompleted = {
+    path: "sessionCompleted.html",
+    route: {
+        path: '/sessionCompleted/',
+        data: function() {
+            const s = Sessions.findOne({_id: sid});
+            return {
+                thesess: s
+            };
+        }
+    },
+    css: 'email.css'
+}
 
 Templates.bookingSuccess_cust = {
     path: "bookingSuccess_cust.html",
@@ -93,6 +109,14 @@ this.TemplateHelpers = {
         if (thesess.sessionstatus == 0) {
             return true;
         }
+    },
+    getnextsessafter(s) {
+        // for testing purposes
+        // let b = 'sphkuR7Phq2y2axb8';
+        bid = s.bookingID;
+        let nextsess = Sessions.findOne({bookingID: bid, date: {$gt: s.date}}, {sort: {date: 1}});
+
+        return nextsess;
     },
     getnextsess(bid) {
         // for testing purposes

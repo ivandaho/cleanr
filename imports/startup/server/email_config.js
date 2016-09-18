@@ -2,7 +2,50 @@ import { Meteor } from 'meteor/meteor';
 import { Sessions } from '/imports/api/sessions/Sessions.js';
 import { Bookings } from '/imports/api/bookings/Bookings.js';
 
+const checkblacklist = function(addr) {
+    let index = addr.indexOf("@") + 1;
+    var str = addr.substring(index);
+
+    // blacklist site.com because i use that name for example
+    let domains = ['site.com'];
+
+    // return true;
+    var blacklisted = false;
+    
+    domains.forEach(function (domain) {
+        if (blacklisted === false) {
+            if (domain === str) {
+                blacklisted = true;
+            }
+        }
+    });
+    return blacklisted;
+};
+
 Meteor.methods({
+    'email.markCompleted' (sid) {
+        const sess = Sessions.findOne({_id: sid});
+        const vid = sess.vendorID;
+        const vendor = Meteor.users.findOne({_id:vid});
+
+        const cid = sess.custID;
+        const cust = Meteor.users.findOne({_id:cid});
+        const emailAddress = cust.emails[0].address;
+
+        if (!checkblacklist(emailAddress)) {
+            Mailer.send({
+                    to: emailAddress,
+                    subject: "[Cleanr] Your Session has been completed.",
+                    template: 'sessionCompleted',
+                    data: {
+                        thesess: sess
+                    }
+            });
+        } else {
+            console.log('The domain for "' + emailAddress + '" is blacklisted for e-mails. The e-mail will not be sent.');
+        }
+
+    },
     'email.bookingSuccess_vend' (b, s) {
 
         // get all the sessions for the booking
@@ -13,7 +56,6 @@ Meteor.methods({
         // get the vendor ids associated with the sessions
         sesses.forEach(function(item) {
             vids.push(item.vendorID);
-            console.log('pushed : ' + item.vendorID);
         });
         function uniq(a) {
                return Array.from(new Set(a));
@@ -23,10 +65,8 @@ Meteor.methods({
         let vends = [];
 
         vids.forEach(function(id) {
-            // console.log('vid: ' + vid);
             const avend = Meteor.users.findOne({_id:id});
             const emailAddress = avend.emails[0].address;
-            console.log('preparing to send to: ' + emailAddress);
             // get each session's information
             var vendorsessions = [];
 
@@ -38,22 +78,8 @@ Meteor.methods({
 
             // check if the domain is blacklisted
             // this is so I don't accidentally send a bunch of emails
-            let index = emailAddress.indexOf("@") + 1;
-            let str = emailAddress.substring(index);
 
-            // blacklist site.com because i use that name for example
-            let blacklists = ['site.com'];
-            let blacklisted = false;
-            blacklists.forEach(function (item) {
-                if (!blacklisted) {
-                    if (item == str) {
-                        blacklisted = true;
-                    }
-                }
-            });
-
-            if (!blacklisted) {
-                console.log(str);
+            if (!checkblacklist(emailAddress)) {
                 Mailer.send({
                         to: emailAddress,
                         subject: "[Cleanr] You have new Session assignment(s)",
@@ -67,26 +93,10 @@ Meteor.methods({
             }
         });
     },
-
     'email.bookingSuccess_cust' (date, slot, repeat, b, s) {
 
         const emailAddress = Meteor.user().emails[0].address;
-        let index = emailAddress.indexOf("@") + 1;
-        let str = emailAddress.substring(index);
-
-        // blacklist site.com because i use that name for example
-        let blacklists = ['site.com'];
-        let blacklisted = false;
-        blacklists.forEach(function (item) {
-            if (!blacklisted) {
-                if (item == str) {
-                    blacklisted = true;
-                }
-            }
-        });
-
-        if (!blacklisted) {
-            console.log(str);
+        if (!checkblacklist(emailAddress)) {
             Mailer.send({
                     to: emailAddress,
                     subject: "[Cleanr] Thank You For Booking With Cleanr",

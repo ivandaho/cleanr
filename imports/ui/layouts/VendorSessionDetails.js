@@ -47,7 +47,14 @@ Template.VendorSessionDetails.helpers({
 Template.VendorSessionDetails.events({
     'click .btn-mark-completed' (event) {
         event.preventDefault();
-        Meteor.call('sessions.markCompleted', FlowRouter.getParam('sessid'));
+        let sid = FlowRouter.getParam('sessid');
+        Meteor.call('sessions.markCompleted', sid, function(error) {
+            if (error) {
+                console.log(error);
+            } else {
+                Meteor.call('email.markCompleted', sid);
+            }
+        });
     },
     'click .btn-mark-not-completed' (event) {
         event.preventDefault();

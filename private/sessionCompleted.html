@@ -1,0 +1,48 @@
+<html>
+  <head>
+    <title>
+      test title
+      </title>
+  </head>
+  <body>
+    <div class="container">
+      <div>
+        <a href="{{baseUrl '/'}}">
+          <img src="/res/img/cleanr-logo.png" class="navbar-brand-logo">
+        </a>
+      </div>
+      <div class="title">
+        <h1>The associated cleaner has marked your session as complete.</h1>
+        <h2>Session Details:</h2>
+      </div>
+      {{#with thesess}}
+        <div class="darken">
+          <div class="field">
+            ID:
+            <div class="value">
+              {{_id}}
+            </div>
+          </div>
+          <div class="field">
+            Time Slot:
+            <div class="value">
+              {{dateToDay date}}, {{dateFormat date}} from {{getslotbynum timeslot}}
+            </div>
+          </div>
+        </div>
+        <div class="inside">
+          <a class="btn-block" href="{{baseUrl '/customersessiondetails/'}}{{this._id}}">View Session Details</a>
+          <a class="btn-block" href="{{baseUrl '/booking/'}}{{bookingID}}">View Booking Details</a>
+        </div>
+        <div class="nodarken">
+          {{#if getnextsessafter this}}
+          The next session for this booking is on {{dateFormat date}} from {{getslotbynum timeslot}}.
+          {{else}}
+          You have no more Sessions for this booking.
+          {{/if}}
+        </div>
+
+      {{/with}}
+    </div>
+  </body>
+</html>
