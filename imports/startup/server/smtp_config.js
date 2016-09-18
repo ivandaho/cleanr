@@ -55,8 +55,8 @@ Mailer.config({
 this.Templates = {};
 // for tests...
 const date = moment.utc(date);
-const b = 'ugkiCxYeuNkEGFZx2';
-const sid = 'f5k6THHQiBDqCCNHS';
+const b = 'LxSFSi7nPiRsvBWMT';
+const sid = 'mjz3xoGcvs9A48phZ';
 const testsess = Sessions.findOne({_id: sid});
 
 Templates.sessionCompleted = {

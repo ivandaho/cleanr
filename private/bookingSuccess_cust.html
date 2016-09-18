@@ -42,11 +42,12 @@
             </div>
           </div>
         </div>
-      {{/with}}
 
       <div class="inside">
-        <a class="btn-block" href="{{baseUrl '/booking/'}}{{bid}}">View More Details</a>
+        <a class="btn-block" href="{{baseUrl '/customersessiondetails/'}}{{_id}}">View Next Session Details</a>
+        <a class="btn-block" href="{{baseUrl '/booking/'}}{{this.bookingID}}">View Booking Details</a>
       </div>
+      {{/with}}
     </div>
   </body>
 </html>

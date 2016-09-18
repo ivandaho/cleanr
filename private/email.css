@@ -17,6 +17,14 @@ body {
 }
 img {
 }
+.nodarken {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding-left: 18px;
+    padding-right: 18px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
 .darken {
     margin-top: 5px;
     margin-bottom: 5px;
