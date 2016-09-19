@@ -5,6 +5,8 @@ import { Generatedweeks } from '/imports/api/generatedweeks/Generatedweeks.js';
 import { Bookings } from '/imports/api/bookings/Bookings.js';
 import { Sessions } from '/imports/api/sessions/Sessions.js';
 
+var later = require('later');
+
 SyncedCron.add({
     name: 'test new named sc job',
     schedule: function(parser) {
@@ -16,11 +18,30 @@ SyncedCron.add({
     }
 });
 
+SyncedCron.add({
+    name: 'sendOutReminders',
+    schedule: function(parser) {
+        return later.parse.recur().on('00:00:00').time();
+        // return parser.text('every 15 seconds'); for debug
+        // return parser.text('every 15 seconds'); for debug
+    },
+    job: function() {
+        sendOutSessionReminders();
+    }
+});
+
 SyncedCron.config({
     log: false
 });
 SyncedCron.start();
 
+const sendOutSessionReminders = function() {
+    let next = moment.utc().startOf('day').add(2, 'day').toDate();
+    var allsessions = Sessions.find({date: {$eq: next}}, {sort: {date: 1}});
+    allsessions.forEach(function (asess) {
+        Meteor.call('email.sessionReminder', asess);
+    });
+};
 
 var timed_UpdateWeeks = function() {
 

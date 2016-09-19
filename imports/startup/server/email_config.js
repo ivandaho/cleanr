@@ -11,7 +11,7 @@ const checkblacklist = function(addr) {
 
     // return true;
     var blacklisted = false;
-    
+
     domains.forEach(function (domain) {
         if (blacklisted === false) {
             if (domain === str) {
@@ -23,6 +23,30 @@ const checkblacklist = function(addr) {
 };
 
 Meteor.methods({
+    'email.sessionReminder' (sess) {
+        // const vid = sess.vendorID;
+        // const vendor = Meteor.users.findOne({_id:vid});
+
+        console.log('kek');
+        return;
+        const cid = sess.custID;
+        const cust = Meteor.users.findOne({_id:cid});
+        const emailAddress = cust.emails[0].address;
+
+        if (!checkblacklist(emailAddress)) {
+            Mailer.send({
+                    to: emailAddress,
+                    subject: "[Cleanr] Reminder: you have an upcoming session",
+                    template: 'sessionReminder',
+                    data: {
+                        thesess: sess
+                    }
+            });
+        } else {
+            console.log('The domain for "' + emailAddress + '" is blacklisted for e-mails. The e-mail will not be sent.');
+        }
+
+    },
     'email.markCompleted' (sid) {
         const sess = Sessions.findOne({_id: sid});
         const vid = sess.vendorID;
@@ -89,7 +113,7 @@ Meteor.methods({
                         }
                 });
             } else {
-                console.log('The domain "' + str + '" is blacklisted for e-mails. The e-mail will not be sent.');
+                console.log('The domain for "' + emailAddress + '" is blacklisted for e-mails. The e-mail will not be sent.');
             }
         });
     },

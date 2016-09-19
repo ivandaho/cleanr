@@ -1,0 +1,45 @@
+<html>
+  <head>
+    <title>
+      test title
+      </title>
+  </head>
+  <body>
+    {{#with thesess}}
+      <div class="container">
+        <div>
+          <a href="{{baseUrl '/'}}">
+            <img src="/res/img/cleanr-logo.png" class="navbar-brand-logo">
+          </a>
+        </div>
+        <div class="title">
+          <h1>You are scheduled for the {{getslotbynum timeslot}} slot for {{dateToDay date}}, {{dateFormat date}}.</h1>
+          <h2>Session Details:</h2>
+        </div>
+          <div class="darken">
+            <div class="field">
+              ID:
+              <div class="value">
+                {{_id}}
+              </div>
+            </div>
+            <div class="field">
+              Address:
+              <div class="value">
+                {{#with thecust custID}}
+                  {{user_address.[0].street}}<br>
+                  {{user_address.[0].city}}<br>
+                  {{user_address.[0].state}}<br>
+                  {{user_address.[0].zip}}<br>
+                {{/with}}
+              </div>
+            </div>
+          </div>
+          <div class="inside">
+            <a class="btn-block" href="{{baseUrl '/customersessiondetails/'}}{{this._id}}">View Session Details</a>
+            <a class="btn-block" href="{{baseUrl '/booking/'}}{{bookingID}}">View Booking Details</a>
+          </div>
+      </div>
+    {{/with}}
+  </body>
+</html>

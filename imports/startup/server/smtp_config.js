@@ -1,6 +1,7 @@
 import { Timeslots } from '/imports/api/timeslots/Timeslots.js';
 import { Sessions } from '/imports/api/sessions/Sessions.js';
 import { Bookings } from '/imports/api/bookings/Bookings.js';
+import { Userdata } from '/imports/api/userdata/Userdata.js';
 
 Accounts.emailTemplates.siteName = "Cleanr.my";
 Accounts.emailTemplates.from     = "Cleanr <admin@site.com>";
@@ -59,6 +60,20 @@ const b = 'LxSFSi7nPiRsvBWMT';
 const sid = 'mjz3xoGcvs9A48phZ';
 const testsess = Sessions.findOne({_id: sid});
 
+Templates.sessionReminder = {
+    path: "sessionReminder.html",
+    route: {
+        path: '/sessionReminder/',
+        data: function() {
+            const s = Sessions.findOne({_id: sid});
+            return {
+                thesess: s
+            };
+        }
+    },
+    css: 'email.css'
+}
+
 Templates.sessionCompleted = {
     path: "sessionCompleted.html",
     route: {
@@ -105,6 +120,9 @@ Templates.bookingSuccess_vend = {
 }
 
 this.TemplateHelpers = {
+    thecust(cid) {
+        return Userdata.findOne({_id: cid});
+    },
     getsessionstatus(sess) {
         if (thesess.sessionstatus == 0) {
             return true;

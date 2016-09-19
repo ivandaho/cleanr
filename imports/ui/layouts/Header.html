@@ -42,14 +42,14 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li id="vendormenu" class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-lg fa-bell"></i></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-lg {{#if atleastonenotification}}fa-bell cleanr-icon-green-darker{{else}}fa-bell-o{{/if}}"></i></a>
           <ul class="dropdown-menu">
             {{#each notificationfound}}
               {{#if isNewVendorSess this}}
               <li class="ntf"><span><a href="/vendorsessiondetails/{{this.sid}}">New assigned session: {{#with sessbysessid this.sid}} {{dateToDay date}} {{dateFormat date}} {{/with}} </a><i id="{{_id}}" class="fa fa-close dismissn"></i></span></li>
               {{/if}}
             {{else}}
-            <li class="ntf">No new notifications</li>
+            <li class="ntf text-center">No new notifications</li>
             {{/each}}
           </ul>
         </li>

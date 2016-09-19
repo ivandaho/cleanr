@@ -11,6 +11,13 @@ Template.Header.onCreated(function AccountOnCreated() {
 });
 
 Template.Header.helpers({
+    atleastonenotification() {
+        thing = Notifications.find({seen: false});
+        if (thing.count() > 0) {
+            return true;
+        }
+        return false;
+    },
     notificationfound() {
         return Notifications.find({seen: false});
     },

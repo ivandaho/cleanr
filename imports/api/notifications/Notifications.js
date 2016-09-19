@@ -17,7 +17,7 @@ NotificationsSchema = new SimpleSchema({
     sid: {
         type: String
     },
-    dismiss: {
+    seen: {
         type: Boolean
     }
 });

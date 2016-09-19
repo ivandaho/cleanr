@@ -10,13 +10,13 @@ Customer makes a booking
     * ~~View First Session~~
 
   * ~~**E-mail:** parse sessions, and notify the corresponding vendors (one e-mail only)~~
-  * **E-mail:** Add sessions into syncedCron array to email customer 2 days before. (ignore if session date is earlier than 2 days away)
-    * View Booking
-    * View Session
+  * ~~**E-mail:** Add sessions into syncedCron array to email customer 2 days before. (ignore if session date is earlier than 2 days away)~~
+    * ~~View Booking~~
+    * ~~View Session~~
 
 Session completed
   * ~~**E-mail:** to customer notifying that the vendor has marked the session as completed~~
     * ~~Verify/Give Feedback~~
 
 ### Visual ###
-Demo icon
+~~Demo icon~~
