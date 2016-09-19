@@ -35,6 +35,11 @@ Template.registerHelper("cust", function(sess) {
     var found = Userdata.findOne({_id: sess.custID}) || {};
     return found;
 });
+Template.registerHelper("sessbysessid", function(sid) {
+    var found = Sessions.findOne({_id: sid}) || {};
+    return found;
+});
+
 Template.registerHelper("sess", function() {
     var sid = FlowRouter.getParam('sessid');
     // might break later?

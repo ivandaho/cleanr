@@ -6,6 +6,7 @@ import '../../api/generatedweeks/server/publications.js';
 import '../../api/vendordata/server/publications.js';
 import '../../api/vendorslots/server/publications.js';
 import '../../api/bookings/server/publications.js';
+import '../../api/notifications/server/publications.js';
 
 import './repopulate.js'
 import './timedjobs.js'

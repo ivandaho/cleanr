@@ -4,6 +4,7 @@ import { Mongo } from 'meteor/mongo';
 import { Sessions } from '../sessions/Sessions.js';
 import { Vendorslots } from '../vendorslots/Vendorslots.js';
 import { Timeslots } from '../timeslots/Timeslots.js';
+import { Notifications } from '../notifications/Notifications.js';
 
 export const Bookings = new Mongo.Collection('bookings');
 
@@ -138,13 +139,14 @@ Meteor.methods({
             // each Booking
 
             // add Sessions
-            let sids = [];
+            var sids = [];
 
             sess.forEach(function(each) {
                 // add booking id into session array
                 each.bookingID = bookingid;
                 // add to session Collection
-                sids.push(Sessions.insert(each));
+                let sx = Sessions.insert(each);
+                sids.push(sx);
                 // CONTINUE:
 
                 // COMMENTED OUT FOR EASY DEV PROCESS
@@ -154,6 +156,16 @@ Meteor.methods({
                 //     d: each.date,
                 //     s: each.timeslot
                 //     });
+
+                // send notification
+                Notifications.insert({
+                    createdDate: moment.utc().toDate(),
+                    uid: each.vendorID,
+                    type: 0,
+                    sid: sx,
+                    seen: false
+                });
+
             });
             const returnobj = {
                 b: bid,

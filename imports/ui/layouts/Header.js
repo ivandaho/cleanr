@@ -2,13 +2,37 @@ import './Header.html';
 
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
+import { Notifications } from '/imports/api/notifications/Notifications.js';
 
 
 Template.Header.onCreated(function AccountOnCreated() {
     Meteor.subscribe('userdata');
+    Meteor.subscribe('notifications');
+});
+
+Template.Header.helpers({
+    notificationfound() {
+        return Notifications.find({seen: false});
+    },
+    isNewVendorSess(n) {
+        if (n.type == 0) {
+            // its a notification for vendor
+            // telling them that a new session
+            // has been assigned to them.
+            return true;
+        }
+        return false;
+    }
 });
 
 Template.Header.events({
+    'click .dismissn' (event) {
+        event.stopPropagation();
+        event.preventDefault();
+        let nid = event.target.id;
+        Meteor.call('notifications.dismissNotification', nid);
+
+    },
     'click .test-btn' (event) {
         event.preventDefault();
         bootbox.alert('test');
