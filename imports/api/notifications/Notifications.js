@@ -26,6 +26,7 @@ Notifications.attachSchema(NotificationsSchema);
 
 Meteor.methods({
     'notifications.dismissNotification' (nid) {
-        Notifications.remove({_id: nid});
+            Notifications.update({_id: nid},
+                    {$set: {seen: true}});
     }
 });

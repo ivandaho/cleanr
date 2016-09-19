@@ -164,6 +164,13 @@ FlowRouter.route('/customersessiondetails/:sessid', {
     }
 });
 
+FlowRouter.route('/notifications', {
+    name: 'notifications',
+    action() {
+        BlazeLayout.render('MainLayout', {main: 'NotificationView'})
+    }
+});
+
 FlowRouter.route('/reset-password/:token',{
     action (params) {
         BlazeLayout.render('MainLayout', {main: 'Resetpassword'})

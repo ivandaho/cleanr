@@ -1,0 +1,41 @@
+<template name="NotificationView">
+  <header class="header-vendor-custlist">
+    <div class="container headertext">
+      <h1>Notifications</h1>
+    </div>
+  </header>
+  <section>
+    <div class="container">
+      <div class="row">
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th class="text-center col-md-2">Date</th>
+                <th class="text-center col-md 10">Message</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each allnotifications}}
+              <tr class="n-row">
+                <td class="text-center">{{dateFormat createdDate}}</td>
+                <td>
+                  {{#if isNewVendorSess this}}
+                    <a href="/vendorsessiondetails/{{this.sid}}">New assigned session: {{#with sessbysessid this.sid}} {{dateToDay date}} {{dateFormat date}} {{/with}} </a>
+                  {{/if}}
+                </td>
+              </tr>
+              {{/each}}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="row">
+        <div class="divmarginbtm">
+          <span class="sec-value"><button class="btn btn-default vm-n">View More</button></span>
+          <span class="sec-value"><button class="btn btn-default vl-n">View Less</button></span>
+        </div>
+      </div>
+    </div>
+  </section>
+</template>

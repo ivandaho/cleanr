@@ -90,3 +90,13 @@ Template.registerHelper("nextsessid", function(sess, direction) {
         return arr[0]._id;
     }
 });
+
+Template.registerHelper("isNewVendorSess", function(n) {
+    if (n.type == 0) {
+        // its a notification for vendor
+        // telling them that a new session
+        // has been assigned to them.
+        return true;
+    }
+    return false;
+});

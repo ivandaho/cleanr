@@ -2,7 +2,6 @@ import { Template } from 'meteor/templating';
 
 import './Account.html';
 
-// this is for meteor session variables, not cleaning session
 import { Sessions } from '../../api/sessions/Sessions.js';
 import { Timeslots } from '../../api/timeslots/Timeslots.js';
 import { Bookings } from '../../api/bookings/Bookings.js';

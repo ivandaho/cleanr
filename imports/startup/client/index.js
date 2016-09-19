@@ -17,6 +17,7 @@ import '/imports/ui/layouts/CustomerSessionDetails.js';
 import '/imports/ui/layouts/Header.js';
 import '/imports/ui/layouts/Login.js';
 import '/imports/ui/layouts/NavbarUserControl.js';
+import '/imports/ui/layouts/NotificationView.js';
 import '/imports/ui/layouts/Passwordrecovery.js';
 import '/imports/ui/layouts/Registration.js';
 import '/imports/ui/layouts/Registration2.js';
