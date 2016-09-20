@@ -38,6 +38,6 @@ Other Notifications:
 
 
 ### Other ###
-* Login - check password string if its empty before passing data to server
+* ~~Login - check password string if its empty before passing data to server~~
 * Page to view all sessions with filters (like date window)
 * Disable view more/less buttons when limit is reached

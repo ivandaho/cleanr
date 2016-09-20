@@ -8,6 +8,23 @@ Template.Login.events({
         event.preventDefault();
         var email = $('[name=email]').val();
         var password = $('[name=password]').val();
+        if (!email) {
+            Bert.alert({
+                icon: 'fa-warning',
+                message: 'E-mail field cannot be blank',
+                type: 'warning-alt'
+            });
+            return;
+        }
+
+        if (!password) {
+            Bert.alert({
+                icon: 'fa-warning',
+                message: 'Password field cannot be blank',
+                type: 'warning-alt'
+            });
+            return;
+        }
 
         Meteor.loginWithPassword(email, password, (error) => {
             if (error) {

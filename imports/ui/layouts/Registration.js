@@ -14,8 +14,28 @@ Template.Registration.events({
         var password = $('[name=password]').val();
         var password2 = $('[name=password2]').val();
 
+        if (!password) {
+            Bert.alert({
+                icon: 'fa-warning',
+                message: 'Please enter a password',
+                type: 'warning-alt'
+            });
+            return;
+        }
+        if (!password2) {
+            Bert.alert({
+                icon: 'fa-warning',
+                message: 'Please confirm your password',
+                type: 'warning-alt'
+            });
+            return;
+        }
         if (password != password2) {
-            Bert.alert('Passwords do not match!', 'danger');
+            Bert.alert({
+                icon: 'fa-warning',
+                message: 'Passwords do not match!',
+                type: 'warning-alt'
+            });
             return;
         }
         if (zxcvbn(password).score < 2) {
@@ -28,6 +48,10 @@ Template.Registration.events({
             return;
         }
         var email = $('[name=email]').val();
+        if (!email) {
+            Bert.alert('E-mail field cannot be blank', 'danger');
+            return;
+        }
         var accounttype = $('[name=accounttype]').val();
         profileobj = {};
 
