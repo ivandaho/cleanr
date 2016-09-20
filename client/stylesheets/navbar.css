@@ -9,12 +9,12 @@
     -webkit-transition: all .35s;
     -moz-transition: all .35s;
     transition: all .35s;
-    padding: 15px 0;
+    padding: 15px;
     /* Add additional styles here for the UNCOLLAPSED state */
     background: rgba(0,0,0,0);
   }
   .navbar-default.affix {
-    padding: 0;
+    padding: 10px 0px 0px 0px;
     background: rgb(0,0,0);
     /* Add additional styles here for the COLLAPSED state */
   }

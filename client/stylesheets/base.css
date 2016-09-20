@@ -1,3 +1,18 @@
+.genericbackground {
+    padding-top:100px;
+    padding-bottom:100px;
+    background-color:#292927;
+    text-align: center;
+    font-size: 6.5em;
+
+    background-image: url('res/img/header-bg.jpg');
+    background-position: center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+    background-attachment: scroll;
+}
 .dismissn {
     cursor: pointer;
 }
@@ -20,10 +35,14 @@
 .cleanr-icon-green-darker {
     color:#0E5F0E;
 }
+.bigheader {
+    padding-top: 300px;
+    padding-bottom: 200px;
+}
 header {
     text-align: center;
-    padding-top: 300px;
-    padding-bottom:200px;
+    padding-top: 150px;
+    padding-bottom:100px;
     background-position: center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -44,8 +63,8 @@ header p{
 main {
 }
 section {
-    padding-bottom:150px;
-    padding-top:150px;
+    padding-bottom:50px;
+    padding-top:50px;
 }
 footer {
     padding-top:100px;

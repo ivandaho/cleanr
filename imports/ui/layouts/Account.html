@@ -1,14 +1,15 @@
 <template name="Account">
+  <div class="genericbackground">
+    <div class="container headertext">
+      <h1> Account Details <button class="btn btn-sm btn-info" id="demobtn"><i class="fa fa-question-circle fa-2x"></i></button> </h1>
+    </div>
+  </div>
   {{#if currentUser}}
     {{#with getuserdata}}
       <section id="custdetails-sec-1" class="bg-light-gray">
         <div class="container">
         <div class="col-centered col-md-10">
           <div class="row section-panel bordered-section">
-            <h1>
-              Account Details
-              <button class="btn btn-sm btn-info" id="demobtn"><i class="fa fa-question-circle fa-2x"></i></button>
-            </h1>
             <div class="col-md-6">
               <div class="profile-image">
                 placeholder for profile image perhaps
@@ -196,6 +197,7 @@
                     <th class="text-center">Booking ID</th>
                     <th class="text-center">Time Slot</th>
                     <th class="text-center">Date Booked</th>
+                    <th class="text-center">Subscription Status</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -204,6 +206,7 @@
                       <td><a href="/booking/{{_id}}">{{_id}}</a></td>
                       <td>{{getslotbynum timeslot}} every {{day}}</td>
                       <td>{{dateFormat subdate}}</td>
+                      <td>{{substatus this}}</td>
                     </tr>
                     {{else}}
                       <tr class="rs-row">
