@@ -5,6 +5,9 @@
 .custbox-complete {
     background: rgba(0, 179, 0, 0.3);
 }
+.custbox-canceled {
+    background: rgba(218, 28, 28, 0.3);
+}
 .custbox-empty {
     background-color : #eeeeee;
 }

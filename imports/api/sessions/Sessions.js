@@ -33,7 +33,7 @@ SessionSchema = new SimpleSchema({
     },
     sessionstatus: {
         type: Number,
-        label: "0 = not yet completed, 1 = completed, 2 = warn"
+        label: "0 = not yet completed, 1 = completed, 2 = cancelled"
     },
     feedback: {
         type: String
@@ -49,6 +49,17 @@ SessionSchema = new SimpleSchema({
 Sessions.attachSchema(SessionSchema);
 
 Meteor.methods({
+    'sessions.cancelsession' (sid) {
+        var thesession = Sessions.findOne({_id: sid});
+
+        if (thesession.custID == Meteor.userId()) {
+            // customer is the one that booked the session
+            var newstatus = 2;
+
+            // "0 = not yet completed, 1 = completed, 2 = cancelled"
+            Sessions.update(thesession, {$set: {sessionstatus: newstatus}});
+        }
+    },
     'sessions.markNotCompleted' (sid) {
         // check if vendor is authorized
         var thesession = Sessions.findOne({_id: sid});

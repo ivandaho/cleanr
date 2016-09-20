@@ -1,0 +1,42 @@
+<html>
+  <head>
+    <title>
+      test title
+      </title>
+  </head>
+  <body>
+    <div class="container">
+      <div>
+        <a href="{{baseUrl '/'}}">
+          <img src="/res/img/cleanr-logo.png" class="navbar-brand-logo">
+        </a>
+      </div>
+      <div class="title">
+        <h1>
+          A session previously assigned to you has been canceled by the customer.
+        </h1>
+        Sorry for any inconvenience caused.
+        <h2>Session Details:</h2>
+      </div>
+      {{#with thesess}}
+        <div class="darken">
+          <div class="field">
+            ID:
+            <div class="value">
+              {{_id}}
+            </div>
+          </div>
+          <div class="field">
+            Time Slot:
+            <div class="value">
+              {{dateToDay date}}, {{dateFormat date}} from {{getslotbynum timeslot}}
+            </div>
+          </div>
+        </div>
+        <div class="inside">
+          <a class="btn-block" href="{{baseUrl '/customersessiondetails/'}}{{this._id}}">View Session Details</a>
+        </div>
+      {{/with}}
+    </div>
+  </body>
+</html>

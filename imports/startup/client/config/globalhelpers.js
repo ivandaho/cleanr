@@ -22,8 +22,18 @@ Template.registerHelper("custremarkfound", function(sess) {
 Template.registerHelper("vendremarkfound", function(sess) {
     return sess.vendremarks;
 });
-Template.registerHelper("getsessionstatus", function(thesess) {
+Template.registerHelper("sessionNotCompleted", function(thesess) {
     if (thesess.sessionstatus == 0) {
+        return true;
+    }
+});
+Template.registerHelper("sessionCompleted", function(thesess) {
+    if (thesess.sessionstatus == 1) {
+        return true;
+    }
+});
+Template.registerHelper("sessionCanceled", function(thesess) {
+    if (thesess.sessionstatus == 2) {
         return true;
     }
 });

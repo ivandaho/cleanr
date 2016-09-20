@@ -58,7 +58,7 @@
 </template>
 
 <template name="vssession">
-  {{#if getsessionstatus this}}
+  {{#if sessionNotCompleted this}}
   <td class="custbox-incomplete {{dateover ..}} text-center">
     <!-- if status = incomplete -->
     {{#with getcuss this}}
@@ -70,17 +70,33 @@
     {{/with}}
     </td>
   {{else}}
-    <td class="custbox-complete {{dateover ..}} text-center">
+    {{#if sessionCompleted this}}
+      <td class="custbox-complete {{dateover ..}} text-center">
 
-      <!-- status is complete -->
-      {{#with getcuss this}}
-      COMPLETED<br>
-      <a href=/vendorsessiondetails/{{../_id}}>
-        {{user_name}}<br>
-        {{user_address.[0].street}}<br>
-      </a>
-      {{/with}}
-    </td>
+        <!-- status is complete -->
+        {{#with getcuss this}}
+        COMPLETED<br>
+        <a href=/vendorsessiondetails/{{../_id}}>
+          {{user_name}}<br>
+          {{user_address.[0].street}}<br>
+        </a>
+        {{/with}}
+      </td>
+    {{else}}
+      {{#if sessionCanceled this}}
+      <td class="custbox-canceled {{dateover ..}} text-center">
+
+        <!-- status is canceled -->
+        {{#with getcuss this}}
+        CANCELED<br>
+        <a href=/vendorsessiondetails/{{../_id}}>
+          {{user_name}}<br>
+          {{user_address.[0].street}}<br>
+        </a>
+        {{/with}}
+      </td>
+      {{/if}}
+    {{/if}}
   {{/if}}
 </template>
 

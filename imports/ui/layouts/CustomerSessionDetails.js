@@ -20,6 +20,20 @@ Template.CustomerSessionDetails.onCreated(function CustomerSessionDetailsOnCreat
 var tss;
 
 Template.CustomerSessionDetails.helpers({
+    notoverdate(sess) {
+        // get sessiond date and slot
+        var sd = sess.date;
+        var ss = sess.timeslot;
+        strdate = moment.utc(sd).subtract(1, 'day').format('YYYY-MM-DD');
+        thetimeslot = Timeslots.findOne({num: parseInt(ss)});
+        slotend = thetimeslot.timeend;
+        strcheck = strdate + ' ' + slotend;
+
+        var check = moment.utc(strcheck, 'YYYY-MM-DD HHmm');
+        if (moment.utc() < check) {
+            return true;
+        }
+    },
     iscustomer(sess) {
         return Meteor.call('userdata.checkIsCustomer', sess) || {};
     },
@@ -31,6 +45,36 @@ Template.CustomerSessionDetails.helpers({
 });
 
 Template.CustomerSessionDetails.events({
+    'click .btn-cancelsession' (event) {
+        event.preventDefault();
+        bootbox.dialog({
+            title: "Confirm Cancellation",
+            message: "Are you sure you want to cancel your session?",
+            buttons: {
+                'NO, I don\'t want to cancel my session': {
+                    className: 'btn btn-default',
+                    callback: function() {
+                        return false;
+                    }
+                },
+                'Yes, cancel my session': {
+                    className: 'btn-danger',
+                    callback: function() {
+                        let sid = FlowRouter.getParam('sessid');
+                        Meteor.call('sessions.cancelsession', sid, function(error) {
+                            if (error) {
+                                console.log(error);
+                            } else {
+                                bootbox.alert('Your session has been cancelled.');
+                                Meteor.call('email.markCanceled', sid);
+                            }
+                        });
+                    }
+                },
+            },
+            onEscape: function() {} // allows for esc to close modal
+        });
+    },
     'click #demobtn' (event) {
         event.preventDefault();
         var tour = {

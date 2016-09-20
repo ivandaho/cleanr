@@ -57,13 +57,27 @@ this.Templates = {};
 // for tests...
 const date = moment.utc(date);
 const b = 'LxSFSi7nPiRsvBWMT';
-const sid = 'mjz3xoGcvs9A48phZ';
+const sid = 'SbbZRoK3PLEgRSBM2';
 const testsess = Sessions.findOne({_id: sid});
 
 Templates.sessionReminder = {
     path: "sessionReminder.html",
     route: {
         path: '/sessionReminder/',
+        data: function() {
+            const s = Sessions.findOne({_id: sid});
+            return {
+                thesess: s
+            };
+        }
+    },
+    css: 'email.css'
+}
+
+Templates.sessionCanceled = {
+    path: "sessionCanceled.html",
+    route: {
+        path: '/sessionCanceled/',
         data: function() {
             const s = Sessions.findOne({_id: sid});
             return {
@@ -123,7 +137,7 @@ this.TemplateHelpers = {
     thecust(cid) {
         return Userdata.findOne({_id: cid});
     },
-    getsessionstatus(sess) {
+    sessionNotCompleted(sess) {
         if (thesess.sessionstatus == 0) {
             return true;
         }

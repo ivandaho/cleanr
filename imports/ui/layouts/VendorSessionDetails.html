@@ -41,15 +41,24 @@
               Session Status
             </div>
             <div class="value">
-              {{#with getsessionstatus this}}
+              {{#with sessionNotCompleted this}}
                 <!-- if session not completed -->
                 Not Completed
                 {{#with overdate ..}}
                   <button type="button" class="btn btn-success btn-mark-completed">Mark as Completed</button>
                 {{/with}}
               {{else}}
-                Completed
-                <button type="button" class="btn btn-warning btn-mark-not-completed">Mark as Incomplete</button>
+                {{#with sessionCompleted this}}
+                  Completed
+                  <button type="button" class="btn btn-warning btn-mark-not-completed">Mark as Incomplete</button>
+                {{else}}
+                  {{#with sessionCanceled this}}
+                    Canceled
+                    <!-- {{#if notoverdate ..}} -->
+                      <!-- <button class="btn btn-danger btn-bookagain">Book again</button> -->
+                    <!-- {{/if}} -->
+                  {{/with}}
+                {{/with}}
               {{/with}}
             </div>
             <div class="hdr">

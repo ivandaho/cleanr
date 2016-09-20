@@ -47,10 +47,28 @@ Meteor.methods({
         }
 
     },
-    'email.markCompleted' (sid) {
+    'email.markCanceled' (sid) {
         const sess = Sessions.findOne({_id: sid});
         const vid = sess.vendorID;
         const vendor = Meteor.users.findOne({_id:vid});
+
+        const emailAddress = vendor.emails[0].address;
+
+        if (!checkblacklist(emailAddress)) {
+            Mailer.send({
+                    to: emailAddress,
+                    subject: "[Cleanr] A Session has been canceled.",
+                    template: 'sessionCanceled',
+                    data: {
+                        thesess: sess
+                    }
+            });
+        } else {
+            console.log('The domain for "' + emailAddress + '" is blacklisted for e-mails. The e-mail will not be sent.');
+        }
+    },
+    'email.markCompleted' (sid) {
+        const sess = Sessions.findOne({_id: sid});
 
         const cid = sess.custID;
         const cust = Meteor.users.findOne({_id:cid});

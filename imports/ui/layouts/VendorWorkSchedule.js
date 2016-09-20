@@ -78,7 +78,7 @@ Template.vssession.helpers({
         }
     },
 
-    getsessionstatus(sess) {
+    sessionNotCompleted(sess) {
         var ss = sess.sessionstatus;
         if (ss == 0) {
             return true;

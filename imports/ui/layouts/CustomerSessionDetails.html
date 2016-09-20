@@ -37,11 +37,23 @@
               Session Status
             </div>
             <div class="value">
-              {{#with getsessionstatus this}}
+              {{#with sessionNotCompleted this}}
                 <!-- if session not completed -->
                 Not Completed
+                {{#if notoverdate ..}}
+                  <button class="btn btn-danger btn-cancelsession">Cancel</button>
+                {{/if}}
               {{else}}
-                Completed
+                {{#with sessionCompleted this}}
+                  Completed
+                {{else}}
+                  {{#with sessionCanceled this}}
+                    Canceled
+                    <!-- {{#if notoverdate ..}} -->
+                      <!-- <button class="btn btn-danger btn-bookagain">Book again</button> -->
+                    <!-- {{/if}} -->
+                  {{/with}}
+                {{/with}}
               {{/with}}
             </div>
             <div class="hdr">
