@@ -1,0 +1,110 @@
+<template name="CustomerBooking">
+  <div class="genericbackground">
+    <div class="container headertext">
+      <h1>Booking Details</h1>
+    </div>
+  </div>
+{{#with thebookingFR}}
+  <section id="bookingdetails-sec-1" class="bg-light-gray">
+    <div class="container">
+        <div class="row section-panel bordered-section">
+          <div class="row">
+            <div class="col-md-12 text-center bighdr">
+              {{_id}}
+            </div>
+          </div>
+          <div class="row-same-height">
+            <div class="col-md-6 col-sm-height">
+              <div class="hdr bookingidhdr">
+                Time Slot
+              </div>
+              <div class="value">
+              Every {{this.day}} {{getslotbynum this.timeslot}}
+              </div>
+              <div class="hdr">
+                Package
+              </div>
+              <div class="value">
+                $_2 maids for 2 hours
+              </div>
+              <div class="hdr">
+                Additional Services
+              </div>
+              <div class="value">
+                {{#if mc}}Mattress Cleaning<br>{{/if}}
+                {{#if cc}}Carpet Cleaning<br>{{/if}}
+              </div>
+            </div>
+            <div class="col-md-6 col-sm-height padded">
+              <div class="hdr">
+                Date Booked
+              </div>
+              <div class="value">
+                {{dateFormat subdate}}
+              </div>
+              <div class="hdr">
+                Sessions Completed
+              </div>
+              <div class="value">
+                $completed
+              </div>
+              <div class="hdr">
+                Subscription Status
+              </div>
+              <div class="value">
+                {{#with getsubstatus this}}
+                  Active
+                  <a class="btn btn-sm btn-danger btn-cancel-sub" id="{{../_id}}">Cancel</a>
+                {{else}}
+                  Not Active
+                  <a class="btn btn-sm btn-success btn-re-sub" id="{{this._id}}">Subscribe</a>
+                {{/with}}
+              </div>
+            </div>
+          </div>
+        </div>
+      <div class="row">
+        <div class="row-same-height">
+          <div class="col-md-12 col-sm-height text-center">
+            <h2>Corresponding Sessions</h2>
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th class="text-center">Session ID</th>
+                    <th class="text-center">Time Slot</th>
+                    <th class="text-center">Booking ID</th>
+                    <th class="text-center">Mattress Cleaning</th>
+                    <th class="text-center">Carpet Cleaning</th>
+                    <th class="text-center">Status</th>
+                    <th class="text-center">Feedback</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {{#each bookingsesses _id}}
+                  <tr>
+                    <td><a href="/vendorsessiondetails/{{_id}}">{{_id}}</a></td>
+                    <td>{{dateFormat date}} {{getslotbynum timeslot}}</td>
+                    <td>{{bookingID}}</td>
+                    <td>$mc</td>
+                    <td>$cc</td>
+                    <td>{{sessionstatus}}</td>
+                    <td>{{feedback}}</td>
+                  </tr>
+                  {{/each}}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div> <!-- row -->
+      <div class="row">
+        <button class="btn btn-default lessbtn">Show Less</button>
+        <button class="btn btn-default morebtn">Show More</button>
+      </div>
+    </div> <!-- container -->
+  </section> <!-- section -->
+{{else}}
+  booking not found/not authorized
+{{/with}}
+</template>

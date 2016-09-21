@@ -104,6 +104,13 @@ FlowRouter.route('/booking/:bid', {
     }
 });
 
+FlowRouter.route('/customerbooking/:bid', {
+    name: 'customerbooking',
+    action(params, queryParams) {
+        BlazeLayout.render('MainLayout', {main: 'CustomerBooking'})
+    }
+});
+
 FlowRouter.route('/confirmation', {
     name: 'confirmation',
     action() {

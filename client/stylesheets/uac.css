@@ -19,6 +19,9 @@
 .section-panel {
     background-color: #fafafa;
 }
+.section-panel h1{
+    margin-bottom:20px;
+}
 
 .profile-image {
     border-style: solid;

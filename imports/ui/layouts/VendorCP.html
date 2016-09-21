@@ -13,16 +13,16 @@
             <div class="row section-panel bordered-section">
               <h1>Vendor Account Details</h1>
               <div class="col-md-6">
+                <p class="sec-heading">{{_id}}<br></p>
+                <p class="sec-value">{{user_name}}<br></p>
+                <p class="sec-value gethover">{{currentUser.emails.[0].address}} <i class="fa fa-edit editicon changeEmail"></i></p>
+                <p class="sec-value gethover">{{user_tel}} <i class="fa fa-edit editicon changeTel"></i></p>
+                <p class="sec-value"><a href='/changepwd' class="btn btn-default">Change Password</a><br></p>
+              </div>
+              <div class="col-md-6">
                 <div class="profile-image">
                   placeholder for profile image perhaps
                 </div>
-              </div>
-              <div class="col-md-6">
-                <p class="sec-heading">{{_id}}<br></p>
-                <p class="sec-value">{{user_name}}<br></p>
-                <p class="sec-value gethover">{{user_email}} <i class="fa fa-edit editicon changeEmail"></i></p>
-                <p class="sec-value gethover">{{user_tel}} <i class="fa fa-edit editicon changeTel"></i></p>
-                <p class="sec-value"><a href='/changepwd' class="btn btn-default">Change Password</a><br></p>
               </div>
             </div>
 

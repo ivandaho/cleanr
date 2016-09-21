@@ -1,18 +1,17 @@
 <template name="VendorSessionDetails">
+  <div class="genericbackground">
+    <div class="container headertext">
+      <h1>Session Details <button class="btn btn-sm btn-info" id="demobtn"><i class="fa fa-question-circle fa-2x"></i></button> </h1>
+    </div>
+  </div>
   <section id="sess" class="bg-light-gray">
     <div class="container">
     {{#with sess}}
     {{#if sess._id}}
-      <div class="row text-center">
-        <div class="col-lg-12">
-          <h2>Session Details</h2>
-          <p>{{_id}}</p>
-        </div>
-      </div>
       <div class="row section-panel bordered-section">
         <div class="row">
           <div class="col-md-12 text-center bighdr">
-            Session Details
+            {{_id}}
           </div>
         </div>
         <div class="row-same-height">
@@ -142,7 +141,6 @@
           </div>
         </div>
       </div>
- 
       {{/with}}
       {{#with cust this}}
       <div class="row section-panel bordered-section">
@@ -187,7 +185,6 @@
         </div>
       </div>
       {{/with}}
-     
       <div class="row section-panel bordered-section">
         <div class="row">
           <div class="col-md-12 text-center bighdr">

@@ -101,6 +101,23 @@ Template.registerHelper("nextsessid", function(sess, direction) {
     }
 });
 
+// shared Booking helpers
+Template.registerHelper("thebookingFR", function() {
+    var bid = FlowRouter.getParam('bid');
+    console.log(bid);
+    var found = Bookings.findOne({_id: bid}) || {};
+    return found;
+});
+Template.registerHelper("custbyCID", function(cid) {
+    var found = Userdata.findOne({_id: cid}) || {};
+    return found;
+});
+Template.registerHelper("bookingsesses", function(bid) {
+    var d = moment.utc().subtract(6, 'months').toDate();
+    return Sessions.find({bookingID: bid, date: {$gt: d}}, {sort: {date: -1}});
+});
+
+// for notification
 Template.registerHelper("isNewVendorSess", function(n) {
     if (n.type == 0) {
         // its a notification for vendor

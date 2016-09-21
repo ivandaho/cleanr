@@ -32,7 +32,7 @@ Meteor.publish('userdata', function(){
 
         // vendor is allowed to see customer info for their customers
         // also, their own userdata
-        return Userdata.find({_id: {$in: r}});
+        return Userdata.find({_id: {$in: r}},{fields: {user_email: 0}});
     } else if (this.userId) {
         // if not vendor, allow only their own data
         return Userdata.find({_id: this.userId});

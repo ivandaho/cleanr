@@ -27,8 +27,6 @@ Meteor.methods({
         // const vid = sess.vendorID;
         // const vendor = Meteor.users.findOne({_id:vid});
 
-        console.log('kek');
-        return;
         const cid = sess.custID;
         const cust = Meteor.users.findOne({_id:cid});
         const emailAddress = cust.emails[0].address;

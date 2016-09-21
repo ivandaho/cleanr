@@ -1,15 +1,24 @@
 <template name="Booking">
+  <div class="genericbackground">
+    <div class="container headertext">
+      <h1>Booking Details</h1>
+    </div>
+  </div>
 {{#with booking}}
   <section id="bookingdetails-sec-1" class="bg-light-gray">
     <div class="container">
-      <div class="row">
-        <div class="text-center">
-          <h2>Booking Details</h2>
-          <p class="sec-heading">{{_id}}<br></p>
-          {{#with cust custID}}
-            <p class="sec-heading"><a href="/vendorcustomer/{{_id}}/">{{user_name}}</a></p>
-          {{/with}}
-          <p class="sec-value">Submitted on {{dateFormat subdate}}</p>
+      <div class="row section-panel bordered-section">
+        <div class="row">
+          <div class="col-md-12 text-center bighdr">
+            {{_id}}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4 col-sm-height padded">
+            {{#with cust custID}}
+              <p class="sec-heading"><a href="/vendorcustomer/{{_id}}/">{{user_name}}</a></p>
+            {{/with}}
+            <p class="sec-value">Submitted on {{dateFormat subdate}}</p>
             <p class="sec-heading">Subscription status:</p>
             {{#with getsubstatus this}}
               <p class="sec-value">Active
@@ -17,6 +26,7 @@
             {{else}}
               <p class="sec-value">Not Active</p>
             {{/with}}
+          </div>
         </div>
       </div>
       <div class="row">
@@ -87,5 +97,4 @@
 {{else}}
   booking not found/not authorized
 {{/with}}
-
 </template>
