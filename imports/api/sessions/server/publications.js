@@ -8,7 +8,8 @@ Meteor.publish('sessions', function(){
     if (Roles.userIsInRole(this.userId, 'admin')) {
         return Sessions.find({});
     } else if (Roles.userIsInRole(this.userId, 'vendor')) {
-        return Sessions.find({vendorID: this.userId});
+        // it's a fix for development, but vendors shouldn't be able to book themselves anyway
+        return Sessions.find({$or: [{vendorID: this.userId}, {custID: this.userId}]});
     } else if (Roles.userIsInRole(this.userId, 'customer')) {
         return Sessions.find({custID: this.userId});
     } else {
