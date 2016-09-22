@@ -82,7 +82,7 @@ Template.VendorCP.helpers({
                                     date: {$lt: todaydate},
                                 },
                                 {
-                                    sort: {date: 1, timeslot: 1},
+                                    sort: {date: -1, timeslot: 1},
                                     limit: pslimit
                                 }
                             );
