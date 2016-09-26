@@ -103,9 +103,31 @@ Template.CustomerSessionDetails.events({
     },
     'click .btn-cancel-sub' (event) {
         event.preventDefault();
-        var bid = event.target.id;
-
-        Meteor.call('bookings.stopSubscription', bid);
+        bootbox.confirm({
+            message: 'Are you sure you want to cancel your subscription? You might not be able to book the same time slot in the future.',
+            size: 'small',
+            buttons: {
+                confirm: {
+                    label: "Yes, cancel it",
+                    className: "btn-danger"
+                },
+                cancel: {
+                    label: "No",
+                    className: "btn-default"
+                }
+            },
+            callback: function(result) {
+                if (result) {
+                    console.log(result);
+                    Meteor.call('bookings.stopSubscription', event.target.id, function(error) {
+                        if (error) {
+                            console.log(error);
+                        };
+                    });
+                }
+            },
+            onEscape: function() {}
+        });
     },
     'click .btn-re-sub' (event) {
         event.preventDefault();

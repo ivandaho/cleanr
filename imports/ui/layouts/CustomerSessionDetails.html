@@ -125,13 +125,10 @@
                 Subscription Status
               </div>
               <div class="value">
-                {{#with getsubstatus this}}
-                  Active
-                  <a class="btn btn-sm btn-danger btn-cancel-sub" id="{{../_id}}">Cancel</a>
-                {{else}}
-                  Not Active
-                  <a class="btn btn-sm btn-success btn-re-sub" id="{{this._id}}">Subscribe</a>
-                {{/with}}
+                {{substatus this}}
+                {{#if cancancel this}}
+                  <a class="btn btn-sm btn-danger btn-cancel-sub" id="{{this._id}}">Unsubscribe</a>
+                {{/if}}
               </div>
             </div>
           </div>

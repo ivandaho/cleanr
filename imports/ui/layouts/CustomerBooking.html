@@ -4,9 +4,9 @@
       <h1>Booking Details</h1>
     </div>
   </div>
-{{#with thebookingFR}}
   <section id="bookingdetails-sec-1" class="bg-light-gray">
     <div class="container">
+      {{#with thebookingFR}}
         <div class="row section-panel bordered-section">
           <div class="row">
             <div class="col-md-12 text-center bighdr">
@@ -52,13 +52,10 @@
                 Subscription Status
               </div>
               <div class="value">
-                {{#with getsubstatus this}}
-                  Active
-                  <a class="btn btn-sm btn-danger btn-cancel-sub" id="{{../_id}}">Cancel</a>
-                {{else}}
-                  Not Active
-                  <a class="btn btn-sm btn-success btn-re-sub" id="{{this._id}}">Subscribe</a>
-                {{/with}}
+                {{substatus this}}
+                {{#if cancancel this}}
+                  <a class="btn btn-sm btn-danger btn-cancel-sub" id="{{this._id}}">Unsubscribe</a>
+                {{/if}}
               </div>
             </div>
           </div>
@@ -83,7 +80,7 @@
                 <tbody>
                   {{#each bookingsesses _id}}
                   <tr>
-                    <td><a href="/vendorsessiondetails/{{_id}}">{{_id}}</a></td>
+                    <td><a href="/customersessiondetails/{{_id}}">{{_id}}</a></td>
                     <td>{{dateFormat date}} {{getslotbynum timeslot}}</td>
                     <td>{{bookingID}}</td>
                     <td>$mc</td>
@@ -102,9 +99,11 @@
         <button class="btn btn-default lessbtn">Show Less</button>
         <button class="btn btn-default morebtn">Show More</button>
       </div>
+    {{else}}
+    <div class="col-md-12 text-center padded">
+      booking not found/not authorized
+    </div>
+    {{/with}}
     </div> <!-- container -->
   </section> <!-- section -->
-{{else}}
-  booking not found/not authorized
-{{/with}}
 </template>

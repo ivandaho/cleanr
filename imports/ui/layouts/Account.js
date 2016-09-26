@@ -28,19 +28,6 @@ Template.Account.helpers({
             return false;
         }
     },
-    substatusnum(num) {
-        if (num == 2 || num == 3) {
-            return "Active";
-        }
-        return "Inactive";
-    },
-    substatus(booking) {
-        const ss = booking.jobstatus;
-        if (ss == 2 || ss == 3) {
-            return "Active";
-        }
-        return "Inactive";
-    },
     morebookings() {
         var mblimit = Session.get('mblimit');
         var thing = Bookings.find({

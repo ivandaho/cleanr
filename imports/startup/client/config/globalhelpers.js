@@ -68,6 +68,23 @@ Template.registerHelper("getsubstatus", function(booking) {
         return true;
     }
 });
+Template.registerHelper("substatus", function(booking) {
+    const ss = booking.jobstatus;
+    if (ss == 0) {
+        return "Inactive";
+    } else if (ss == 1) {
+        return "Active";
+    } else if (ss == 2) {
+        return "Single session booking";
+    }
+    return "Inactive";
+});
+Template.registerHelper("cancancel", function(booking) {
+    const ss = booking.jobstatus;
+    if (ss == 1) {
+        return true;
+    }
+});
 Template.registerHelper("sess_nextsessdate", function(sess) {
     // this sorts dates on the server, client cant sort Date
     // to sort dates on client we need some other way
@@ -104,8 +121,7 @@ Template.registerHelper("nextsessid", function(sess, direction) {
 // shared Booking helpers
 Template.registerHelper("thebookingFR", function() {
     var bid = FlowRouter.getParam('bid');
-    console.log(bid);
-    var found = Bookings.findOne({_id: bid}) || {};
+    var found = Bookings.findOne({_id: bid});
     return found;
 });
 Template.registerHelper("custbyCID", function(cid) {

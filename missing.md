@@ -8,6 +8,7 @@ Customer makes a booking
   * ~~**E-mail:** to customer notifying them of successful booking~~
     * ~~View Booking~~
     * ~~View First Session~~
+    * E-mail should mention whether the booking is for a single session or a subscription
 
   * ~~**E-mail:** parse sessions, and notify the corresponding vendors (one e-mail only)~~
   * ~~**E-mail:** Add sessions into syncedCron array to email customer 2 days before. (ignore if session date is earlier than 2 days away)~~
@@ -19,7 +20,7 @@ Session completed
     * ~~Verify/Give Feedback~~
 
 Other Notifications:
- * **When a new session is created:** notify the corresponding vendor
+ * ~~**When a new session is created:** notify the corresponding vendor~~
  * **When a session is marked as completed by the vendor:** notify the customer
  * **When a new comment is added by the vendor:** notify the customer
  * **When a new comment is added by the customer:** notify the vendor

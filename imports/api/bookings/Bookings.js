@@ -36,10 +36,11 @@ BookingsSchema = new SimpleSchema({
     },
     jobstatus: {
         type: Number
-        // 0 - no pending sessions, no subscription
-        // 1 - pending sessions, no subscription
-        // 2 - no pending sessions, subscription active
-        // 3 - pending sessions, subscription active
+        // 0 - SUBSCRIPTION INACTIVE
+        // 1 - SUBSCRIPTION ACTIVE
+        // 2 - SINGLE SESSION
+
+        // shouldnt be able to rebook (schedule conflicts)
 
         // TODO: when vendor marks a session as complete, it will check
         // the booking for jobstatus and change it accordingly
@@ -117,9 +118,9 @@ Meteor.methods({
             var daystr = moment.utc(date).clone().format('ddd').toLowerCase();
             var js; // weekly subscription
             if (repeat) {
-                js = 3; // subscription active
+                js = 1; // subscription active
             } else {
-                js = 1 // subscription not active
+                js = 2 // single booking
             }
             var doc = {packageID: 1,
                     jobstatus: js,
@@ -220,9 +221,9 @@ Meteor.methods({
             var newstatus;
 
             if (thebooking.jobstatus == 2) {
+                throw new Meteor.Error('custom', 'Unable to cancel a single session booking');
+            } else if (thebooking.jobstatus == 1) {
                 newstatus = 0;
-            } else if (thebooking.jobstatus == 3) {
-                newstatus = 1;
             }
             Bookings.update(thebooking, {$set: {jobstatus: newstatus}});
         }
