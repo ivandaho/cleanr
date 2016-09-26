@@ -134,8 +134,17 @@ Template.registerHelper("bookingsesses", function(bid) {
 });
 
 // for notification
-Template.registerHelper("isNewVendorSess", function(n) {
+Template.registerHelper("notificationIsType0", function(n) {
     if (n.type == 0) {
+        // its a notification for vendor
+        // telling them that a new session
+        // has been assigned to them.
+        return true;
+    }
+    return false;
+});
+Template.registerHelper("notificationIsType1", function(n) {
+    if (n.type == 1) {
         // its a notification for vendor
         // telling them that a new session
         // has been assigned to them.

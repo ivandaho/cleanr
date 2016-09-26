@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 
 import { Vendorslots } from '../vendorslots/Vendorslots.js';
+import { Notifications } from '../notifications/Notifications.js';
 
 export const Sessions = new Mongo.Collection('sessions');
 
@@ -80,6 +81,16 @@ Meteor.methods({
 
             // "0 = not yet completed, 1 = completed, 2 = warn"
             Sessions.update(thesession, {$set: {sessionstatus: newstatus}});
+
+            // insert notification for customer
+            Notifications.insert({
+                createdDate: moment.utc().toDate(),
+                uid: thesession.custID,
+                type: 1,
+                sid: thesession._id,
+                seen: false
+            });
+
         }
     },
     'sessions.createSession' (dt, st, c, p, ss, f, b, cr, vr) {
@@ -138,10 +149,10 @@ Meteor.methods({
             // current user authorized as customer of the session
             console.log('trying to edit this cust comment');
             Sessions.update({_id: sid,
-                            custremarks: 
+                            custremarks:
                                 {$in: [oldcomment]}
                             },
-                            {$set: 
+                            {$set:
                                 {"custremarks.$": newcomment}
                             });
         }
@@ -151,10 +162,10 @@ Meteor.methods({
         if (thesess.vendorID == Meteor.userId()) {
             // current user authorized as vendor of the session
             Sessions.update({_id: sid,
-                            vendremarks: 
+                            vendremarks:
                                 {$in: [oldcomment]}
                             },
-                            {$set: 
+                            {$set:
                                 {"vendremarks.$": newcomment}
                             });
         }

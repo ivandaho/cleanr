@@ -45,11 +45,15 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-lg {{#if atleastonenotification}}fa-bell cleanr-icon-green-darker{{else}}fa-bell-o{{/if}}"></i></a>
           <ul class="dropdown-menu">
             {{#each notificationfound}}
-              {{#if isNewVendorSess this}}
-              <li class="ntf"><span><a href="/vendorsessiondetails/{{this.sid}}">New assigned session: {{#with sessbysessid this.sid}} {{dateToDay date}} {{dateFormat date}} {{/with}} </a><i id="{{_id}}" class="fa fa-close dismissn"></i></span></li>
+              {{#if notificationIsType0 this}}
+                <li class="ntf"><span><a href="/vendorsessiondetails/{{this.sid}}">New assigned session: {{#with sessbysessid this.sid}} {{dateToDay date}} {{dateFormat date}} {{/with}} </a><i id="{{_id}}" class="fa fa-close dismissn"></i></span></li>
+              {{else}}
+                {{#if notificationIsType1 this}}
+                  <li class="ntf"><span><a href="/vendorsessiondetails/{{this.sid}}">A session has been marked complete: {{#with sessbysessid this.sid}} {{dateToDay date}} {{dateFormat date}} {{/with}} </a><i id="{{_id}}" class="fa fa-close dismissn"></i></span></li>
+                {{else}}
+                  <li class="ntf text-center">No new notifications</li>
+                {{/if}}
               {{/if}}
-            {{else}}
-            <li class="ntf text-center">No new notifications</li>
             {{/each}}
             <li class="ntf text-center"><a href="/notifications/">View all</a></li>
           </ul>

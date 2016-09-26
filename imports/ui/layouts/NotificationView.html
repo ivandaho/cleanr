@@ -20,8 +20,12 @@
               <tr class="n-row">
                 <td class="text-center">{{dateFormat createdDate}}</td>
                 <td>
-                  {{#if isNewVendorSess this}}
+                  {{#if notificationIsType0 this}}
                     <a href="/vendorsessiondetails/{{this.sid}}">New assigned session: {{#with sessbysessid this.sid}} {{dateToDay date}} {{dateFormat date}} {{/with}} </a>
+                  {{else}}
+                    {{#if notificationIsType1 this}}
+                    <a href="/vendorsessiondetails/{{this.sid}}">A session has been marked complete: {{#with sessbysessid this.sid}} {{dateToDay date}} {{dateFormat date}} {{/with}} </a>
+                    {{/if}}
                   {{/if}}
                 </td>
               </tr>
