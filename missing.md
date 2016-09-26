@@ -21,7 +21,7 @@ Session completed
 
 Other Notifications:
  * ~~**When a new session is created:** notify the corresponding vendor~~
- * **When a session is marked as completed by the vendor:** notify the customer
+ * ~~**When a session is marked as completed by the vendor:** notify the customer~~
  * **When a new comment is added by the vendor:** notify the customer
  * **When a new comment is added by the customer:** notify the vendor
  * **When the vendor has not marked the session as completed by end of day:** notify the vendor
@@ -41,4 +41,4 @@ Other Notifications:
 ### Other ###
 * ~~Login - check password string if its empty before passing data to server~~
 * Page to view all sessions with filters (like date window)
-* Disable view more/less buttons when limit is reached
+* ~~Disable view more/less buttons when limit is reached~~

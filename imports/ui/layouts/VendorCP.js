@@ -16,7 +16,20 @@ Template.VendorCP.onCreated(function VendorCPOnCreated() {
 });
 
 Template.VendorCP.helpers({
+    usmin() {
+        if (Session.get('uslimit') <= 5) {
+            return true;
+        }
+        return false;
+    },
+    psmin() {
+        if (Session.get('pslimit') <= 5) {
+            return true;
+        }
+        return false;
+    },
     parsess(s) {
+        //parse session status
         if (s== 1) {
             return true;
         } else if (s == 0) {

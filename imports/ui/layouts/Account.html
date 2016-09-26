@@ -162,7 +162,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  {{#each sesses this}}
+                  {{#each sesses}}
                     <tr class="rs-row">
                       <td><a href="/customersessiondetails/{{_id}}">{{_id}}</a></td>
                       <td>{{dateFormat date}} {{getslotbynum timeslot}}</td>
@@ -184,10 +184,10 @@
                 </tbody>
               </table>
             </div>
-            {{#if sesses this}}
+            {{#if sesses}}
               <div class="divmarginbtm">
-                <span class="sec-value"><button class="btn btn-default vm-rs">View More</button></span>
-                <span class="sec-value"><button class="btn btn-default vl-rs">View Less</button></span>
+                <span class="sec-value"><button class="btn btn-default {{#if getSessionVariable 'rsmaxed'}} disabled {{/if}}vm-rs">View More</button></span>
+                <span class="sec-value"><button class="btn btn-default {{#if rsmin}} disabled {{/if}}vl-rs">View Less</button></span>
               </div>
             {{/if}}
             <p class="sec-heading">Recent Bookings</p>
@@ -221,8 +221,8 @@
             </div>
             {{#if morebookings this}}
               <div class="divmarginbtm">
-                <span class="sec-value"><button class="btn btn-default vm-mb">View More</button></span>
-                <span class="sec-value"><button class="btn btn-default vl-mb">View Less</button></span>
+                <span class="sec-value"><button class="btn btn-default {{#if getSessionVariable 'mbmaxed'}} disabled {{/if}}vm-mb">View More</button></span>
+                <span class="sec-value"><button class="btn btn-default {{#if mbmin}} disabled {{/if}}vl-mb">View Less</button></span>
               </div>
             {{/if}}
           </div>

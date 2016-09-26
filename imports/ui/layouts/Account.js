@@ -67,6 +67,18 @@ Template.Account.helpers({
               }
             }
     },
+    rsmin() {
+        if (Session.get('rslimit') <= 5) {
+            return true;
+        }
+        return false;
+    },
+    mbmin() {
+        if (Session.get('mblimit') <= 5) {
+            return true;
+        }
+        return false;
+    },
     sesses() { // TODO: is this secure? #22
         var rslimit = Session.get('rslimit');
         var thing = Sessions.find({

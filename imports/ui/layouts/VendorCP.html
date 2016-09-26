@@ -98,8 +98,8 @@
               </div>
               {{#if upcomingsesses this}}
               <div class="divmarginbtm">
-                <span class="sec-value"><button class="btn btn-default vm-us">View More</button></span>
-                <span class="sec-value"><button class="btn btn-default vl-us">View Less</button></span>
+                <span class="sec-value"><button class="btn btn-default {{#if getSessionVariable 'usmaxed'}} disabled {{/if}}vm-us">View More</button></span>
+                <span class="sec-value"><button class="btn btn-default {{#if usmin}} disabled {{/if}}vl-us">View Less</button></span>
               </div>
                 {{/if}}
 
@@ -140,8 +140,8 @@
               </div>
               {{#if pastsesses this}}
               <div class="divmarginbtm">
-                <span class="sec-value"><button class="btn btn-default vm-ps">View More</button></span>
-                <span class="sec-value"><button class="btn btn-default vl-ps">View Less</button></span>
+                <span class="sec-value"><button class="btn btn-default {{#if getSessionVariable 'mbmaxed'}} disabled {{/if}}vm-ps">View More</button></span>
+                <span class="sec-value"><button class="btn btn-default {{#if psmin}} disabled {{/if}}vl-ps">View Less</button></span>
               </div>
               {{/if}}
             </div>
