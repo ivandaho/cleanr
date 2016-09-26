@@ -149,9 +149,19 @@ Template.registerHelper("notificationIsType0", function(n) {
 });
 Template.registerHelper("notificationIsType1", function(n) {
     if (n.type == 1) {
+        // its a notification for customer
+        // telling them that a session
+        // has been marked as complete.
+        return true;
+    }
+    return false;
+});
+Template.registerHelper("notificationIsType2", function(n) {
+    if (n.type == 2) {
         // its a notification for vendor
-        // telling them that a new session
-        // has been assigned to them.
+        // telling them that one of their
+        // today's session has not been
+        // marked as complete.
         return true;
     }
     return false;

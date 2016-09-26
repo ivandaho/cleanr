@@ -19,14 +19,23 @@ SyncedCron.add({
 });
 
 SyncedCron.add({
-    name: 'sendOutReminders',
+    name: 'sendOutCustomerSessionReminders',
     schedule: function(parser) {
         return later.parse.recur().on('00:00:00').time();
         // return parser.text('every 15 seconds'); for debug
         // return parser.text('every 15 seconds'); for debug
     },
     job: function() {
-        sendOutSessionReminders();
+        sendOutCustomerSessionReminders();
+    }
+});
+SyncedCron.add({
+    name: 'sendOutVendorSessionUnmarkedReminders',
+    schedule: function(parser) {
+        return later.parse.recur().on('22:00:00').time();
+    },
+    job: function() {
+        sendOutVendorSessionUnmarkedReminders();
     }
 });
 
@@ -35,7 +44,18 @@ SyncedCron.config({
 });
 SyncedCron.start();
 
-const sendOutSessionReminders = function() {
+const sendOutVendorSessionUnmarkedReminders = function() {
+    let today = moment.utc().startOf('day').toDate();
+    let allsessions = Sessions.find({date: {$lte: today}}, {sort: {date: 1}});
+    allsessions.forEach(function (asess) {
+        if (asess.sessionstatus == 1) {
+            Meteor.call('notification.createReminderVendorSessionUnmarked', asess);
+            // Meteor.call('email.sessionReminder', asess);
+        }
+    });
+};
+
+const sendOutCustomerSessionReminders = function() {
     let next = moment.utc().startOf('day').add(2, 'day').toDate();
     var allsessions = Sessions.find({date: {$eq: next}}, {sort: {date: 1}});
     allsessions.forEach(function (asess) {

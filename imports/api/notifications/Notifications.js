@@ -27,7 +27,17 @@ Notifications.attachSchema(NotificationsSchema);
 
 Meteor.methods({
     'notifications.dismissNotification' (nid) {
-            Notifications.update({_id: nid},
-                    {$set: {seen: true}});
+        Notifications.update({_id: nid},
+                {$set: {seen: true}});
+    },
+    'notifications.createReminderVendorSessionUnmarked' (sess) {
+        // insert notification for vendorr
+        Notifications.insert({
+            createdDate: moment.utc().toDate(),
+            uid: sess.vendorID,
+            type: 2,
+            sid: sess._id,
+            seen: false
+        });
     }
 });
