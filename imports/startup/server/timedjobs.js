@@ -115,7 +115,7 @@ var timed_UpdateWeeks = function() {
 
                 // settle subs and sessions
                 // find subs on that day
-                var subs = Bookings.find({jobstatus: {$gte: 2, $lte: 3},
+                var subs = Bookings.find({jobstatus: 1,
                     day: currday.clone().format('ddd').toLowerCase(),
                 });
                 subs.forEach(function (sub) {

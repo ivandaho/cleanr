@@ -15,6 +15,7 @@ import '/imports/ui/layouts/Changepwd.js';
 import '/imports/ui/layouts/Confirmation.js';
 import '/imports/ui/layouts/CustomerBooking.js';
 import '/imports/ui/layouts/CustomerSessionDetails.js';
+import '/imports/ui/layouts/CustomerSessions.js';
 import '/imports/ui/layouts/Header.js';
 import '/imports/ui/layouts/Login.js';
 import '/imports/ui/layouts/NavbarUserControl.js';

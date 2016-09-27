@@ -16,6 +16,7 @@ Template.VendorCustomerList.onCreated(function VendorCustomerListOnCreated() {
     Meteor.subscribe('userdata');
     Meteor.subscribe('bookings');
     Meteor.subscribe('sessions');
+    Meteor.subscribe('timeslots');
 
     this.state = new ReactiveDict();
 });

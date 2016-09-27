@@ -1,0 +1,55 @@
+<template name="CustomerSessions">
+  <div class="genericbackground">
+    <div class="container headertext">
+      <h1>All Sessions</h1>
+    </div>
+  </div>
+  <section>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-5">
+          <form class="filter">
+            <input type="text" name="text" class="form-control" placeholder="Type to filter name" />
+            <br>
+          </form>
+        </div>
+      </div>
+      <div class="row">
+        <label class="checkbox-inline">
+          <input type="checkbox" id="upc" checked> Show Upcoming
+        </label>
+        <label class="checkbox-inline">
+          <input type="checkbox" id="pre" checked> Show Previous
+        </label>
+        <label class="checkbox-inline">
+          <input type="checkbox" id="com" checked> Show Completed
+        </label>
+      </div>
+      <div class="row">
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <th class="text-center">Session ID</th>
+                <th class="text-center">Date/Time</th>
+                <th class="text-center">Booking Type</th>
+                <th class="text-center">Next Session</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each textfilter}}
+              <tr>
+                <td><a href="/customersessiondetails/{{_id}}">{{_id}}</a></td>
+                <td>{{dateFormat date}} {{getslotbynum timeslot}}</td>
+                <td>$booking_type</td>
+                <td>{{sessstatus sessionstatus}}</td>
+              </tr>
+              {{/each}}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+</template>
+

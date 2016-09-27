@@ -111,6 +111,13 @@ FlowRouter.route('/customerbooking/:bid', {
     }
 });
 
+FlowRouter.route('/customersessions', {
+    name: 'customersessions',
+    action() {
+        BlazeLayout.render('MainLayout', {main: 'CustomerSessions'})
+    }
+});
+
 FlowRouter.route('/confirmation', {
     name: 'confirmation',
     action() {
