@@ -4,6 +4,8 @@ A work in progress
 
 Built with MeteorJS stack
 
+Demo website: [cleanr.ivanho.me](http://cleanr.ivanho.me)
+
 Allows customers to find independant contractors (cleaners) for their homes or apartments
 
 1. install meteor

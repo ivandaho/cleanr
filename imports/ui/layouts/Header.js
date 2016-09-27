@@ -59,7 +59,7 @@ Template.Header.events({
             },
             {
                 title: "Log In",
-                content: "You can log in with the following example users to demo features:<br>e-mail: 'vendor@site.com' | 'verygoodvendorpassword'<br>e-mail: 'vendor2@site.com' | 'verygoodvendorpassword'<br>e-mail: 'cust1@site.com' | 'verygoodcustpassword'<br>e-mail: 'cust2@site.com'  | 'verygoodcustpassword'",
+                content: "You can log in with the following example users to demo features:<br>e-mail: 'vendor@site.com' | 'verygoodvendorpassword'<br>e-mail: 'vendor2@site.com' | 'verygoodvendorpassword'<br>e-mail: 'cust1@site.com' | 'verygoodcustpassword'<br>e-mail: 'cust2@site.com'  | 'verygoodcustpassword'<br>e-mail: 'cust3@site.com' | 'verygoodcustpassword'",
                 target: "#loginlink",
                 fixedElement: true,
                 placement: "bottom"
@@ -79,7 +79,7 @@ Template.Header.events({
             },
             {
                 title: "Access new notifications here",
-                target: "#vendormenu",
+                target: "#notificationdd",
                 fixedElement: true,
                 placement: "bottom"
             }
