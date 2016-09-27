@@ -22,7 +22,7 @@ Template.Resetpassword.events({
             // failed password strength test
             Bert.alert({
                 icon: 'fa-warning',
-                message: 'Password too weak. Please enter a more complex password', 
+                message: 'Password too weak. Please enter a more complex password',
                 type: 'warning-alt'
             });
             return;

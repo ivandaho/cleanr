@@ -55,7 +55,11 @@
                     <li class="ntf"><span><a href="/vendorsessiondetails/{{this.sid}}">You have yet to mark the following session as completed: {{#with sessbysessid this.sid}} {{dateToDay date}} {{dateFormat date}} {{getslotbynum timeslot}} {{/with}} </a><i id="{{_id}}" class="fa fa-close dismissn"></i></span></li>
 
                   {{else}}
-                    <li class="ntf text-center">No new notifications</li>
+                    {{#if notificationIsType3 this}}
+                      <li class="ntf"><span><a href="/vendorsessiondetails/{{this.sid}}">A customer has cancelled an upcoming session: {{#with sessbysessid this.sid}} {{dateToDay date}} {{dateFormat date}} {{getslotbynum timeslot}} {{/with}} </a><i id="{{_id}}" class="fa fa-close dismissn"></i></span></li>
+                    {{else}}
+                      <li class="ntf text-center">No new notifications</li>
+                    {{/if}}
                   {{/if}}
                 {{/if}}
               {{/if}}

@@ -76,6 +76,12 @@ Template.Header.events({
                 target: "#vendormenu",
                 fixedElement: true,
                 placement: "bottom"
+            },
+            {
+                title: "Access new notifications here",
+                target: "#vendormenu",
+                fixedElement: true,
+                placement: "bottom"
             }
             ]
         };

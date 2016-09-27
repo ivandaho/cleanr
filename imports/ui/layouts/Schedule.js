@@ -85,6 +85,32 @@ Template.eachslot.helpers({
 });
 
 Template.Schedule.events({
+    'click #demobtn' (event) {
+        event.preventDefault();
+        var tour = {
+            showCloseButton: false,
+            id: "scheduletour",
+            i18n:{stepNums: ["", "", "", "", "", "", ""]},
+            steps: [
+            {
+                content: "Browse by day and time slot",
+                target: ".table-hover",
+                placement: "top"
+            },
+            {
+                content: "Select a time slot to book",
+                target: ".bookbtn",
+                placement: "top"
+            },
+            {
+                content: "Browse up to 5 weeks in advance",
+                target: ".changeweekbtn",
+                placement: "top"
+            }
+            ]
+        };
+        hopscotch.startTour(tour);
+    },
     'click .bookbtn' (event) {
         event.preventDefault();
 

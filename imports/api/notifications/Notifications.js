@@ -14,6 +14,8 @@ NotificationsSchema = new SimpleSchema({
         type: Number
         // 0 - new Session, notify vendor
         // 1 - Session marked as complete, notify customer
+        // 2 - Session not yet marked complete, notify vendor
+        // 3 - Session canceled by customer, notify vendor
     },
     sid: {
         type: String

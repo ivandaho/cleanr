@@ -85,7 +85,7 @@ Template.Account.helpers({
                                 custID: Meteor.userId()
                             },
                             {
-                                sort: {date: 1, timeslot: 1},
+                                sort: {date: -1, timeslot: 1},
                                 limit: rslimit
                             });
         // counts the number of sessions found

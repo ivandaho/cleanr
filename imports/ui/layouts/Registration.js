@@ -42,7 +42,7 @@ Template.Registration.events({
             // failed password strength test
             Bert.alert({
                 icon: 'fa-warning',
-                message: 'Password too weak. Please enter a more complex password', 
+                message: 'Password too weak. Please enter a more complex password',
                 type: 'warning-alt'
             });
             return;
@@ -64,7 +64,6 @@ Template.Registration.events({
         };
 
         var success = false;
-        var lel = 'test';
         // security concern if account is created from client??
         // also, performance/bandwidth stuff for zxcvbn checking
         // current password strength checking is done on client

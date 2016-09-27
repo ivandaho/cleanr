@@ -59,6 +59,14 @@ Meteor.methods({
 
             // "0 = not yet completed, 1 = completed, 2 = cancelled"
             Sessions.update(thesession, {$set: {sessionstatus: newstatus}});
+            // notify vendor
+            Notifications.insert({
+                createdDate: moment.utc().toDate(),
+                uid: thesession.vendorID,
+                type: 3,
+                sid: thesession._id,
+                seen: false
+            });
         }
     },
     'sessions.markNotCompleted' (sid) {

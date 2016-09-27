@@ -166,3 +166,13 @@ Template.registerHelper("notificationIsType2", function(n) {
     }
     return false;
 });
+Template.registerHelper("notificationIsType3", function(n) {
+    if (n.type == 3) {
+        // its a notification for vendor
+        // telling them that one of their
+        // previously assigned sessions
+        // has been canceled.
+        return true;
+    }
+    return false;
+});
