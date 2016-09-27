@@ -24,7 +24,7 @@ Other Notifications:
  * ~~**When a session is marked as completed by the vendor:** notify the customer~~
  * **When a new comment is added by the vendor:** notify the customer
  * **When a new comment is added by the customer:** notify the vendor
- * **When the vendor has not marked the session as completed by end of day:** notify the vendor
+ * ~~**When the vendor has not marked the session as completed by end of day:** notify the vendor~~
 
 
 ### Visual ###
