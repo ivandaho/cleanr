@@ -26,19 +26,29 @@ Template.CustomerSessions.onCreated(function CustomerSessionsOnCreated() {
 });
 
 Template.CustomerSessions.helpers({
-    textfilter() {
+    sessionfound() {
         const instance = Template.instance();
-        var re = new RegExp(instance.state.get('filtertext'), "ig");
         const today = moment.utc().startOf('day').toDate();
-        const previous = {custID: Meteor.userId(), date: {$lt: today}};
-        const upcoming = {custID: Meteor.userId(), date: {$gte: today}};
+        // sessionstatus = 1 means completed
+        const previousCom = {custID: Meteor.userId(), date: {$lt: today}};
+        const previousNoCom = {custID: Meteor.userId(), date: {$lt: today}, sessionstatus: 0};
+        const upcomingCom = {custID: Meteor.userId(), date: {$gte: today}};
+        const upcomingNoCom = {custID: Meteor.userId(), date: {$gte: today}, sessionstatus: 0};
         var options = [{cantfindme: 'cantfindmeeither'}];
 
         if (instance.state.get('pre')) {
-            options.push(previous);
+            if (instance.state.get('com')) {
+                options.push(previousCom);
+            } else {
+                options.push(previousNoCom);
+            }
         };
         if (instance.state.get('upc')) {
-            options.push(upcoming);
+            if (instance.state.get('com')) {
+                options.push(upcomingCom);
+            } else {
+                options.push(upcomingNoCom);
+            }
         };
 
         const query = {
@@ -57,20 +67,6 @@ Template.CustomerSessions.helpers({
             return 'Cancelled';
         }
     }
-    // findsession(cust, s) {
-    //     // search for most recent COMPLETED session
-    //     var fs = Sessions.find({custID: cust._id,
-    //         sessionstatus: s}, {sort: {date: -1}}) || {};
-    //     var arr = [];
-    //     fs.forEach(function(item) {
-    //         arr.push(item);
-    //     });
-
-    //     if (arr.length > 0) {
-    //         return moment.utc(arr[0].date).format('YYYY-MM-DD');
-    //     }
-    //     return 'None found';
-    // },
 });
 
 Template.CustomerSessions.events({
@@ -81,9 +77,7 @@ Template.CustomerSessions.events({
         instance.state.set('pre', event.target.checked);
     },
     'change #com'(event, instance) {
+        console.log('test');
         instance.state.set('com', event.target.checked);
-    },
-    'keyup .filter'(event, instance) {
-        instance.state.set('filtertext', event.target.value);
-    },
+    }
 });
