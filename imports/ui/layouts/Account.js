@@ -147,6 +147,9 @@ Template.Account.events({
     },
     'click #demobtn' (event) {
         event.preventDefault();
+        $('#modal-changeAddr').modal('show');
+        return;
+        event.preventDefault();
         var tour = {
             showCloseButton: false,
             id: "acctour",
@@ -184,118 +187,18 @@ Template.Account.events({
     },
     'click .changeEmail' (event) {
         event.preventDefault();
-        bootbox.dialog({
-                size: "small",
-                title: "Change E-mail",
-                message:
-                    // TODO: change account login also
-                '<div class="row">' +
-                  '<div class="col-centered col-md-12">' +
-                    '<form class="form-horizontal register">' +
-                      '<div class="form-group">' +
-                        '<div class="col-centered col-sm-12">' +
-                          '<input type="text" id="mail" placeholder="Enter new e-mail address" class="form-control">' +
-                        '</div>' +
-                      '</div>' +
-                    '</form>' +
-                  '</div>' +
-                '</div>',
-                buttons: {
-                    success: {
-                        label: "Save",
-                        className: "btn-success",
-                        callback: function () {
-                            var newmail = $("#mail").val();
-                            Meteor.call('userdata.changeEmail', newmail);
-                        }
-                    }
-                },
-                onEscape: function() {}
-            }
-        );
+        console.log('unimplemented');
     },
-    'click .changeTel' (event) {
+    'click .changePhone' (event) {
         event.preventDefault();
-        bootbox.dialog({
-                size: "small",
-                title: "Change Phone Number",
-                message:
-                '<div class="row">' +
-                  '<div class="col-centered col-md-12">' +
-                    '<form class="form-horizontal register">' +
-                      '<div class="form-group">' +
-                        '<div class="col-centered col-sm-12">' +
-                          '<input type="text" id="tel" placeholder="Enter new phone number" class="form-control">' +
-                        '</div>' +
-                      '</div>' +
-                    '</form>' +
-                  '</div>' +
-                '</div>',
-                buttons: {
-                    success: {
-                        label: "Save",
-                        className: "btn-success btn-primary",
-                        callback: function () {
-                            var newtel = $("#tel").val();
-                            Meteor.call('userdata.changeTel', newtel);
-                        }
-                    }
-                },
-                onEscape: function() {}
-            }
-        );
+        Modal.show('AccountChangePhone');
     },
     'click .changeAddress' (event) {
         event.stopPropagation();
         event.preventDefault();
+        Modal.show('AccountChangeAddress');
         var i = (event.target.id);
-        bootbox.dialog({
-                size: "small",
-                title: "Change Address",
-                message:
-                '<div class="row">' +
-                  '<div class="col-centered col-md-12">' +
-                    '<form class="form-horizontal register">' +
-                      '<div class="form-group">' +
-                        '<div class="col-centered col-sm-12">' +
-                          '<input type="text" id="street" placeholder="Street" class="form-control">' +
-                        '</div>' +
-                      '</div>' +
-                      '<div class="form-group">' +
-                        '<div class="col-centered col-sm-12">' +
-                          '<input type="text" id="city" placeholder="City" class="form-control">' +
-                        '</div>' +
-                      '</div>' +
-                      '<div class="form-group">' +
-                        '<div class="col-centered col-sm-12">' +
-                          '<input type="text" id="state" placeholder="State" class="form-control">' +
-                        '</div>' +
-                      '</div>' +
-                      '<div class="form-group">' +
-                        '<div class="col-centered col-sm-12">' +
-                          '<input type="text" id="zip" placeholder="ZIP" class="form-control">' +
-                        '</div>' +
-                      '</div>' +
-                    '</form>' +
-                  '</div>' +
-                '</div>',
-                buttons: {
-                    success: {
-                        label: "Save",
-                        className: "btn-success",
-                        callback: function () {
-                            var index = parseInt(i);
-                            var street = $("#street").val();
-                            var city = $("#city").val();
-                            var state = $("#state").val();
-                            var zip = $("#zip").val();
-                            Meteor.call('userdata.changeAddress', index, street, city, state, zip);
-                        }
-                    }
-                },
-                onEscape: function() {}
-            }
-        );
+        Session.set('changeAddrID', i);
     },
     'click .delAddress' (event) {
         event.stopPropagation();

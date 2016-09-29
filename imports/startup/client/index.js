@@ -9,7 +9,6 @@ import '/imports/ui/layouts/Footer.html';
 
 // templates js
 import '/imports/ui/layouts/Account.js';
-import '/imports/ui/layouts/Account_2.js';
 import '/imports/ui/layouts/Booking.js';
 import '/imports/ui/layouts/Changepwd.js';
 import '/imports/ui/layouts/Confirmation.js';
@@ -32,6 +31,10 @@ import '/imports/ui/layouts/VendorRegistration.js';
 import '/imports/ui/layouts/VendorWorkSchedule.js';
 import '/imports/ui/layouts/VendorSessionDetails.js';
 import '/imports/ui/layouts/VendorSpecify.js';
+
+// modals
+import '/imports/ui/modals/AccountChangePhone.js';
+import '/imports/ui/modals/AccountChangeAddress.js';
 
 // additional configuration on client
 import './config/bert_config.js';

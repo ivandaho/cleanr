@@ -5,6 +5,7 @@
     "start": "meteor run"
   },
   "dependencies": {
+    "bootstrap-daterangepicker": "^2.1.24",
     "bcrypt": "^0.8.7",
     "later": "^1.2.0",
     "meteor-node-stubs": "~0.2.0",

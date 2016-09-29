@@ -84,18 +84,6 @@ FlowRouter.route('/account', {
         BlazeLayout.render('MainLayout', {main: 'Account'})
     }
 });
-FlowRouter.route('/account2', {
-    name: 'account2',
-    triggersEnter: [function() {
-        if (Meteor.user() == null) {
-            // if user is not logged in
-            // FlowRouter.go('login');
-        }
-    }],
-    action() {
-        BlazeLayout.render('MainLayout', {main: 'Account_2'})
-    }
-});
 
 FlowRouter.route('/booking/:bid', {
     name: 'booking',
