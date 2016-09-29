@@ -11,3 +11,13 @@
     height:100%;
     display:block;
 }
+
+.table-past-date {
+    background-color: #ffffff;
+}
+.table-today {
+    background-color: #ccffb3;
+}
+.table-upcoming-date {
+    background-color: #e6f7ff;
+}

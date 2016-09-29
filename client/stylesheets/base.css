@@ -14,6 +14,7 @@
     background-attachment: scroll;
 }
 .dismissn {
+    float: right;
     cursor: pointer;
 }
 .ntf {
@@ -72,4 +73,8 @@ footer {
 }
 .divmarginbtm {
     margin-bottom: 20px;
+}
+.notification-area {
+    width: 600px;
+
 }

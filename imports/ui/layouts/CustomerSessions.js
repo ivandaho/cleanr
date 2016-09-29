@@ -23,18 +23,32 @@ Template.CustomerSessions.onCreated(function CustomerSessionsOnCreated() {
     this.state.set('upc', true);
     this.state.set('pre', true);
     this.state.set('com', true);
+    // var today = moment.utc().startOf('day').toDate();
 });
 
+let today = moment.utc().startOf('day').toDate();
+
 Template.CustomerSessions.helpers({
+    datecss(date) {
+        if (date < today) {
+            // date is today or later
+            return 'table-past-date';
+        }
+        else if (date.getTime() === today.getTime()) {
+            return 'table-today';
+        } else {
+            return 'table-upcoming-date';
+        }
+    },
     sessionfound() {
         const instance = Template.instance();
         const today = moment.utc().startOf('day').toDate();
         // sessionstatus = 1 means completed
         const previousCom = {custID: Meteor.userId(), date: {$lt: today}};
-        const previousNoCom = {custID: Meteor.userId(), date: {$lt: today}, sessionstatus: 0};
-        const upcomingCom = {custID: Meteor.userId(), date: {$gte: today}};
-        const upcomingNoCom = {custID: Meteor.userId(), date: {$gte: today}, sessionstatus: 0};
-        var options = [{cantfindme: 'cantfindmeeither'}];
+        const previousNoCom = {custID: Meteor.userId(), date: {$lt: today}, sessionstatus: {$nin: [1]}};
+        const upcomingCom = {custID: Meteor.userId(), date: {$gt: today}};
+        const upcomingNoCom = {custID: Meteor.userId(), date: {$gte: today}, sessionstatus: {$nin: [1]}};
+        var options = [{custID: Meteor.userId(), date: today}];
 
         if (instance.state.get('pre')) {
             if (instance.state.get('com')) {
@@ -77,7 +91,6 @@ Template.CustomerSessions.events({
         instance.state.set('pre', event.target.checked);
     },
     'change #com'(event, instance) {
-        console.log('test');
         instance.state.set('com', event.target.checked);
     }
 });

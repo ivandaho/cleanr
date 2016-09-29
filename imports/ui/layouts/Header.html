@@ -43,13 +43,13 @@
       <ul class="nav navbar-nav navbar-right">
         <li id="notificationdd" class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-lg {{#if atleastonenotification}}fa-bell cleanr-icon-green-darker{{else}}fa-bell-o{{/if}}"></i></a>
-          <ul class="dropdown-menu">
+          <ul class="dropdown-menu notification-area">
             {{#each notificationfound}}
               {{#if notificationIsType0 this}}
                 <li class="ntf"><span><a href="/vendorsessiondetails/{{this.sid}}">New assigned session: {{#with sessbysessid this.sid}} {{dateToDay date}} {{dateFormat date}} {{/with}} </a><i id="{{_id}}" class="fa fa-close dismissn"></i></span></li>
               {{else}}
                 {{#if notificationIsType1 this}}
-                  <li class="ntf"><span><a href="/customersessiondetails/{{this.sid}}">A session has been marked complete: {{#with sessbysessid this.sid}} {{dateToDay date}} {{dateFormat date}} {{/with}} </a><i id="{{_id}}" class="fa fa-close dismissn"></i></span></li>
+                  <li class="ntf text-center"><span><a href="/customersessiondetails/{{this.sid}}">A session has been marked complete: {{#with sessbysessid this.sid}} {{dateToDay date}} {{dateFormat date}} {{/with}} </a><i id="{{_id}}" class="fa fa-close dismissn"></i></span></li>
                 {{else}}
                   {{#if notificationIsType2 this}}
                     <li class="ntf"><span><a href="/vendorsessiondetails/{{this.sid}}">You have yet to mark the following session as completed: {{#with sessbysessid this.sid}} {{dateToDay date}} {{dateFormat date}} {{getslotbynum timeslot}} {{/with}} </a><i id="{{_id}}" class="fa fa-close dismissn"></i></span></li>

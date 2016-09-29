@@ -19,7 +19,7 @@
               {{#each allnotifications}}
               <tr class="n-row">
                 <td class="text-center">{{dateFormat createdDate}}</td>
-                <td>
+                <td class="text-center">
                   {{#if notificationIsType0 this}}
                     <a href="/vendorsessiondetails/{{this.sid}}">New assigned session: {{#with sessbysessid this.sid}} {{dateToDay date}} {{dateFormat date}} {{/with}} </a>
                   {{else}}
