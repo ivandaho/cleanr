@@ -58,11 +58,13 @@
                     {{#if notificationIsType3 this}}
                       <li class="ntf"><span><a href="/vendorsessiondetails/{{this.sid}}">A customer has cancelled an upcoming session: {{#with sessbysessid this.sid}} {{dateToDay date}} {{dateFormat date}} {{getslotbynum timeslot}} {{/with}} </a><i id="{{_id}}" class="fa fa-close dismissn"></i></span></li>
                     {{else}}
-                      <li class="ntf text-center">No new notifications</li>
+                      <li class="ntf"><span><a href="/vendorsessiondetails/{{this.sid}}">Unknown notification</a><i id="{{_id}}" class="fa fa-close dismissn"></i></span></li>
                     {{/if}}
                   {{/if}}
                 {{/if}}
               {{/if}}
+              {{else}}
+                      <li class="ntf text-center">No new notifications</li>
             {{/each}}
             <li class="ntf text-center"><a href="/notifications/">View all</a></li>
           </ul>

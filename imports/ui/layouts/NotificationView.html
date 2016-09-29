@@ -25,6 +25,17 @@
                   {{else}}
                     {{#if notificationIsType1 this}}
                     <a href="/vendorsessiondetails/{{this.sid}}">A session has been marked complete: {{#with sessbysessid this.sid}} {{dateToDay date}} {{dateFormat date}} {{/with}} </a>
+                    {{else}}
+                      {{#if notificationIsType2 this}}
+                        <a href="/vendorsessiondetails/{{this.sid}}">You have yet to mark the following session as completed: {{#with sessbysessid this.sid}} {{dateToDay date}} {{dateFormat date}} {{getslotbynum timeslot}} {{/with}} </a>
+
+                      {{else}}
+                        {{#if notificationIsType3 this}}
+                          <a href="/vendorsessiondetails/{{this.sid}}">A customer has cancelled an upcoming session: {{#with sessbysessid this.sid}} {{dateToDay date}} {{dateFormat date}} {{getslotbynum timeslot}} {{/with}} </a>
+                        {{else}}
+                          <a href="/vendorsessiondetails/{{this.sid}}">Unknown notification</a>
+                        {{/if}}
+                      {{/if}}
                     {{/if}}
                   {{/if}}
                 </td>
