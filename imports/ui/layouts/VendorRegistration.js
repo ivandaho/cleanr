@@ -9,9 +9,9 @@ import { Vendorslots } from '../../api/vendorslots/Vendorslots.js';
     //Meteor.subscribe('recipes');
 
 Template.VendorRegistration.onCreated(function VendorRegistrationOnCreated() {
-    Meteor.subscribe('timeslots');
-    Meteor.subscribe('vendordata');
-    Meteor.subscribe('vendorslots');
+    sm.subscribe('timeslots');
+    sm.subscribe('vendordata');
+    sm.subscribe('vendorslots');
     //Meteor.subscribe('weeks');
 });
 

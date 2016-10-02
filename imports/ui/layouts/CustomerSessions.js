@@ -13,10 +13,10 @@ Template.CustomerSessions.onCreated(function CustomerSessionsOnCreated() {
     var mdate = moment.utc().startOf('week').add(1, 'days'); // this week's monday
     var jdate = mdate.toDate();
     Session.set('currweek', jdate);
-    Meteor.subscribe('userdata');
-    Meteor.subscribe('bookings');
-    Meteor.subscribe('sessions');
-    Meteor.subscribe('timeslots');
+    sm.subscribe('userdata');
+    sm.subscribe('bookings');
+    sm.subscribe('sessions');
+    sm.subscribe('timeslots');
 
     this.state = new ReactiveDict();
     const instance = Template.instance;

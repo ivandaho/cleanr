@@ -13,9 +13,9 @@ import './Confirmation.html';
 import { Session } from 'meteor/session';
 
 Template.Confirmation.onCreated(function ConfirmationOnCreated() {
-    Meteor.subscribe('jobs');
-    Meteor.subscribe('sessions');
-    Meteor.subscribe('timeslots');
+    sm.subscribe('jobs');
+    sm.subscribe('sessions');
+    sm.subscribe('timeslots');
     this.state = new ReactiveDict();
 });
 

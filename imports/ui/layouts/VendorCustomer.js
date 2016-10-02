@@ -10,9 +10,9 @@ import { Sessions } from '../../api/sessions/Sessions.js';
 import { Timeslots } from '../../api/timeslots/Timeslots.js';
 
 Template.VendorCustomer.onCreated(function VendorCustomerOnCreated() {
-  Meteor.subscribe('sessions');
-  Meteor.subscribe('userdata');
-  Meteor.subscribe('timeslots');
+  sm.subscribe('sessions');
+  sm.subscribe('userdata');
+  sm.subscribe('timeslots');
 });
 
 

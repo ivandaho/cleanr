@@ -6,7 +6,7 @@ import { Template } from 'meteor/templating';
 import { Notifications } from '../../api/notifications/Notifications.js';
 
 Template.NotificationView.onCreated(function NotificationsOnCreated() {
-    Meteor.subscribe('notifications');
+    sm.subscribe('notifications');
     Session.set('nlimit', 10);
 });
 

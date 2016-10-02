@@ -8,9 +8,9 @@ import { Sessions } from '../../api/sessions/Sessions.js';
 import '/imports/startup/client/config/velocity_callouts.js';
 
 Template.VendorCP.onCreated(function VendorCPOnCreated() {
-    Meteor.subscribe('userdata');
-    Meteor.subscribe('sessions');
-    Meteor.subscribe('timeslots');
+    sm.subscribe('userdata');
+    sm.subscribe('sessions');
+    sm.subscribe('timeslots');
     Session.set('uslimit', 5);
     Session.set('pslimit', 5);
 });

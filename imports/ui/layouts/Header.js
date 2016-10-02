@@ -5,8 +5,9 @@ import { Template } from 'meteor/templating';
 import { Notifications } from '/imports/api/notifications/Notifications.js';
 
 Template.Header.onCreated(function AccountOnCreated() {
-    Meteor.subscribe('userdata');
-    Meteor.subscribe('notifications');
+    sm.subscribe('userdata');
+    sm.subscribe('notifications');
+    sm.subscribe('sessions');
 });
 
 Template.Header.helpers({

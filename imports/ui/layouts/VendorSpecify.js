@@ -10,10 +10,10 @@ import { Generatedweeks } from '../../api/generatedweeks/Generatedweeks.js';
     //Meteor.subscribe('recipes');
 
 Template.VendorSpecify.onCreated(function VendorSpecifyOnCreated() {
-    Meteor.subscribe('timeslots');
-    Meteor.subscribe('vendordata');
-    Meteor.subscribe('vendorslots');
-    Meteor.subscribe('generatedweeks');
+    sm.subscribe('timeslots');
+    sm.subscribe('vendordata');
+    sm.subscribe('vendorslots');
+    sm.subscribe('generatedweeks');
     var mdate = moment.utc().startOf('week').add(1, 'days');
     var jdate = mdate.toDate();
     Session.set('currweek', jdate);

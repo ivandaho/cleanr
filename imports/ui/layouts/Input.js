@@ -17,8 +17,8 @@ Template.Input.helpers({
     isAdmin() {
         console.log('is admin.');
         console.log(Meteor.userId());
-        Meteor.subscribe('sessions');
-        Meteor.subscribe('jobs');
+        sm.subscribe('sessions');
+        sm.subscribe('jobs');
         return Roles.userIsInRole(this.userId, 'admin');
         // the previous line throws a warning if this.userId() is used??
     },

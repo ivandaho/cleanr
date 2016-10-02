@@ -40,3 +40,5 @@ import '/imports/ui/modals/AccountChangeAddress.js';
 import './config/bert_config.js';
 import './config/globalhelpers.js';
 // import './config/velocity_callouts.js';
+
+sm = new SubsManager();

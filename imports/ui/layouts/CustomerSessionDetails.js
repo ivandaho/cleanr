@@ -9,10 +9,10 @@ import { Userdata } from '../../api/userdata/Userdata.js';
 import { Bookings } from '../../api/bookings/Bookings.js';
 
 Template.CustomerSessionDetails.onCreated(function CustomerSessionDetailsOnCreated() {
-    Meteor.subscribe('timeslots');
-    Meteor.subscribe('sessions');
-    Meteor.subscribe('userdata');
-    Meteor.subscribe('bookings');
+    sm.subscribe('timeslots');
+    sm.subscribe('sessions');
+    sm.subscribe('userdata');
+    sm.subscribe('bookings');
 
     tss = Timeslots.find({});
 });

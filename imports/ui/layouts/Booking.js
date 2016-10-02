@@ -11,10 +11,10 @@ import { Timeslots } from '../../api/timeslots/Timeslots.js';
 import { Bookings } from '../../api/bookings/Bookings.js';
 
 Template.Booking.onCreated(function BookingOnCreated() {
-    Meteor.subscribe('sessions');
-    Meteor.subscribe('userdata');
-    Meteor.subscribe('timeslots');
-    Meteor.subscribe('bookings');
+    sm.subscribe('sessions');
+    sm.subscribe('userdata');
+    sm.subscribe('timeslots');
+    sm.subscribe('bookings');
 });
 
 

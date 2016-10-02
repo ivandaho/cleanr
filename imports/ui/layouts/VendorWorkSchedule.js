@@ -11,14 +11,14 @@ import { Userdata } from '../../api/userdata/Userdata.js';
 import '/imports/startup/client/config/velocity_callouts.js';
 
 Template.VendorWorkSchedule.onCreated(function VendorWorkScheduleOnCreated() {
-    Meteor.subscribe('timeslots');
-    Meteor.subscribe('vendorslots');
+    sm.subscribe('timeslots');
+    sm.subscribe('vendorslots');
     var mdate = moment.utc().startOf('week').add(1, 'days'); // this week's monday
     var jdate = mdate.toDate();
     Session.set('currweek', jdate);
     tss = Timeslots.find({});
-    Meteor.subscribe('sessions');
-    Meteor.subscribe('userdata');
+    sm.subscribe('sessions');
+    sm.subscribe('userdata');
 });
 
 var tss;

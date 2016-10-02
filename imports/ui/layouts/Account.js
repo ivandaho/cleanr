@@ -11,10 +11,10 @@ import { Session } from 'meteor/session';
 */
 
 Template.Account.onCreated(function AccountOnCreated() {
-    Meteor.subscribe('userdata');
-    Meteor.subscribe('sessions');
-    Meteor.subscribe('timeslots');
-    Meteor.subscribe('bookings');
+    sm.subscribe('userdata');
+    sm.subscribe('sessions');
+    sm.subscribe('timeslots');
+    sm.subscribe('bookings');
     Session.set('rslimit', 5);
     Session.set('mblimit', 5);
 });
@@ -146,9 +146,6 @@ Template.Account.events({
         }
     },
     'click #demobtn' (event) {
-        event.preventDefault();
-        $('#modal-changeAddr').modal('show');
-        return;
         event.preventDefault();
         var tour = {
             showCloseButton: false,

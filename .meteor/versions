@@ -66,8 +66,11 @@ matb33:bootstrap-glyphicons@10.0.0
 mdg:validation-error@0.5.1
 meteor@1.2.17
 meteor-base@1.0.4
+meteorhacks:kadira@2.30.0
+meteorhacks:meteorx@1.4.1
 meteorhacks:picker@1.0.3
 meteorhacks:ssr@2.2.0
+meteorhacks:subs-manager@1.6.4
 meteortoys:allthings@3.0.0
 meteortoys:authenticate@3.0.0
 meteortoys:autopub@3.0.0
@@ -94,6 +97,7 @@ modules-runtime@0.7.6
 momentjs:moment@2.14.4
 mongo@1.1.12
 mongo-id@1.0.5
+mongo-livedata@1.0.12
 mrt:moment@2.8.1
 msavin:jetsetter@2.0.0
 msavin:mongol@2.0.1

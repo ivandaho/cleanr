@@ -9,8 +9,8 @@ import { Vendorslots } from '../../api/vendorslots/Vendorslots.js';
 import '/imports/startup/client/config/velocity_callouts.js';
 
 Template.Schedule.onCreated(function ScheduleOnCreated() {
-    Meteor.subscribe('timeslots');
-    Meteor.subscribe('vendorslots');
+    sm.subscribe('timeslots');
+    sm.subscribe('vendorslots');
     var mdate = moment.utc().startOf('week').add(1, 'days'); // this week's monday
     var jdate = mdate.toDate();
     if (!Session.get('currweek')) {
