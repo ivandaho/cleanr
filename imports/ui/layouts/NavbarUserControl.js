@@ -9,5 +9,6 @@ Template.NavbarUserControl.events({
     event.preventDefault();
     FlowRouter.go('/');
     Meteor.logout();
+    sm.clear();
   }
 });

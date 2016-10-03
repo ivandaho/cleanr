@@ -30,6 +30,7 @@ Template.Login.events({
             if (error) {
                 Bert.alert(error.reason, 'danger');
             } else {
+                sm.clear();
                 if (Roles.userIsInRole(Meteor.userId(), 'customer')) {
                     FlowRouter.go('account');
                 } else if (Roles.userIsInRole(Meteor.userId(), 'vendor')) {
