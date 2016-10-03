@@ -19,14 +19,6 @@ Template.CustomerBooking.onCreated(function CustomerBookingOnCreated() {
 
 
 Template.CustomerBooking.events({
-    'click .morebtn' (event) {
-        event.preventDefault();
-        console.log('TODO: change treshold for recent sessions');
-    },
-    'click .lessbtn' (event) {
-        event.preventDefault();
-        console.log('TODO: change treshold for recent sessions');
-    },
     'click .btn-cancel-sub' () {
         event.preventDefault();
         bootbox.confirm({

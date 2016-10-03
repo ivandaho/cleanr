@@ -72,6 +72,18 @@ Template.registerHelper("getsubstatus", function(booking) {
         return true;
     }
 });
+Template.registerHelper("substatusBID", function(bid) {
+    const booking = Bookings.findOne({_id: bid});
+    const ss = booking.jobstatus;
+    if (ss == 0) {
+        return "Inactive";
+    } else if (ss == 1) {
+        return "Active";
+    } else if (ss == 2) {
+        return "Single session booking";
+    }
+    return "Inactive";
+});
 Template.registerHelper("substatus", function(booking) {
     const ss = booking.jobstatus;
     if (ss == 0) {

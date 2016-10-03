@@ -42,10 +42,6 @@ Template.VendorCP.helpers({
         const thing = Sessions.find(
                                     {
                                         vendorID: Meteor.userId(),
-                                        // TODO: might have time zone errors
-                                        // down the road if this is set to
-                                        // $eq instead of something like $gte
-                                        // or $lte
                                         date: {$eq: todaydate},
                                     },
                                     {sort: {timeslot: 1}}

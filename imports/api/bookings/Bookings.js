@@ -41,9 +41,6 @@ BookingsSchema = new SimpleSchema({
         // 2 - SINGLE SESSION
 
         // shouldnt be able to rebook (schedule conflicts)
-
-        // TODO: when vendor marks a session as complete, it will check
-        // the booking for jobstatus and change it accordingly
     },
     mc: {
         type: Boolean
@@ -152,11 +149,11 @@ Meteor.methods({
 
                 // COMMENTED OUT FOR EASY DEV PROCESS
                 // remove vendorslot
-                // Vendorslots.remove({
-                //     ownerID: each.vendorID,
-                //     d: each.date,
-                //     s: each.timeslot
-                //     });
+                Vendorslots.remove({
+                    ownerID: each.vendorID,
+                    d: each.date,
+                    s: each.timeslot
+                    });
 
                 // send notification
                 Notifications.insert({
@@ -192,9 +189,6 @@ Meteor.methods({
             console.log(msg);
 
         }
-
-        // LATER:
-        // notify vendor
     },
     'bookings.reSubscribe' (bid) {
         // find the booking

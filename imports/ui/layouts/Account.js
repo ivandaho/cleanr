@@ -113,8 +113,8 @@ Template.Account.events({
         if (Session.get('rsmaxed') != true) {
             Session.set('rslimit', Session.get('rslimit') + 5);
             setTimeout(function () {
-            $(".rs-row").velocity("stop");
-            $(".rs-row").velocity("callout.emerge", {stagger: 5});
+                $(".rs-row").velocity("stop");
+                $(".rs-row").velocity("callout.emerge", {stagger: 5});
             }, 10);
         }
     },
@@ -132,8 +132,8 @@ Template.Account.events({
         if (Session.get('mbmaxed') != true) {
             Session.set('mblimit', Session.get('mblimit') + 5);
             setTimeout(function () {
-            $(".mb-row").velocity("stop");
-            $(".mb-row").velocity("callout.emerge", {stagger: 5});
+                $(".mb-row").velocity("stop");
+                $(".mb-row").velocity("callout.emerge", {stagger: 5});
             }, 10);
         }
     },
@@ -215,9 +215,5 @@ Template.Account.events({
         var zip = delthis.zip;
         Meteor.call('userdata.delAddress', index, street, city, state, zip);
         $(event.target.parentElement.parentElement.parentElement.parentElement).removeClass("panel-info");
-    },
-    'click .lessbtn' (event) {
-        event.preventDefault();
-        console.log('TODO: change treshold for recent sessions');
     },
 });
