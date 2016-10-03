@@ -9,32 +9,35 @@
   <section>
     <div class="container">
       <ul class="pagination">
-      <!-- <li class="prevweekbtn"><a href="#"><i class="fa fa-angle-left"></i></a></li> -->
-      <li class="changeweekbtn active" id="week1"><a href="#">1</a></li>
-      <li class="changeweekbtn" id="week2"><a href="#">2</a></li>
-      <li class="changeweekbtn" id="week3"><a href="#">3</a></li>
-      <li class="changeweekbtn" id="week4"><a href="#">4</a></li>
-      <li class="changeweekbtn" id="week5"><a href="#">5</a></li>
-      <!-- <li class="nextweekbtn"><a href="#"><i class="fa fa-angle-right"></i></a></li> -->
+        <li class="changeweekbtn active" id="s{{weekdates 0}}"><a href="#">1</a></li>
+        <li class="changeweekbtn" id="s{{weekdates 1}}"><a href="#">2</a></li>
+        <li class="changeweekbtn" id="s{{weekdates 2}}"><a href="#">3</a></li>
+        <li class="changeweekbtn" id="s{{weekdates 3}}"><a href="#">4</a></li>
+        <li class="changeweekbtn" id="s{{weekdates 4}}"><a href="#">5</a></li>
       </ul>
-      <div class="table-responsive">
-      <table class="table table-hover">
-        <thead>
-          <tr>
-            <th>Time Slots</th>
-            <th>Monday <br> {{weekdates 0}}</th>
-            <th>Tuesday <br> {{weekdates 1}}</th>
-            <th>Wednesday <br> {{weekdates 2}}</th>
-            <th>Thursday <br> {{weekdates 3}}</th>
-            <th>Friday <br> {{weekdates 4}}</th>
-            <th>Saturday <br> {{weekdates 5}}</th>
-            <th>Sunday <br> {{weekdates 6}}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {{>schedtable timeslots}}
-        </tbody>
-      </table>
+      <div class="table-responsive" id="scrollthis">
+        <table class="table table-special table-hover" data-spy="scroll" data-target="#pager">
+          <thead>
+            <tr>
+              <th>Time Slots</th>
+              {{#each fulldates}}
+              <th class="{{#if lastday}}divided{{/if}}" id="{{date}}">
+                {{day}} <br> {{date}}
+              </th>
+              {{/each}}
+              <!-- <th>Monday <br> {{weekdates 0}}</th> -->
+              <!-- <th>Tuesday <br> {{weekdates 1}}</th> -->
+              <!-- <th>Wednesday <br> {{weekdates 2}}</th> -->
+              <!-- <th>Thursday <br> {{weekdates 3}}</th> -->
+              <!-- <th>Friday <br> {{weekdates 4}}</th> -->
+              <!-- <th>Saturday <br> {{weekdates 5}}</th> -->
+              <!-- <th>Sunday <br> {{weekdates 6}}</th> -->
+            </tr>
+          </thead>
+          <tbody>
+            {{>schedtable timeslots}}
+          </tbody>
+        </table>
       </div>
     </div>
   </section>
@@ -51,7 +54,7 @@
 
 <template name="eachslot">
   {{#each this}}
-    <td class="tsbtn">
+  <td class="tsbtn {{#if lastday}}divided{{/if}}">
       {{#if dateover date n}}
         <button class="btn disabled">
           Too late

@@ -20,3 +20,39 @@
   user-select: none;           /* Non-prefixed version, currently
                                   not supported by any browser */
 }
+.divided {
+    border-left-style: solid;
+    border-left-width: 3px;
+    border-left-color: #c9c9c9;
+}
+.table-special>thead:first-child>tr:first-child>th:first-child
+{
+    position: absolute;
+    display: inline-block;
+    height:100%;
+
+    padding:20px;
+    background-color:#f2f2f2;
+    z-index: 999;
+}
+.table-special> tbody > tr > td:first-child
+{
+    position: absolute;
+    display: inline-block;
+    height:100%;
+
+    padding:15px;
+    background-color:#f2f2f2;
+    z-index: 999;
+    max-height:50px;
+
+}
+.table-special>thead:first-child>tr:first-child>th:nth-child(2)
+{
+    padding-left:120px;
+}
+.table-special> tbody > tr > td:nth-child(2)
+{
+    padding-left:120px !important;
+
+}

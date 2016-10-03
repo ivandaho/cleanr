@@ -32,7 +32,24 @@ Template.Schedule.helpers({
     weekdates(i) {
         var jdate = Session.get('currweek');
         var mdate = moment.utc(jdate);
-        return mdate.add(i, 'days').format("DD-MM");
+        return mdate.clone().add(i, 'weeks').format("DD-MM");
+    },
+    fulldates() {
+        var thething = [];
+        var mdate = moment.utc().startOf('week').add(1, 'days');
+        for(i = 0; i<35; i++) {
+            themdate = mdate.clone().add(i, 'days');
+            let thedate = themdate.format("DD-MM");
+            let theday = themdate.format("dddd");
+            var oneday;
+            if (i % 7  == 0) {
+                oneday = {day: theday, date: thedate, lastday: true};
+            } else {
+                oneday = {day: theday, date: thedate};
+            }
+            thething.push(oneday);
+        }
+        return thething;
     },
 });
 
@@ -43,14 +60,25 @@ Template.schedtable.helpers({
         var mdate = moment.utc(jdate);
         // var d =  mdate.add(i, 'days').format("YYYY-MM-DD");
 
+        var thething = [];
+        for(i = 0; i<35; i++) {
+            var oneday;
+            if (i % 7  == 0) {
+                oneday = {date: mdate.clone().add(i, 'days').format("YYYY-MM-DD"),n: num, lastday: true};
+            } else {
+                oneday = {date: mdate.clone().add(i, 'days').format("YYYY-MM-DD"),n: num};
+            }
+            thething.push(oneday);
+        };
+        return thething;
         return [
-            {day:'mon',date: mdate.clone().add(0, 'days').format("YYYY-MM-DD"),n: num},
-            {day:'tue',date: mdate.clone().add(1, 'days').format("YYYY-MM-DD"),n: num},
-            {day:'wed',date: mdate.clone().add(2, 'days').format("YYYY-MM-DD"),n: num},
-            {day:'thu',date: mdate.clone().add(3, 'days').format("YYYY-MM-DD"),n: num},
-            {day:'fri',date: mdate.clone().add(4, 'days').format("YYYY-MM-DD"),n: num},
-            {day:'sat',date: mdate.clone().add(5, 'days').format("YYYY-MM-DD"),n: num},
-            {day:'sun',date: mdate.clone().add(6, 'days').format("YYYY-MM-DD"),n: num}];
+            {date: mdate.clone().add(0, 'days').format("YYYY-MM-DD"),n: num},
+            {date: mdate.clone().add(1, 'days').format("YYYY-MM-DD"),n: num},
+            {date: mdate.clone().add(2, 'days').format("YYYY-MM-DD"),n: num},
+            {date: mdate.clone().add(3, 'days').format("YYYY-MM-DD"),n: num},
+            {date: mdate.clone().add(4, 'days').format("YYYY-MM-DD"),n: num},
+            {date: mdate.clone().add(5, 'days').format("YYYY-MM-DD"),n: num},
+            {date: mdate.clone().add(6, 'days').format("YYYY-MM-DD"),n: num}];
     },
 });
 
@@ -201,13 +229,14 @@ Template.Schedule.events({
         event.preventDefault();
         $(".active").removeClass("active");
         $(event.target.parentElement).addClass("active");
-
-        i = parseInt(event.target.parentElement.id.substring(4,5)) - 1;
-        var mdate = moment.utc().startOf('week').add(i, 'weeks').add(1, 'days');
-        tempjdate = mdate.toDate();
-        Session.set('currweek', tempjdate);
-        $(".tsbtn").velocity("stop");
-        $(".tsbtn").velocity("callout.emerge");
+        let p = $(".container").offset().left;
+        let targetid = "#" + event.target.parentElement.id.substring(1,6);
+        let finaloffset = -p - 130
+        $(targetid).velocity("scroll", {
+            axis: "x",
+            container: $("#scrollthis"),
+            offset: finaloffset
+        });
     },
     'click .nextweekbtn' (event) {
         event.preventDefault();
