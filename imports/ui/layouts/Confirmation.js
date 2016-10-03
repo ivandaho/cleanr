@@ -239,7 +239,20 @@ Template.Confirmation.events({
 
             Meteor.call('email.bookingSuccess_cust', date, slot, repeat, bid, sid);
             Meteor.call('email.bookingSuccess_vend', bid, sid);
-            bootbox.alert('Success!');
+            bootbox.dialog({
+                size: 'small',
+                message: 'Success!',
+                buttons: {
+                    'account': {
+                        label: 'OK',
+                        className: 'btn-success',
+                        callback: function() {
+                            FlowRouter.go('/account');
+                        }
+                    },
+                },
+                onEscape: function() {} // allows for esc to close modal
+            });
         });
     },
 });
