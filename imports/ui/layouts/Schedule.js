@@ -12,6 +12,7 @@ Template.Schedule.onCreated(function ScheduleOnCreated() {
     sm.subscribe('timeslots');
     sm.subscribe('vendorslots');
     var mdate = moment.utc().startOf('week').add(1, 'days'); // this week's monday
+    sow = moment.utc().startOf('week').add(1, 'days'); // this week's monday
     var jdate = mdate.toDate();
     if (!Session.get('currweek')) {
         Session.set('currweek', jdate);
@@ -22,6 +23,8 @@ Template.Schedule.onCreated(function ScheduleOnCreated() {
 });
 
 var tss;
+var scrollindex;
+var sow;
 
 Template.Schedule.helpers({
     timeslots() {
@@ -113,6 +116,34 @@ Template.eachslot.helpers({
 });
 
 Template.Schedule.events({
+    'scroll #scrollthis' (event) {
+        var ar = [];
+        var o = $(".container").offset().left;
+
+        for (var s = 0; s < 5; s++) {
+            var p = "#" + sow.clone().add(s, 'weeks').format("DD-MM");
+            var elepos = $(p).offset().left - 230;
+            if (elepos > 0) {
+                ar.push(elepos);
+            }
+        }
+
+        var indexOfMin;
+        if (ar.length > 0) {
+            indexOfMin = ar.reduce((iMin, x, i, arr) => x > arr[iMin] ? i : iMin, 0) + 2;
+        } else {
+            indexOfMin = 1;
+        }
+
+        if (indexOfMin !== scrollindex) {
+            scrollindex = indexOfMin;
+
+            let targetclass = "#s" + sow.clone().add(5 - indexOfMin, 'weeks').format("DD-MM");
+            $(".active").removeClass("active");
+            $(targetclass).addClass("active");
+        }
+
+    },
     'click #demobtn' (event) {
         event.preventDefault();
         var tour = {
@@ -227,15 +258,18 @@ Template.Schedule.events({
     },
     'click .changeweekbtn' (event) {
         event.preventDefault();
-        $(".active").removeClass("active");
-        $(event.target.parentElement).addClass("active");
+        setTimeout(function () {
+            $(".active").removeClass("active");
+            $(event.target.parentElement).addClass("active");
+        }, 101);
         let p = $(".container").offset().left;
         let targetid = "#" + event.target.parentElement.id.substring(1,6);
         let finaloffset = -p - 130
         $(targetid).velocity("scroll", {
             axis: "x",
             container: $("#scrollthis"),
-            offset: finaloffset
+            offset: finaloffset,
+            duration: 100
         });
     },
     'click .nextweekbtn' (event) {
