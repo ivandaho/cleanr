@@ -117,28 +117,57 @@ Template.eachslot.helpers({
 
 Template.Schedule.events({
     'scroll #scrollthis' (event) {
+        // change pagination
         var ar = [];
+        let containeroffset = $('.container').offset().left;
         var o = $(".container").offset().left;
+        var elepos;
 
         for (var s = 0; s < 5; s++) {
+            // for 5 weeks
             var p = "#" + sow.clone().add(s, 'weeks').format("DD-MM");
-            var elepos = $(p).offset().left - 230;
-            if (elepos > 0) {
-                ar.push(elepos);
+            elepos = $(p).offset().left - containeroffset - 130;
+            // offset is 130 for the first column
+
+            if (elepos <= 0) {
+                // if scrollpos less than 0
+                // ignore by setting scrollpos to a large number
+                elepos = Number.MAX_VALUE;
+                // elepos = 4000;
             }
+            ar.push(elepos);
         }
 
         var indexOfMin;
-        if (ar.length > 0) {
-            indexOfMin = ar.reduce((iMin, x, i, arr) => x > arr[iMin] ? i : iMin, 0) + 2;
-        } else {
-            indexOfMin = 1;
+
+        // http://stackoverflow.com/questions/11301438/return-index-of-greatest-value-in-an-array
+        indexOfMin = ar.reduce((iMin, x, i, arr) => x < arr[iMin] ? i : iMin, 0);
+        if (indexOfMin === 0) {
+            // if undetermined, set index to 5
+            indexOfMin = 5;
+        }
+
+        // get ratio of scrollpos against tablewidth
+        // to determine if the table has been scrolled to end
+        let scrollpos = $("#scrollthis").scrollLeft();
+        let tablewidth = $(".table-special").width();
+        let ratio = scrollpos/tablewidth;
+        // console.log($(window).width() + "|" + ratio);
+        // console.log(ar + " | " + indexOfMin);
+        // console.log(scrollpos.scrollLeft() + " | " + tablewidth.width());
+        if ($(window).width() > 1199) {
+            // if window width is less than 1200,
+            // page 5 is already reachable
+            if (ratio > 0.7) {
+                indexOfMin = 5;
+            }
         }
 
         if (indexOfMin !== scrollindex) {
+            // set new scrollindex only if scrollindex is different
             scrollindex = indexOfMin;
 
-            let targetclass = "#s" + sow.clone().add(5 - indexOfMin, 'weeks').format("DD-MM");
+            let targetclass = "#s" + sow.clone().add(indexOfMin - 1, 'weeks').format("DD-MM");
             $(".active").removeClass("active");
             $(targetclass).addClass("active");
         }
