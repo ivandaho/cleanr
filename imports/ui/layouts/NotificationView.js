@@ -7,6 +7,8 @@ import { Notifications } from '../../api/notifications/Notifications.js';
 
 Template.NotificationView.onCreated(function NotificationsOnCreated() {
     sm.subscribe('notifications');
+    sm.subscribe('sessions');
+    sm.subscribe('timeslots');
     Session.set('nlimit', 10);
 });
 

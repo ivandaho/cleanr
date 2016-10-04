@@ -21,10 +21,10 @@
                 <td class="text-center">{{dateFormat createdDate}}</td>
                 <td class="text-center">
                   {{#if notificationIsType0 this}}
-                    <a href="/vendorsessiondetails/{{this.sid}}">New assigned session: {{#with sessbysessid this.sid}} {{dateToDay date}} {{dateFormat date}} {{/with}} </a>
+                  <a href="/vendorsessiondetails/{{this.sid}}">New assigned session: {{#with sessbysessid this.sid}} {{dateToDay date}} {{dateFormat date}} {{getslotbynum timeslot}}{{/with}} </a>
                   {{else}}
                     {{#if notificationIsType1 this}}
-                    <a href="/vendorsessiondetails/{{this.sid}}">A session has been marked complete: {{#with sessbysessid this.sid}} {{dateToDay date}} {{dateFormat date}} {{/with}} </a>
+                    <a href="/customersessiondetails/{{this.sid}}">A session has been marked complete: {{#with sessbysessid this.sid}} {{dateToDay date}} {{dateFormat date}} {{getslotbynum timeslot}}{{/with}} </a>
                     {{else}}
                       {{#if notificationIsType2 this}}
                         <a href="/vendorsessiondetails/{{this.sid}}">You have yet to mark the following session as completed: {{#with sessbysessid this.sid}} {{dateToDay date}} {{dateFormat date}} {{getslotbynum timeslot}} {{/with}} </a>
