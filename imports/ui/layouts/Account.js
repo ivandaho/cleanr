@@ -112,10 +112,11 @@ Template.Account.events({
         var newrslimit = Session.get('rslimit') + 5;
         if (Session.get('rsmaxed') != true) {
             Session.set('rslimit', Session.get('rslimit') + 5);
+            $(".rs-row").removeClass("rs-row");
             setTimeout(function () {
                 $(".rs-row").velocity("stop");
                 $(".rs-row").velocity("callout.emerge", {stagger: 5});
-            }, 10);
+            }, 0);
         }
     },
     'click .vl-rs' (event) {
@@ -131,10 +132,11 @@ Template.Account.events({
         var newmblimit = Session.get('mblimit') + 5;
         if (Session.get('mbmaxed') != true) {
             Session.set('mblimit', Session.get('mblimit') + 5);
+            $(".mb-row").removeClass("mb-row");
             setTimeout(function () {
                 $(".mb-row").velocity("stop");
                 $(".mb-row").velocity("callout.emerge", {stagger: 5});
-            }, 10);
+            }, 0);
         }
     },
     'click .vl-mb' (event) {
