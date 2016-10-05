@@ -109,7 +109,6 @@ Template.Account.helpers({
 Template.Account.events({
     'click .vm-rs' (event) {
         event.preventDefault();
-        var newrslimit = Session.get('rslimit') + 5;
         if (Session.get('rsmaxed') != true) {
             Session.set('rslimit', Session.get('rslimit') + 5);
             $(".rs-row").removeClass("rs-row");
@@ -129,7 +128,6 @@ Template.Account.events({
     },
     'click .vm-mb' (event) {
         event.preventDefault();
-        var newmblimit = Session.get('mblimit') + 5;
         if (Session.get('mbmaxed') != true) {
             Session.set('mblimit', Session.get('mblimit') + 5);
             $(".mb-row").removeClass("mb-row");

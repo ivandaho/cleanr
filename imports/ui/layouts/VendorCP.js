@@ -118,13 +118,13 @@ Template.VendorCP.helpers({
 Template.VendorCP.events({
     'click .vm-ps' (event) {
         event.preventDefault();
-        const newpslimit = Session.get('pslimit') + 5;
         if (Session.get('psmaxed') != true) {
             Session.set('pslimit', Session.get('pslimit') + 5);
+            $(".ps-row").removeClass("ps-row");
             setTimeout(function () {
             $(".ps-row").velocity("stop");
             $(".ps-row").velocity("callout.emerge", {stagger: 5});
-            }, 10);
+            }, 0);
         }
     },
     'click .vl-ps' (event) {
@@ -137,13 +137,13 @@ Template.VendorCP.events({
     },
     'click .vm-us' (event) {
         event.preventDefault();
-        const newuslimit = Session.get('uslimit') + 5;
         if (Session.get('usmaxed') != true) {
             Session.set('uslimit', Session.get('uslimit') + 5);
+            $(".us-row").removeClass("us-row");
             setTimeout(function () {
             $(".us-row").velocity("stop");
             $(".us-row").velocity("callout.emerge", {stagger: 5});
-            }, 10);
+            }, 0);
         }
     },
     'click .vl-us' (event) {
