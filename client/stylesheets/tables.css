@@ -21,3 +21,6 @@
 .table-upcoming-date {
     background-color: #e6f7ff;
 }
+.table-completed {
+    opacity: .4;
+}

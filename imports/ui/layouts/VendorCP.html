@@ -5,6 +5,7 @@
     </div>
   </div>
   {{#if currentUser}}
+  {{#if isInRole 'vendor'}}
     {{#with getuserdata}}
       <section class="bg-light-gray">
         <div class="container">
@@ -27,7 +28,7 @@
             </div>
 
             <div class="row section-panel bordered-section">
-              <h1>Sessions & Bookings</h1>
+              <h1>Sessions</h1>
 
               <p class="sec-heading">Today's Sessions</p>
               <br>
@@ -65,7 +66,7 @@
                 </table>
               </div>
 
-              <p class="sec-heading">More Upcoming Sessions</p>
+              <p class="sec-heading">More Upcoming Sessions <a href="/vendorsessions" class="btn btn-sm btn-default">View All</a></p>
               <br>
               <div class="table-responsive">
                 <table class="table table-bordered table-hover">
@@ -103,7 +104,7 @@
               </div>
                 {{/if}}
 
-              <p class="sec-heading">Past Sessions</p>
+              <p class="sec-heading">Past Sessions <a href="/vendorsessions" class="btn btn-sm btn-default">View All</a></p>
               <br>
               <div class="table-responsive">
                 <table class="table table-bordered table-hover">
@@ -150,5 +151,29 @@
       </section>
       {{else}}
     {{/with}}
+    {{else}}
+    <!-- user is not admin -->
+      <section>
+        <div class="container">
+          <div class="row">
+            <div class="text-center">
+              <h3>Not Vendor</h3>
+              <a href='/account'>Go to Account page</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    {{/if}}
+  {{else}}
+    <section>
+      <div class="container">
+        <div class="row">
+          <div class="text-center">
+            <h2>Not Logged in</h2>
+            <a href='/login' class="btn btn-lg btn-success">Sign in</a>
+          </div>
+        </div>
+      </div>
+    </section>
   {{/if}}
 </template>

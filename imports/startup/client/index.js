@@ -29,6 +29,7 @@ import '/imports/ui/layouts/VendorCustomer.js';
 import '/imports/ui/layouts/VendorCustomerList.js';
 import '/imports/ui/layouts/VendorRegistration.js';
 import '/imports/ui/layouts/VendorWorkSchedule.js';
+import '/imports/ui/layouts/VendorSessions.js';
 import '/imports/ui/layouts/VendorSessionDetails.js';
 import '/imports/ui/layouts/VendorSpecify.js';
 

@@ -1,4 +1,4 @@
-import './CustomerSessions.html';
+import './VendorSessions.html';
 
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
@@ -9,7 +9,7 @@ import { Userdata } from '../../api/userdata/Userdata.js';
 import { Bookings } from '../../api/bookings/Bookings.js';
 import { Sessions } from '../../api/sessions/Sessions.js';
 
-Template.CustomerSessions.onCreated(function CustomerSessionsOnCreated() {
+Template.VendorSessions.onCreated(function VendorSessionsOnCreated() {
     var mdate = moment.utc().startOf('week').add(1, 'days'); // this week's monday
     var jdate = mdate.toDate();
     Session.set('currweek', jdate);
@@ -28,7 +28,7 @@ Template.CustomerSessions.onCreated(function CustomerSessionsOnCreated() {
 
 let today = moment.utc().startOf('day').toDate();
 
-Template.CustomerSessions.helpers({
+Template.VendorSessions.helpers({
     completed(sessstatus) {
         if (sessstatus == 1) {
             return 'table-completed';
@@ -50,11 +50,11 @@ Template.CustomerSessions.helpers({
         const instance = Template.instance();
         const today = moment.utc().startOf('day').toDate();
         // sessionstatus = 1 means completed
-        const previousCom = {custID: Meteor.userId(), date: {$lt: today}};
-        const previousNoCom = {custID: Meteor.userId(), date: {$lt: today}, sessionstatus: {$nin: [1]}};
-        const upcomingCom = {custID: Meteor.userId(), date: {$gt: today}};
-        const upcomingNoCom = {custID: Meteor.userId(), date: {$gte: today}, sessionstatus: {$nin: [1]}};
-        var options = [{custID: Meteor.userId(), date: today}];
+        const previousCom = {vendorID: Meteor.userId(), date: {$lt: today}};
+        const previousNoCom = {vendorID: Meteor.userId(), date: {$lt: today}, sessionstatus: {$nin: [1]}};
+        const upcomingCom = {vendorID: Meteor.userId(), date: {$gt: today}};
+        const upcomingNoCom = {vendorID: Meteor.userId(), date: {$gte: today}, sessionstatus: {$nin: [1]}};
+        var options = [{vendorID: Meteor.userId(), date: today}];
 
         if (instance.state.get('pre')) {
             if (instance.state.get('com')) {
@@ -89,7 +89,7 @@ Template.CustomerSessions.helpers({
     }
 });
 
-Template.CustomerSessions.events({
+Template.VendorSessions.events({
     'change #upc'(event, instance) {
         instance.state.set('upc', event.target.checked);
     },
@@ -98,5 +98,15 @@ Template.CustomerSessions.events({
     },
     'change #com'(event, instance) {
         instance.state.set('com', event.target.checked);
+    },
+    'click .jumpTo'(event) {
+        event.preventDefault();
+        var sdf =  $(".table-today").offset().top;
+        console.log(sdf);
+        $(".table-today").velocity("scroll", {
+            duration:400,
+            offset: -65
+        });
     }
+
 });

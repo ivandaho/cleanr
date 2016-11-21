@@ -193,6 +193,13 @@ FlowRouter.route('/vendorcp', {
     }
 });
 
+FlowRouter.route('/vendorsessions', {
+    name: 'vendorsessions',
+    action() {
+        BlazeLayout.render('MainLayout', {main: 'VendorSessions'})
+    }
+});
+
 FlowRouter.route('/vendorspecify', {
     name: 'vendorspecify',
     action() {

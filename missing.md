@@ -39,8 +39,9 @@ Other Notifications:
 
 
 ### Other ###
-* ~~Login - check password string if its empty before passing data to server~~
-* ~~Page to view all sessions~~ with filters (like date window)
+* ~~Login page: check password string if its empty before passing data to server~~
+* ~~Page to view all sessions~~
+    * ~~Customer Session List View~~
+    * ~~Vendor Session List View~~
+    * Date filter
 * ~~Disable view more/less buttons when limit is reached~~
-* Customer Session List View
-* Vendor Session List View
