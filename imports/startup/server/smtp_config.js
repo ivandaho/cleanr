@@ -50,7 +50,8 @@ Meteor.methods({
 Mailer.config({
     from: 'Cleanr <admin@site.com>',
     baseUrl: 'http://localhost:3000/',
-    replyTo: 'Cleanr <admin@site.com>'
+    replyTo: 'Cleanr <admin@site.com>',
+    silent: true
 });
 
 this.Templates = {};
