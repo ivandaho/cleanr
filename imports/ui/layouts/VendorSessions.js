@@ -101,12 +101,11 @@ Template.VendorSessions.events({
     },
     'click .jumpTo'(event) {
         event.preventDefault();
-        var sdf =  $(".table-today").offset().top;
-        console.log(sdf);
-        $(".table-today").velocity("scroll", {
-            duration:400,
-            offset: -65
-        });
+        var todayOffset =  $(".table-today").offset().top;
+        let navbarheight = $("#mainNav").height();
+            $("#mainNav").css('padding-bottom');
+        let finaloffset = todayOffset - navbarheight - 15;
+        $("body").animate({scrollTop: finaloffset}, 100);
     }
 
 });

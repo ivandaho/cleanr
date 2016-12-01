@@ -22,6 +22,8 @@
             {{else}}
               <li><a href="{{pathFor 'account'}}">Welcome, {{currentUser.emails.[0].address}}</a></li>
             {{/if}}
+            {{else}}
+            <li><a href="/registration/step2">Welcome - Please complete info</a></li>
           {{/with}}
         {{/if}}
         {{> NavbarUserControl}}
