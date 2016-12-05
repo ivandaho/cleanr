@@ -18,6 +18,16 @@ SyncedCron.add({
     }
 });
 
+// SyncedCron.add({
+//     name: 'removeOldVendorslots',
+//     schedule: function(parser) {
+//         return parser.text('at 3:00 am every Thursday');
+//     },
+//     job: function() {
+//         removeOldVendorslots();
+//     }
+// });
+
 SyncedCron.add({
     name: 'sendOutCustomerSessionReminders',
     schedule: function(parser) {
@@ -44,12 +54,18 @@ SyncedCron.config({
 });
 SyncedCron.start();
 
+const removeOldVendorslots = function() {
+    let date = moment.utc().subtract(10, 'w').toDate();
+    Vendorslots.remove({d : {$lt: date}});
+    console.log('removing old vendorslots');
+};
+
 const sendOutVendorSessionUnmarkedReminders = function() {
     let today = moment.utc().startOf('day').toDate();
     let allsessions = Sessions.find({date: {$lte: today}}, {sort: {date: 1}});
     allsessions.forEach(function (asess) {
         if (asess.sessionstatus == 1) {
-            Meteor.call('notification.createReminderVendorSessionUnmarked', asess);
+            Meteor.call('notifications.createReminderVendorSessionUnmarked', asess);
             // Meteor.call('email.sessionReminder', asess);
         }
     });

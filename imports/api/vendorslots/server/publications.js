@@ -5,6 +5,7 @@ import { Meteor } from 'meteor/meteor';
 import { Vendorslots } from '../Vendorslots.js';
 
 Meteor.publish('vendorslots', function(){
-    return Vendorslots.find({});
+    let datewindow = moment.utc().toDate();
+    let recentvs = Vendorslots.find({d: {$gt: datewindow}});
+    return recentvs;
 });
-

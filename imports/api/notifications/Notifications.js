@@ -34,6 +34,17 @@ Meteor.methods({
     },
     'notifications.createReminderVendorSessionUnmarked' (sess) {
         // insert notification for vendorr
+        if (Notifications.find({
+            uid: sess.vendorID,
+            type: 2,
+            sid: sess._id,
+        })) {
+            // notification already exists
+            return;
+        }
+
+        // inserting notification...
+
         Notifications.insert({
             createdDate: moment.utc().toDate(),
             uid: sess.vendorID,

@@ -26,6 +26,7 @@
             <thead>
               <tr>
                 <th class="text-center">Session ID</th>
+                <th class="text-center">Customer Name</th>
                 <th class="text-center">Date/Time</th>
                 <th class="text-center">Booking ID</th>
                 <th class="text-center">Status</th>
@@ -35,6 +36,8 @@
               {{#each sessionfound}}
               <tr class="{{datecss date}} {{completed sessionstatus}}">
                 <td><a href="/vendorsessiondetails/{{_id}}">{{_id}}</a></td>
+                <td><a href="/vendorcustomer/{{custID}}">
+                    {{#with custbyCID custID}}{{user_name}}{{/with}}</a></td>
                 <td>{{dateFormat date}} {{getslotbynum timeslot}}</td>
                 <td><a href="/customerbooking/{{bookingID}}">{{bookingID}}</a></td>
                 <td>{{sessstatus sessionstatus}}</td>
