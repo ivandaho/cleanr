@@ -29,7 +29,11 @@ Template.Header.events({
         event.preventDefault();
         let nid = event.target.id;
         Meteor.call('notifications.dismissNotification', nid);
-
+    },
+    'click .dismissnall' (event) {
+        event.stopPropagation();
+        event.preventDefault();
+        Meteor.call('notifications.dismissAllUnreadNotifications');
     },
     'click #demobtn' (event) {
         event.preventDefault();

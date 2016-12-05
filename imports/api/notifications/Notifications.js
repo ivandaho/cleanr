@@ -32,6 +32,13 @@ Meteor.methods({
         Notifications.update({_id: nid},
                 {$set: {seen: true}});
     },
+
+    'notifications.dismissAllUnreadNotifications' () {
+        const userID = Meteor.userId();
+        Notifications.update({seen: false, uid: userID},
+                {$set: {seen: true}},
+                {multi:true});
+    },
     'notifications.createReminderVendorSessionUnmarked' (sess) {
         // insert notification for vendorr
         if (Notifications.find({

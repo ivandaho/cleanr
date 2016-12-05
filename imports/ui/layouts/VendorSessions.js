@@ -35,12 +35,15 @@ Template.VendorSessions.helpers({
         }
         return false;
     },
-    datecss(date) {
+    checkcss(date, sessstatus) {
+        if (sessstatus == 2) {
+            return 'table-canceled';
+        }
+
         if (date < today) {
             // date is today or later
             return 'table-past-date';
-        }
-        else if (date.getTime() === today.getTime()) {
+        } else if (date.getTime() === today.getTime()) {
             return 'table-today';
         } else {
             return 'table-upcoming-date';
@@ -84,7 +87,7 @@ Template.VendorSessions.helpers({
         } else if (i === 1) {
             return 'Completed';
         } else if (i === 2) {
-            return 'Cancelled';
+            return 'Canceled';
         }
     }
 });

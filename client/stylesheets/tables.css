@@ -21,6 +21,9 @@
 .table-upcoming-date {
     background-color: #e6f7ff;
 }
+.table-canceled {
+    background-color: #f2c3bf;
+}
 .table-completed {
     opacity: .4;
 }

@@ -43,6 +43,7 @@
         {{/if}}
       </ul>
       <ul class="nav navbar-nav navbar-right">
+        {{#if currentUser}}
         <li id="notificationdd" class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-lg {{#if atleastonenotification}}fa-bell cleanr-icon-green-darker{{else}}fa-bell-o{{/if}}"></i></a>
           <ul class="dropdown-menu notification-area">
@@ -68,9 +69,21 @@
               {{else}}
                       <li class="ntf text-center">No new notifications</li>
             {{/each}}
-            <li class="ntf text-center"><a href="/notifications/">View all</a></li>
+            <li class="text-center">
+              {{#if atleastonenotification}}
+                <div>
+                <a class="btn btn-sm btn-success" href="/notifications/">View all</a>
+                <button class="btn btn-sm btn-success dismissnall">
+                  Dismiss all
+                </button>
+                </div>
+              {{else}}
+                <a class="ntf" href="/notifications/">View all</a>
+              {{/if}}
+            </li>
           </ul>
         </li>
+        {{/if}}
         <li>
           <p class="navbar-btn-fix">
             <button id="demobtn" class='btn btn-lg btn-info'>Demo</button>
