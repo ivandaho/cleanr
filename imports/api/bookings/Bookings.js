@@ -137,23 +137,23 @@ Meteor.methods({
             // each Booking
 
             // add Sessions
+            // array with sessionIDs of the inserted items
             var sids = [];
 
             sess.forEach(function(each) {
                 // add booking id into session array
                 each.bookingID = bookingid;
                 // add to session Collection
+                // collection.insert returns the _id of the inserted item
                 let sx = Sessions.insert(each);
                 sids.push(sx);
-                // CONTINUE:
 
-                // COMMENTED OUT FOR EASY DEV PROCESS
                 // remove vendorslot
                 Vendorslots.remove({
                     ownerID: each.vendorID,
                     d: each.date,
                     s: each.timeslot
-                    });
+                });
 
                 // send notification
                 Notifications.insert({

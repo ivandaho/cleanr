@@ -143,11 +143,22 @@ var timed_UpdateWeeks = function() {
                     var ss = 0;
                     var f = '--';
                     var onesess = Meteor.call('sessions.createSession', dt, st, c, p, ss, f, sub._id);
-                    Sessions.insert(onesess);
+                    // get the _id of the inserted session
+                    // for use when notifying vendor about new assigned session
+                    let sx = Sessions.insert(onesess);
+
                     Vendorslots.remove({
                         ownerID: onesess.vendorID,
                         d: onesess.date,
                         s: onesess.timeslot
+                    });
+
+                    Notifications.insert({
+                        createdDate: moment.utc().toDate(),
+                        uid: onesess.vendorID,
+                        type: 0,
+                        sid: sx,
+                        seen: false
                     });
                 });
                 if (x == 0) {
