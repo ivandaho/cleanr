@@ -64,7 +64,7 @@ const sendOutVendorSessionUnmarkedReminders = function() {
     let today = moment.utc().startOf('day').toDate();
     let allsessions = Sessions.find({date: {$lte: today}}, {sort: {date: 1}});
     allsessions.forEach(function (asess) {
-        if (asess.sessionstatus == 1) {
+        if (asess.sessionstatus == 0) {
             Meteor.call('notifications.createReminderVendorSessionUnmarked', asess);
             // Meteor.call('email.sessionReminder', asess);
         }
