@@ -1,5 +1,9 @@
 #**completely** override remote mongodb with local mongodb database#
 
+**NOTE: you have to have the correct version of mongo tools installed on your local machine.
+Check [official mongo docs](https://docs.mongodb.com/manual/release-notes/3.0-upgrade/) for instructions.
+Tested with shell version 3.4.0 and server version 3.2.6.**
+
 mongodump from inside of local project's root folder:
 ```
 mongodump -h 127.0.0.1 --port 3001 -d meteor
