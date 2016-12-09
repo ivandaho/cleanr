@@ -52,14 +52,14 @@
                 <li class="ntf"><span><a href="/vendorsessiondetails/{{this.sid}}">New assigned session: {{#with sessbysessid this.sid}} {{dateToDay date}} {{dateFormat date}} {{/with}} </a><i id="{{_id}}" class="fa fa-close dismissn"></i></span></li>
               {{else}}
                 {{#if notificationIsType1 this}}
-                  <li class="ntf text-center"><span><a href="/customersessiondetails/{{this.sid}}">A session has been marked complete: {{#with sessbysessid this.sid}} {{dateToDay date}} {{dateFormat date}} {{/with}} </a><i id="{{_id}}" class="fa fa-close dismissn"></i></span></li>
+                  <li class="ntf text-center"><span><a href="/customersessiondetails/{{this.sid}}">Completed Session: {{#with sessbysessid this.sid}} {{dateToDay date}} {{dateFormat date}} {{/with}} </a><i id="{{_id}}" class="fa fa-close dismissn"></i></span></li>
                 {{else}}
                   {{#if notificationIsType2 this}}
-                    <li class="ntf"><span><a href="/vendorsessiondetails/{{this.sid}}">You have yet to mark the following session as completed: {{#with sessbysessid this.sid}} {{dateToDay date}} {{dateFormat date}} {{getslotbynum timeslot}} {{/with}} </a><i id="{{_id}}" class="fa fa-close dismissn"></i></span></li>
+                    <li class="ntf"><span><a href="/vendorsessiondetails/{{this.sid}}">Session not yet marked completed: {{#with sessbysessid this.sid}} {{dateToDay date}} {{dateFormat date}} {{getslotbynum timeslot}} {{/with}} </a><i id="{{_id}}" class="fa fa-close dismissn"></i></span></li>
 
                   {{else}}
                     {{#if notificationIsType3 this}}
-                      <li class="ntf"><span><a href="/vendorsessiondetails/{{this.sid}}">A customer has cancelled an upcoming session: {{#with sessbysessid this.sid}} {{dateToDay date}} {{dateFormat date}} {{getslotbynum timeslot}} {{/with}} </a><i id="{{_id}}" class="fa fa-close dismissn"></i></span></li>
+                      <li class="ntf"><span><a href="/vendorsessiondetails/{{this.sid}}">Session completed: {{#with sessbysessid this.sid}} {{dateToDay date}} {{dateFormat date}} {{getslotbynum timeslot}} {{/with}} </a><i id="{{_id}}" class="fa fa-close dismissn"></i></span></li>
                     {{else}}
                       <li class="ntf"><span><a href="/vendorsessiondetails/{{this.sid}}">Unknown notification</a><i id="{{_id}}" class="fa fa-close dismissn"></i></span></li>
                     {{/if}}

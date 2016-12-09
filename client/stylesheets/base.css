@@ -23,6 +23,10 @@
     margin-left: 5px;
     margin-right: 5px;
 }
+.ntf:hover {
+    /* color: #fff; */
+    background-color: #a6d9a6;
+}
 .ntf a{
     text-decoration: none;
     color: #383838;
@@ -76,6 +80,8 @@ footer {
 }
 .notification-area {
     width: 600px;
+    max-height:500px;
+    overflow-y:scroll;
 
 }
 
