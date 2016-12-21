@@ -4,6 +4,7 @@ import { Generatedweeks } from '/imports/api/generatedweeks/Generatedweeks.js';
 
 import { Bookings } from '/imports/api/bookings/Bookings.js';
 import { Sessions } from '/imports/api/sessions/Sessions.js';
+import { Notifications } from '/imports/api/notifications/Notifications.js';
 
 var later = require('later');
 

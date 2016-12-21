@@ -46,7 +46,6 @@ Meteor.methods({
             type: 2,
             sid: sess._id,
         })
-        console.log(found);
         if (found) {
             // notification already exists
             return;
@@ -54,7 +53,6 @@ Meteor.methods({
 
         // inserting notification...
 
-        console.log("sending out notification");
         Notifications.insert({
             createdDate: moment.utc().toDate(),
             uid: sess.vendorID,
