@@ -17,7 +17,7 @@ standard-minifier-js    # JS minifier run for production mode
 es5-shim                # ECMAScript 5 compatibility for older browsers.
 ecmascript              # Enable ECMAScript2015+ syntax in app code
 
-kadira:flow-router
+# kadira:flow-router
 kadira:blaze-layout
 # erasaur:meteor-lodash
 # stolinski:stylus-multi
@@ -65,4 +65,4 @@ dsyko:hopscotch
 lookback:emails
 peppelg:bootstrap-3-modal
 meteorhacks:subs-manager
-meteorhacks:kadira
+# meteorhacks:kadira
