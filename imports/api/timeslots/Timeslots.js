@@ -14,7 +14,7 @@ TimeslotsSchema = new SimpleSchema({
     slot: {
         type: String
     },
-    num: { 
+    num: {
         type: Number
     },
     timestart: {
