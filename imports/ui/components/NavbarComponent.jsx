@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {Component} from 'react';
 import { IndexLink, Link, browserHistory } from 'react-router';
 import { Userdata } from '/imports/api/userdata/Userdata';
 
+import Affix from 'react-overlays/lib/Affix';
+
 function handleLogoutClick(event) {
     event.preventDefault();
-    console.log('clicked');
     browserHistory.push('/');
     Meteor.logout();
     smUserdata.clear();
@@ -91,31 +92,8 @@ function NavbarRightSide(props) {
     return (
         <ul className="nav navbar-nav navbar-right">
             {Meteor.userId() ? (
-                <li id="notificationdd" className="dropdown">
-                    <Link to="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i className={ddtcn} /></Link>
-                    <ul className="dropdown-menu notification-area">
-                        {/* {{#each notificationfound}} */}
-                        {/*   {{#if notificationIsType0 this}} */}
-                        <li className="ntf"><span><Link to="/vendorsessiondetails/this.sid">Session completed: id day date timeslot</Link><i id="$_id" className="fa fa-close dismissn"></i></span></li>
-                        {/* {{/if}} */}
-                        {/* {{else}} */}
-                        {/* <li className="ntf text-center">No new notifications</li> */}
-                        {/* {{/each}} */}
-                        {/* <li className="text-center"> */}
-                            {/* {{#if atleastonenotification}} */}
-                            {/* <div> */}
-                                {/* <a className="btn btn-sm btn-success" href="/notifications/">View all</Link> */}
-                                {/* <button className="btn btn-sm btn-success dismissnall"> */}
-                                    {/*   Dismiss all */}
-                                    {/* </button> */}
-                                {/* </div> */}
-                            {/* {{else}} */}
-                            {/* <a className="ntf" href="/notifications/">View all</Link> */}
-                            {/* {{/if}} */}
-                            {/* </li> */}
-                    </ul>
-                </li>
-            ) : ('sdf')
+                <NavbarNotificationButton ddtcn={ddtcn}/>
+            ) : (null)
             }
             <li>
                 <p className="navbar-btn-fix">
@@ -130,7 +108,37 @@ function NavbarRightSide(props) {
         </ul>
     )
 }
-function NavbarUserControl(props) {
+class NavbarNotificationButton extends Component {
+    render() {
+        return (
+            <li id="notificationdd" className="dropdown">
+                <Link to="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i className={this.props.ddtcn} /></Link>
+                <ul className="dropdown-menu notification-area">
+                    {/* {{#each notificationfound}} */}
+                    {/*   {{#if notificationIsType0 this}} */}
+                    <li className="ntf"><span><Link to="/vendorsessiondetails/this.sid">Session completed: id day date timeslot</Link><i id="$_id" className="fa fa-close dismissn"></i></span></li>
+                    {/* {{/if}} */}
+                    {/* {{else}} */}
+                    {/* <li className="ntf text-center">No new notifications</li> */}
+                    {/* {{/each}} */}
+                    {/* <li className="text-center"> */}
+                        {/* {{#if atleastonenotification}} */}
+                        {/* <div> */}
+                            {/* <a className="btn btn-sm btn-success" href="/notifications/">View all</Link> */}
+                            {/* <button className="btn btn-sm btn-success dismissnall"> */}
+                                {/*   Dismiss all */}
+                                {/* </button> */}
+                            {/* </div> */}
+                        {/* {{else}} */}
+                        {/* <a className="ntf" href="/notifications/">View all</Link> */}
+                        {/* {{/if}} */}
+                        {/* </li> */}
+                </ul>
+            </li>
+        )
+    }
+}
+function NavbarLeftSide(props) {
     return (
         <ul className="nav navbar-nav">
             <CheckRegStatus user={props.user}/>
@@ -142,35 +150,39 @@ function NavbarUserControl(props) {
         </ul>
     )
 }
-export class NavbarComponent extends React.Component {
+export class NavbarComponent extends Component {
     getUserData() {
         return Meteor.userId();
         {/* return this.props.userData; */}
     }
     render() {
         {/* TODO: fix logic, based on which registration step the user is */}
-        console.log('userdata: ' + this.getUserData());
+        {/* console.log('userdata: ' + this.getUserData()); */}
         if (!this.props.ready) {
+            {/* TODO: better loading */}
+            return null;
             return <div>Loading Navbar</div>
         }
         return (
-            <nav id="mainNav" className="navbar-default navbar-default navbar-fixed-top">
-                <div className="container">
-                    <div className="navbar-header">
-                        <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                            <span className="sr-only">Toggle navigation</span>
-                            <span className="icon-bar"></span>
-                            <span className="icon-bar"></span>
-                            <span className="icon-bar"></span>
-                        </button>
-                        <Link to="/"><img src="/res/img/cleanr-logo.png" className="navbar-brand-logo"/></Link>
-                    </div>
-                    <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <NavbarUserControl user={this.props.userData}/>
-                        <NavbarRightSide user={this.props.userData}/>
-                    </div>{/* /.navbar-collapse */}
-                </div>{/* /.container-fluid */}
-            </nav>
+            <Affix offsetTop={100} affixClassName="navbarScrolled">
+                <nav id="mainNav" className="navbar-default navbar-default navbar-fixed-top">
+                    <div className="container">
+                        <div className="navbar-header">
+                            <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                                <span className="sr-only">Toggle navigation</span>
+                                <span className="icon-bar"></span>
+                                <span className="icon-bar"></span>
+                                <span className="icon-bar"></span>
+                            </button>
+                            <Link to="/"><img src="/res/img/cleanr-logo.png" className="navbar-brand-logo"/></Link>
+                        </div>
+                        <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                            <NavbarLeftSide user={this.props.userData}/>
+                            <NavbarRightSide user={this.props.userData}/>
+                        </div>{/* /.navbar-collapse */}
+                    </div>{/* /.container-fluid */}
+                </nav>
+            </Affix>
         )
     }
 }
