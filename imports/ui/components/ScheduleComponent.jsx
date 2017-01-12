@@ -10,6 +10,10 @@ const daysToGenerate = 35;
 
 export class ScheduleComponent extends React.Component {
     render() {
+        if (!this.props.ready) {
+            {/* TODO: better loading */}
+            return <div>Loading Schedule Page</div>
+        }
         return (
             <div>
                 <ScheduleHeaderComponent />
@@ -28,11 +32,11 @@ class SchedulePaginationBar extends Component {
     render() {
         return (
             <ul className="pagination">
-                <li className="changeweekbtn active" id="s$weekdates 0$"><a href="#">1</a></li>
-                <li className="changeweekbtn" id="s$weekdates 1$"><a href="#">2</a></li>
-                <li className="changeweekbtn" id="s$weekdates 2$"><a href="#">3</a></li>
-                <li className="changeweekbtn" id="s$weekdates 3$"><a href="#">4</a></li>
-                <li className="changeweekbtn" id="s$weekdates 4$"><a href="#">5</a></li>
+                <li className="changeweekbtn active" id="target-1"><a href="#">1</a></li>
+                <li className="changeweekbtn" id="target-2"><a href="#">2</a></li>
+                <li className="changeweekbtn" id="target-3"><a href="#">3</a></li>
+                <li className="changeweekbtn" id="target-4"><a href="#">4</a></li>
+                <li className="changeweekbtn" id="target-5"><a href="#">5</a></li>
             </ul>
         )
     }
@@ -118,47 +122,44 @@ class ScheduleTable extends Component {
         };
     }
     _handleScroll() {
-        return;
-        {/* TODO: implement scrolling pagination */}
-        {/* console.log(this.state.sow); */}
-        {/* return; */}
-        var ar = [];
-        let containeroffset = $('.container').offset().left;
-        var o = $(".container").offset().left;
-        var elepos;
+        const offset = document.getElementById('tsHeader').getBoundingClientRect().right;
 
-        for (var s = 0; s < 5; s++) {
-            // for 5 weeks
-            var p = "#" + this.state.sow.clone().add(s, 'weeks').format("DD-MM");
-            elepos = $(p).offset().left - containeroffset - 130;
-            // offset is 130 for the first column
+        scrollPos = document.getElementById('scrollthis').scrollLeft + offset;
 
-            if (elepos <= 0) {
-                // if scrollpos less than 0
-                // ignore by setting scrollpos to a large number
-                elepos = Number.MAX_VALUE;
-                // elepos = 4000;
+        const mondayScrollLefts = this.state.mondayScrollLefts;
+        var done = false;
+        const table = this;
+        mondayScrollLefts.forEach(function(columnLeft, index) {
+            if (scrollPos > columnLeft && !done) {
+                {/* console.log('passed ' + (5 - index)); */}
+                done = true;
+                let target;
+                switch(index) {
+                    case 4:
+                        target= "#target-1";
+                        break;
+                    case 3:
+                        target= "#target-2";
+                        break;
+                    case 2:
+                        target= "#target-3";
+                        break;
+                    case 1:
+                        target= "#target-4";
+                        break;
+                    default:
+                        target= "#target-5";
+                        break;
+                }
+                $(".active").removeClass("active");
+                $(target).addClass("active");
+                return;
             }
-            ar.push(elepos);
-        }
-
-        var indexOfMin;
-
-        // http://stackoverflow.com/questions/11301438/return-index-of-greatest-value-in-an-array
-        indexOfMin = ar.reduce((iMin, x, i, arr) => x < arr[iMin] ? i : iMin, 0);
-        if (indexOfMin === 0) {
-            // if undetermined, set index to 5
-            indexOfMin = 5;
-        }
-
-        // get ratio of scrollpos against tablewidth
-        // to determine if the table has been scrolled to end
+        });
+        return;
         let scrollpos = $("#scrollthis").scrollLeft();
         let tablewidth = $(".table-special").width();
         let ratio = scrollpos/tablewidth;
-        // console.log($(window).width() + "|" + ratio);
-        // console.log(ar + " | " + indexOfMin);
-        // console.log(scrollpos.scrollLeft() + " | " + tablewidth.width());
         if ($(window).width() > 1199) {
             // if window width is less than 1200,
             // page 5 is already reachable
@@ -178,22 +179,28 @@ class ScheduleTable extends Component {
 
     }
     componentDidMount() {
-        const list = ReactDOM.findDOMNode(this.refs.list)
-        list.addEventListener('scroll', this._handleScroll);
+        this.theTable.addEventListener('scroll', this._handleScroll);
+
+        mondayScrollLefts = [];
+        for(let i = 0; i < 5; i++) {
+            let mdate = moment.utc().startOf('week').add(1, 'days').add(i, 'weeks').format("DD-MM");
+            mondayScrollLefts.push(document.getElementById(mdate).getBoundingClientRect().left);
+        }
+        mondayScrollLefts.reverse();
+        this.setState({'mondayScrollLefts':mondayScrollLefts});
     }
     componentWillUnmount() {
-        const list = ReactDOM.findDOMNode(this.refs.list)
-        list.removeEventListener('scroll', this._handleScroll);
+        this.theTable.removeEventListener('scroll', this._handleScroll);
     }
     renderTableHeaders() {
         return (
             <thead>
                 <tr>
-                    <th>Time Slots</th>
+                    <th id="tsHeader">Time Slots</th>
                     {/* render headers for each time day */}
                     {this.getDateDataForHeaders().map(function(adate) {
                         return (
-                            <th className={adate.lastday ? 'divided' : ''} id={adate.date} key={adate.date}>
+                            <th className={adate.lastday ? 'tsbtn divided' : 'tsbtn'} id={adate.date} key={adate.date}>
                                 {adate.day}<br/>
                                 {adate.date}
                             </th>
@@ -248,7 +255,7 @@ class ScheduleTable extends Component {
     }
     render() {
         return (
-            <div className="table-responsive" ref="list" id="scrollthis">
+            <div className="table-responsive" ref={(table) => {this.theTable = table}}id="scrollthis">
                 <table className="table table-special table-hover" data-spy="scroll" data-target="#pager">
                     {this.renderTableHeaders()}
                     {this.renderTableBody(this.props.timeslots)}
