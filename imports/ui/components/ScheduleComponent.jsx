@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { IndexLink, Link } from 'react-router';
 import ReactDOM from 'react-dom';
+import { Button, Modal } from 'react-bootstrap';
 
 import ScheduleHeaderComponent from '/imports/ui/components/ScheduleHeaderComponent';
 import { Vendorslots } from '/imports/api/vendorslots/Vendorslots';
@@ -8,7 +9,25 @@ import { Timeslots } from '/imports/api/timeslots/Timeslots';
 
 const daysToGenerate = 35;
 
-export class ScheduleComponent extends React.Component {
+export class ScheduleComponent extends Component {
+    constructor(props) {
+        super(props);
+        this.openModal = this.openModal.bind(this);
+        this.closeModal = this.closeModal.bind(this);
+        this.state = {msg_slot: '', msg_day: ''};
+    }
+    openModal(slot, day) {
+        this.setState({msg_slot: slot, msg_day: day});
+        this.setState({ showModal: true });
+    }
+    closeModal() {
+        this.setState({ showModal: false });
+    }
+    scrollToPage() {
+        // TODO: click pagination to scroll to specific week
+        console.log('done');
+        document.getElementById('scrollthis').scrollLeft = 200;
+    }
     render() {
         if (!this.props.ready) {
             {/* TODO: better loading */}
@@ -16,11 +35,12 @@ export class ScheduleComponent extends React.Component {
         }
         return (
             <div>
+                <BookingModalComponent msg_slot={this.state.msg_slot} msg_day={this.state.msg_day} trigger={this.closeModal} visible={this.state.showModal}/>
                 <ScheduleHeaderComponent />
                 <section>
                     <div className="container">
                         <SchedulePaginationBar />
-                        <ScheduleTable timeslots={this.props.timeslots}/>
+                        <ScheduleTable openModal={this.openModal} timeslots={this.props.timeslots}/>
                     </div>
                 </section>
             </div>
@@ -42,76 +62,6 @@ class SchedulePaginationBar extends Component {
     }
 }
 
-function getSlotAvailability(timeSlot) {
-    {/* var jdate = Session.get('currweek'); */}
-    {/* var mdate = moment.utc(jdate); */}
-    {/* TODO: session variables for current week */}
-    var mdate = moment.utc().startOf('week').add(1, 'days');
-    // var d =  mdate.add(i, 'days').format("YYYY-MM-DD");
-    var thething = [];
-    for(i = 0; i<daysToGenerate; i++) {
-        var oneday;
-        if (i % 7  == 0) {
-            oneday = {date: mdate.clone().add(i, 'days').format("YYYY-MM-DD"),n: timeSlot, lastday: true};
-        } else {
-            oneday = {date: mdate.clone().add(i, 'days').format("YYYY-MM-DD"),n: timeSlot};
-        }
-        thething.push(oneday);
-    };
-    return thething;
-}
-
-class BookButton extends Component {
-    hasFreeSlot(date, slot) {
-        var jdate = moment.utc(date).toDate();
-
-        //var ds = Vendorslots.find({d: new Date(jdate)});
-        var ds = Vendorslots.find({
-                                    $and: [
-                                        {d: new Date(jdate)},
-                                        {s: parseInt(slot)}
-                                    ]
-                                }); // find for that day
-        var count = ds.count();
-        if (count > 0) {
-            return true;
-        } else {
-            return false;
-        }
-
-    }
-    dateOver(date, slot) {
-        var theTS = Timeslots.findOne({num: slot});
-        datestr = moment.utc(date).format('YYYY-MM-DD');
-        checkstr = datestr + ' ' + theTS.timestart;
-        if (moment.utc(checkstr, 'YYYY-MM-DD HHmm') < moment.utc().add(2, 'days')) {
-            return true;
-        }
-        return false;
-    }
-    render() {
-        if (this.dateOver(this.props.date, this.props.num)) {
-            return (
-                <button className="btn disabled">Too Late</button>
-            )
-        }
-
-        if (this.hasFreeSlot(this.props.date, this.props.num)) {
-            let id = this.props.date + ' ' + this.props.num;
-            return (
-                <button className="btn btn-success bookbtn" id={id}>
-                    Book this slot
-                </button>
-            )
-        }
-
-        return (
-            <button className="btn disabled">
-                Not available
-            </button>
-        )
-    }
-}
 class ScheduleTable extends Component {
     constructor(props) {
         super(props);
@@ -227,40 +177,175 @@ class ScheduleTable extends Component {
         }
         return dateHeaderData;
     }
-    renderTableBody(timeslots) {
-        {/* build 5 rows by mapping */}
-        {/* var timeslots = []; */}
-
-        return (
-            <tbody>
-                {timeslots.map(function(aTimeSlotRow) {
-                    return (
-                        <tr key={aTimeSlotRow.slot}>
-                            <td>
-                                {aTimeSlotRow.slot}
-                            </td>
-                            {getSlotAvailability(aTimeSlotRow.num).map(function(aButton) {
-                                return (
-                                    <td key={aButton.date}
-                                        className={aButton.lastday ? 'tsbtn divided' : 'tsbtn'}>
-                                        <BookButton date={aButton.date} num={aTimeSlotRow.num} />
-                                    </td>
-                                )
-                            })}
-                        </tr>
-                    )
-                })}
-            </tbody>
-        )
-    }
     render() {
         return (
             <div className="table-responsive" ref={(table) => {this.theTable = table}}id="scrollthis">
                 <table className="table table-special table-hover" data-spy="scroll" data-target="#pager">
                     {this.renderTableHeaders()}
-                    {this.renderTableBody(this.props.timeslots)}
+                    <TableBodyComponent openModal={this.props.openModal} timeslots={this.props.timeslots} />
                 </table>
             </div>
+        )
+    }
+}
+class TableBodyComponent extends Component {
+    constructor(props) {
+        super(props);
+    }
+    render() {
+        return (
+            <tbody>
+                {this.props.timeslots.map(function(aTimeSlotRow) {
+                    return (
+                        <TimeSlotRowComponent key={aTimeSlotRow.num} ts={aTimeSlotRow} openModal={this.props.openModal} />
+                    )
+                }, this) }
+            </tbody>
+        )
+    }
+}
+class TimeSlotRowComponent extends Component {
+    constructor(props) {
+        super(props);
+    }
+    getSlotAvailability(timeSlot) {
+        {/* var jdate = Session.get('currweek'); */}
+        {/* var mdate = moment.utc(jdate); */}
+        {/* TODO: session variables for current week */}
+        var mdate = moment.utc().startOf('week').add(1, 'days');
+        // var d =  mdate.add(i, 'days').format("YYYY-MM-DD");
+        var thething = [];
+        for(i = 0; i<daysToGenerate; i++) {
+            var oneday;
+            if (i % 7  == 0) {
+                oneday = {date: mdate.clone().add(i, 'days').format("YYYY-MM-DD"),n: timeSlot, lastday: true};
+            } else {
+                oneday = {date: mdate.clone().add(i, 'days').format("YYYY-MM-DD"),n: timeSlot};
+            }
+            thething.push(oneday);
+        };
+        return thething;
+    }
+    render() {
+        return (
+            <tr>
+                <td>
+                    {this.props.ts.slot}
+                </td>
+                {this.getSlotAvailability(this.props.ts.num).map(function(aButton) {
+                    return (
+                        <EachDayCellComponent abtn={aButton} ts={this.props.ts} key={aButton.date} openModal={this.props.openModal} />
+                    )
+                }, this)}
+            </tr>
+        )
+    }
+}
+class EachDayCellComponent extends Component {
+    constructor(props) {
+        super(props);
+    }
+    render() {
+        return (
+            <td
+                className={this.props.abtn.lastday ? 'tsbtn divided' : 'tsbtn'}>
+                <BookButton openModal={this.props.openModal} date={this.props.abtn.date} num={this.props.ts.num} />
+            </td>
+        )
+    }
+}
+class BookButton extends Component {
+    constructor(props) {
+        super(props);
+    }
+    hasFreeSlot(date, slot) {
+        var jdate = moment.utc(date).toDate();
+
+        // var ds = Vendorslots.find({d: new Date(jdate)});
+
+        // TODO: is this the most optimized way to get data?
+        // looks like it will query nWeeks * nSlots each page refresh.
+        var ds = Vendorslots.find({
+                                    $and: [
+                                        {d: new Date(jdate)},
+                                        {s: parseInt(slot)}
+                                    ]
+                                }); // find for that day
+        var count = ds.count();
+        if (count > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    dateOver(date, slot) {
+        var theTS = Timeslots.findOne({num: slot});
+        datestr = moment.utc(date).format('YYYY-MM-DD');
+        checkstr = datestr + ' ' + theTS.timestart;
+        if (moment.utc(checkstr, 'YYYY-MM-DD HHmm') < moment.utc().add(2, 'days')) {
+            return true;
+        }
+        return false;
+    }
+    render() {
+        if (this.dateOver(this.props.date, this.props.num)) {
+            return (
+                <Button className="btn disabled">Too Late</Button>
+            )
+        }
+
+        if (this.hasFreeSlot(this.props.date, this.props.num)) {
+            let id = this.props.date + ' ' + this.props.num;
+            return (
+                <Button onClick={this.props.openModal.bind(this, this.props.num, this.props.date)} className="btn btn-success bookbtn" id={id}>
+                    Book this slot
+                </Button>
+            )
+        }
+
+        return (
+            <Button className="btn disabled">
+                Not available
+            </Button>
+        )
+    }
+}
+class BookingModalComponent extends Component {
+    render() {
+        let msg_day = 'msg_day';
+        let msg_date = 'msg_date';
+        let ts_slot = 'ts_slot';
+        return (
+            <Modal show={this.props.visible} onHide={this.props.trigger}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Booking Type</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <div className="row text-center">
+                        <h4>You have selected the {this.props.msg_day} {this.props.msg_date} {this.props.msg_slot} time slot.</h4><br/>
+                        Please select a session type.
+                    </div>
+                    <div className="row">
+                        <div className="text-center">
+                            Single session: a once-off cleaning session.
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="text-center">
+                            or:
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="text-center">
+                            Weekly Sessions: Billed once a month. Cancel anytime.
+                        </div>
+                    </div>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button bsStyle="success">Single Session</Button>
+                    <Button bsStyle="success">Weekly Sessions</Button>
+                </Modal.Footer>
+            </Modal>
         )
     }
 }

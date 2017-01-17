@@ -5,12 +5,13 @@
     "start": "meteor run"
   },
   "dependencies": {
-    "bootstrap-daterangepicker": "^2.1.24",
     "bcrypt": "^0.8.7",
+    "bootstrap-daterangepicker": "^2.1.24",
     "later": "^1.2.0",
     "meteor-node-stubs": "~0.2.0",
     "react": "^15.4.1",
     "react-addons-pure-render-mixin": "^15.4.1",
+    "react-bootstrap": "^0.30.7",
     "react-dom": "^15.4.1",
     "react-overlays": "^0.6.10",
     "react-router": "^3.0.0",
