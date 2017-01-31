@@ -17,7 +17,7 @@ Template.NotificationView.helpers({
         var nlimit = Session.get('nlimit');
         var thing = Notifications.find({},
                             {
-                                sort: {createdDate: 1},
+                                sort: {createdDate: -1},
                                 limit: nlimit
                             });
         // counts the number of sessions found
@@ -57,5 +57,9 @@ Template.NotificationView.events({
         } else {
             Session.set('nlimit', Session.get('nlimit') - 10);
         }
+    },
+    'click .va-n' (event) {
+        event.preventDefault();
+            Session.set('nlimit', 99999);
     },
 });
