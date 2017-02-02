@@ -12,6 +12,7 @@ import { LoginComponent } from '/imports/ui/components/LoginComponent.jsx';
 
 import AccountContainer from '/imports/ui/containers/AccountContainer.jsx';
 import ScheduleContainer from '/imports/ui/containers/ScheduleContainer.jsx';
+import ConfirmationContainer from '/imports/ui/containers/ConfirmationContainer.jsx';
 {/* import NavbarContainer from '/imports/ui/containers/NavbarContainer.jsx'; */}
 
 Meteor.startup( () => {
@@ -19,9 +20,10 @@ Meteor.startup( () => {
             <Router history={ browserHistory }>
                 <Route path="/" component={ App }>
                     <IndexRoute component={ HomeComponent } />
-                    <Route path="/schedule" component={ ScheduleContainer } />
                     <Route path="/account" component={ AccountContainer } />
+                    <Route path="/confirmation" component={ ConfirmationContainer } />
                     <Route path="/login" component={ LoginComponent } />
+                    <Route path="/schedule" component={ ScheduleContainer } />
                 </Route>
                 <Route path="*" component={ NotFound } />
             </Router>,

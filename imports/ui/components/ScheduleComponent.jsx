@@ -14,10 +14,14 @@ export class ScheduleComponent extends Component {
         super(props);
         this.openModal = this.openModal.bind(this);
         this.closeModal = this.closeModal.bind(this);
-        this.state = {msg_slot: '', msg_day: ''};
+        this.state = {};
     }
-    openModal(slot, day) {
-        this.setState({msg_slot: slot, msg_day: day});
+    openModal(slotNum, date) {
+        this.setState({
+            slot_num: slotNum,
+            msg_day: moment.utc(date, "YYYY-MM-DD").format("dddd"),
+            msg_date: date
+        });
         this.setState({ showModal: true });
     }
     closeModal() {
@@ -35,12 +39,20 @@ export class ScheduleComponent extends Component {
         }
         return (
             <div>
-                <BookingModalComponent msg_slot={this.state.msg_slot} msg_day={this.state.msg_day} trigger={this.closeModal} visible={this.state.showModal}/>
+                <BookingModalComponent
+                    slot_num={this.state.slot_num}
+                    msg_day={this.state.msg_day}
+                    msg_date={this.state.msg_date}
+                    trigger={this.closeModal}
+                    visible={this.state.showModal}/>
                 <ScheduleHeaderComponent />
                 <section>
                     <div className="container">
                         <SchedulePaginationBar />
-                        <ScheduleTable openModal={this.openModal} timeslots={this.props.timeslots}/>
+                        <ScheduleTable
+                            openModal={this.openModal}
+                            vendorslots={this.props.vendorslots}
+                            timeslots={this.props.timeslots}/>
                     </div>
                 </section>
             </div>
@@ -182,7 +194,10 @@ class ScheduleTable extends Component {
             <div className="table-responsive" ref={(table) => {this.theTable = table}}id="scrollthis">
                 <table className="table table-special table-hover" data-spy="scroll" data-target="#pager">
                     {this.renderTableHeaders()}
-                    <TableBodyComponent openModal={this.props.openModal} timeslots={this.props.timeslots} />
+                    <TableBodyComponent
+                        openModal={this.props.openModal}
+                        vendorslots={this.props.vendorslots}
+                        timeslots={this.props.timeslots} />
                 </table>
             </div>
         )
@@ -197,7 +212,11 @@ class TableBodyComponent extends Component {
             <tbody>
                 {this.props.timeslots.map(function(aTimeSlotRow) {
                     return (
-                        <TimeSlotRowComponent key={aTimeSlotRow.num} ts={aTimeSlotRow} openModal={this.props.openModal} />
+                        <TimeSlotRowComponent
+                            key={aTimeSlotRow.num}
+                            ts={aTimeSlotRow}
+                            vendorslots={this.props.vendorslots}
+                            openModal={this.props.openModal} />
                     )
                 }, this) }
             </tbody>
@@ -234,7 +253,12 @@ class TimeSlotRowComponent extends Component {
                 </td>
                 {this.getSlotAvailability(this.props.ts.num).map(function(aButton) {
                     return (
-                        <EachDayCellComponent abtn={aButton} ts={this.props.ts} key={aButton.date} openModal={this.props.openModal} />
+                        <EachDayCellComponent
+                            abtn={aButton}
+                            ts={this.props.ts}
+                            key={aButton.date}
+                            vendorslots={this.props.vendorslots}
+                            openModal={this.props.openModal} />
                     )
                 }, this)}
             </tr>
@@ -249,7 +273,11 @@ class EachDayCellComponent extends Component {
         return (
             <td
                 className={this.props.abtn.lastday ? 'tsbtn divided' : 'tsbtn'}>
-                <BookButton openModal={this.props.openModal} date={this.props.abtn.date} num={this.props.ts.num} />
+                <BookButton
+                    openModal={this.props.openModal}
+                    date={this.props.abtn.date}
+                    vendorslots={this.props.vendorslots}
+                    num={this.props.ts.num} />
             </td>
         )
     }
@@ -257,6 +285,13 @@ class EachDayCellComponent extends Component {
 class BookButton extends Component {
     constructor(props) {
         super(props);
+    }
+    findByMatchingProperties(set, properties) {
+        return set.filter(function (entry) {
+            return Object.keys(properties).every(function (key) {
+                return entry[key] == properties[key];
+            });
+        });
     }
     hasFreeSlot(date, slot) {
         var jdate = moment.utc(date).toDate();
@@ -271,6 +306,11 @@ class BookButton extends Component {
                                         {s: parseInt(slot)}
                                     ]
                                 }); // find for that day
+
+        {/* below: potential fix?? filter doesn't work with dates. not sure what's missing. */}
+        {/* var ds = this.findByMatchingProperties(this.props.vendorslots, {d: jdate}); */}
+        {/* var count = ds.length; */}
+
         var count = ds.count();
         if (count > 0) {
             return true;
@@ -288,6 +328,10 @@ class BookButton extends Component {
         return false;
     }
     render() {
+        if (!this.props.vendorslots) {
+            {/* TODO: better loading */}
+            return <div>Loading Button</div>
+        }
         if (this.dateOver(this.props.date, this.props.num)) {
             return (
                 <Button className="btn disabled">Too Late</Button>
@@ -311,10 +355,16 @@ class BookButton extends Component {
     }
 }
 class BookingModalComponent extends Component {
+    getSlotTime(slotNum) {
+        // time slot
+        var tsdata = Timeslots.findOne({"num": parseInt(slotNum)});
+        if (tsdata != undefined) {
+            return tsdata.slot;
+        } else {
+            return 'invalid slot Number. Please re-check the slot number.';
+        }
+    }
     render() {
-        let msg_day = 'msg_day';
-        let msg_date = 'msg_date';
-        let ts_slot = 'ts_slot';
         return (
             <Modal show={this.props.visible} onHide={this.props.trigger}>
                 <Modal.Header closeButton>
@@ -322,7 +372,7 @@ class BookingModalComponent extends Component {
                 </Modal.Header>
                 <Modal.Body>
                     <div className="row text-center">
-                        <h4>You have selected the {this.props.msg_day} {this.props.msg_date} {this.props.msg_slot} time slot.</h4><br/>
+                        <h4>You have selected the {this.props.msg_day} {this.props.msg_date} {this.getSlotTime(this.props.slot_num)} time slot.</h4><br/>
                         Please select a session type.
                     </div>
                     <div className="row">
@@ -342,8 +392,20 @@ class BookingModalComponent extends Component {
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button bsStyle="success">Single Session</Button>
-                    <Button bsStyle="success">Weekly Sessions</Button>
+                    <Link to={{
+                        pathname: "/confirmation",
+                        query: {
+                            date: this.props.msg_date,
+                            slot: this.props.slot_num,
+                            repeat: false
+                        }}} className="btn btn-success">Single Session</Link>
+                    <Link to={{
+                        pathname: "/confirmation",
+                        query: {
+                            date: this.props.msg_date,
+                            slot: this.props.slot_num,
+                            repeat: true
+                        }}} className="btn btn-success">Weekly Sessions</Link>
                 </Modal.Footer>
             </Modal>
         )
