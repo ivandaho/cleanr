@@ -291,11 +291,9 @@ class BookButton extends Component {
     constructor(props) {
         super(props);
     }
-    findByMatchingProperties(set, properties) {
+    filterSlotDate(set, targetSlot, targetDate) {
         return set.filter(function (entry) {
-            return Object.keys(properties).every(function (key) {
-                return entry[key] == properties[key];
-            });
+            return (entry.s === targetSlot && entry.d.getDate() === targetDate.toDate().getDate());
         });
     }
     hasFreeSlot(date, slot) {
@@ -312,8 +310,8 @@ class BookButton extends Component {
                                     ]
                                 }); // find for that day
 
-        {/* below: potential fix?? filter doesn't work with dates. not sure what's missing. */}
-        {/* var ds = this.findByMatchingProperties(this.props.vendorslots, {d: jdate}); */}
+        {/* below: potential fix?? this one filters the prop array, but performance hit is substantial */}
+        {/* var ds = this.filterSlotDate(this.props.vendorslots, slot, date); */}
         {/* var count = ds.length; */}
 
         var count = ds.count();

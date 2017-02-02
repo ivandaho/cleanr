@@ -4,9 +4,8 @@ import { App } from '/imports/ui/layouts/app';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
 
-import { Userdata } from '/imports/api/userdata/Userdata';
-
 import { AccountHeaderComponent } from '/imports/ui/components/AccountHeaderComponent';
+import { parse_substatus  } from '/imports/startup/client/util';
 
 function AccountPersonalParticulars(props) {
     return (
@@ -117,7 +116,6 @@ function AccountAddresses(props) {
                             </button>
                         </span>
                     </h4>
-                    {/* {{#with user_address.[0]}} */}
                     {props.profile.user_address[0] ? (
                         <div>
                             <p className="sec-value">{props.profile.user_address[0].street}<br/></p>
@@ -136,37 +134,135 @@ function AccountAddresses(props) {
     )
 }
 
-export class deleteThisAccountAddresses extends Component {
-    render() {
-        console.log(this.props.profile);
-        return (
-            <div className="row section-panel bordered-section">
-                <h1 id="useradds">Addresses</h1>
-                <p className="sec-heading">Add up to 3 addresses.<br/></p>
-                <br/>
-                <br/>
+function SessionsDisplayRow(props) {
+    const idLink = "/customersessiondetails/" + props.sessData._id;
+    return (
+        <tr className="rs-row">
+            <td><Link to={idLink}>{props.sessData._id}</Link></td>
+            <td>{moment.utc(props.sessData.date).format("MMMM D YYYY")} {props.slotString}</td>
+            {props.sessData.sessionstatus === 1 ? (
+                <td>
+                    Completed | <button className="btn btn-xs btn-success"> Give feedback </button>
+                </td>
+            ) : (
+                <td>
+                    Pending
+                </td>
+            )}
+        </tr>
+    )
+}
 
-                <div className="row">
-                    <div className="address-main-box">
-                        <h4>
-                            Main Address
-                            <span className="sec-heading">
-                                <button className="btn btn-sm btn-default changeAddress" id="0">
-                                    {/* {this.props.userData.user_address[0] ? 'Modify' : 'Add'} */}
-                                </button>
-                            </span>
-                        </h4>
-                        {/* {{#with user_address.[0]}} */}
-                        {/* {this.props.userData.user_address[0] ? ( */}
-                        {/*     <p className="sec-value">{this.props.userData.user_address[0].street}<br/></p> */}
-                        {/* ) : ( */}
-                        {/*     'None Found' */}
-                        {/* )} */}
-                    </div>
-                </div> {/* /row */}
+function SessionsDisplayArea(props) {
+    return (
+        <div>
+            <p className="sec-heading">Recent Sessions</p>
+            <br/>
+            <div className="table-responsive">
+                <table className="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th className="text-center">Session ID</th>
+                            <th className="text-center">Date / Time</th>
+                            <th className="text-center">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {props.sessions.length > 0 ? (
+                            props.sessions.map(function(eachSess) {
+                                return (
+                                    <SessionsDisplayRow
+                                        slotString={props.timeslots[eachSess.timeslot-1].slot}
+                                        key={eachSess._id}
+                                        sessData={eachSess} />
+                                )
+                            })
+                        ) : (
+                            <tr className="rs-row">
+                                <td colSpan="3" className="text-center">
+                                    None found
+                                </td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
             </div>
-        )
-    }
+            <div className="divmarginbtm">
+                {props.sessions.length > 0 ? <button className="btn btn-default">View All Sessions</button> : null}
+            </div>
+        </div>
+    )
+}
+
+function BookingsDisplayRow(props) {
+    const idLink = "/customerbooking/" + props.bookingId;
+    return (
+        <tr className="mb-row">
+            <td><Link to={idLink}>{props.bookingId}</Link></td>
+            <td>{props.slotString} every {props.day}</td>
+            <td>{moment.utc(props.dateBooked).format("MMMM d YYYY")}</td>
+            <td>{parse_substatus(props.substatus)}</td>
+        </tr>
+    )
+}
+
+function BookingsDisplayArea(props) {
+    return (
+        <div>
+            <p className="sec-heading">Recent Sessions</p>
+            <br/>
+            <div className="table-responsive">
+                <table className="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th className="text-center">Booking ID</th>
+                            <th className="text-center">Time Slot</th>
+                            <th className="text-center">Date Booked</th>
+                            <th className="text-center">Subscription Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {props.bookings.length > 0 ? (
+                            props.bookings.map(function(eachBooking) {
+                                return (
+                                    <BookingsDisplayRow
+                                        key={eachBooking._id}
+                                        day={eachBooking.day}
+                                        bookingId={eachBooking._id}
+                                        slotString={props.timeslots[eachBooking.timeslot-1].slot}
+                                        dateBooked={eachBooking.subdate}
+                                        substatus={eachBooking.jobstatus} />
+                                )
+                            })
+                        ) : (
+                            <tr className="rs-row">
+                                <td colSpan="4" className="text-center">
+                                    None found
+                                </td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
+            </div>
+            <div className="divmarginbtm">
+                {props.bookings.length > 0 ? <button className="btn btn-default">View All Bookings</button> : null}
+            </div>
+        </div>
+    )
+}
+
+
+
+function AccountSessionsAndBookings(props) {
+    return (
+        <div className="row section-panel bordered-section">
+            <h1 id="usersbs">Sessions {'&'} Bookings</h1>
+            <SessionsDisplayArea sessions={props.sessions}
+                timeslots={props.timeslots} />
+            <BookingsDisplayArea bookings={props.bookings}
+                timeslots={props.timeslots} />
+        </div>
+    )
 }
 
 export class AccountComponent extends Component {
@@ -182,6 +278,11 @@ export class AccountComponent extends Component {
                         <div className="col-centered col-md-10">
                             <AccountPersonalParticulars profile={this.props.userData}/>
                             <AccountAddresses profile={this.props.userData}/>
+                            <AccountSessionsAndBookings
+                                timeslots={this.props.timeslots}
+                                sessions={this.props.sessions}
+                                bookings={this.props.bookings}
+                                profile={this.props.userData}/>
                         </div>
                     </div>
                 </section>
