@@ -16,9 +16,9 @@ Template.Confirmation.onCreated(function ConfirmationOnCreated() {
     sm.subscribe('jobs');
     sm.subscribe('sessions');
     sm.subscribe('timeslots');
+    sm.subscribe('userdata');
     this.state = new ReactiveDict();
 });
-
 
 Template.Confirmation.helpers({
     schedSlotTime() {
