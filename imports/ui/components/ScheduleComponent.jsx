@@ -7,6 +7,9 @@ import ScheduleHeaderComponent from '/imports/ui/components/ScheduleHeaderCompon
 import { Vendorslots } from '/imports/api/vendorslots/Vendorslots';
 import { Timeslots } from '/imports/api/timeslots/Timeslots';
 
+import { format_date_generic_short, format_date_descriptive_full } from '/imports/startup/client/util';
+
+
 const daysToGenerate = 35;
 
 export class ScheduleComponent extends Component {
@@ -19,8 +22,8 @@ export class ScheduleComponent extends Component {
     openModal(slotNum, date) {
         this.setState({
             slot_num: slotNum,
-            msg_day: moment.utc(date, "YYYY-MM-DD").format("dddd"),
-            msg_date: date
+            msg_slot: this.props.timeslots[slotNum].slot,
+            date: date
         });
         this.setState({ showModal: true });
     }
@@ -40,9 +43,9 @@ export class ScheduleComponent extends Component {
         return (
             <div>
                 <BookingModalComponent
+                    date={this.state.date}
+                    msg_slot={this.state.msg_slot}
                     slot_num={this.state.slot_num}
-                    msg_day={this.state.msg_day}
-                    msg_date={this.state.msg_date}
                     trigger={this.closeModal}
                     visible={this.state.showModal}/>
                 <ScheduleHeaderComponent />
@@ -177,7 +180,7 @@ class ScheduleTable extends Component {
         var mdate = moment.utc().startOf('week').add(1, 'days');
         for(i=0; i<daysToGenerate; i++) {
             themdate = mdate.clone().add(i, 'days');
-            let thedate = themdate.format('DD-MM');
+            let thedate = format_date_generic_short(themdate);
             let theday = themdate.format('dddd');
             var oneday;
             if (i % 7 == 0) {
@@ -214,7 +217,8 @@ class TableBodyComponent extends Component {
                     return (
                         <TimeSlotRowComponent
                             key={aTimeSlotRow.num}
-                            ts={aTimeSlotRow}
+                            slotNum={aTimeSlotRow.num}
+                            slotString={aTimeSlotRow.slot}
                             vendorslots={this.props.vendorslots}
                             openModal={this.props.openModal} />
                     )
@@ -237,9 +241,9 @@ class TimeSlotRowComponent extends Component {
         for(i = 0; i<daysToGenerate; i++) {
             var oneday;
             if (i % 7  == 0) {
-                oneday = {date: mdate.clone().add(i, 'days').format("YYYY-MM-DD"),n: timeSlot, lastday: true};
+                oneday = {date: mdate.clone().add(i, 'days'), n: timeSlot, lastday: true};
             } else {
-                oneday = {date: mdate.clone().add(i, 'days').format("YYYY-MM-DD"),n: timeSlot};
+                oneday = {date: mdate.clone().add(i, 'days'), n: timeSlot};
             }
             thething.push(oneday);
         };
@@ -249,14 +253,14 @@ class TimeSlotRowComponent extends Component {
         return (
             <tr>
                 <td>
-                    {this.props.ts.slot}
+                    {this.props.slotString}
                 </td>
-                {this.getSlotAvailability(this.props.ts.num).map(function(aButton) {
+                {this.getSlotAvailability(this.props.slotNum).map(function(moreProps) {
                     return (
                         <EachDayCellComponent
-                            abtn={aButton}
-                            ts={this.props.ts}
-                            key={aButton.date}
+                            key={moreProps.date}
+                            {...moreProps}
+                            slotTimeStart={this.props.slotString.substr(0,4)}
                             vendorslots={this.props.vendorslots}
                             openModal={this.props.openModal} />
                     )
@@ -272,12 +276,13 @@ class EachDayCellComponent extends Component {
     render() {
         return (
             <td
-                className={this.props.abtn.lastday ? 'tsbtn divided' : 'tsbtn'}>
+                className={this.props.lastday ? 'tsbtn divided' : 'tsbtn'}>
                 <BookButton
+                    num={this.props.n}
+                    slotTimeStart={this.props.slotTimeStart}
+                    date={this.props.date}
                     openModal={this.props.openModal}
-                    date={this.props.abtn.date}
-                    vendorslots={this.props.vendorslots}
-                    num={this.props.ts.num} />
+                    vendorslots={this.props.vendorslots} />
             </td>
         )
     }
@@ -294,7 +299,7 @@ class BookButton extends Component {
         });
     }
     hasFreeSlot(date, slot) {
-        var jdate = moment.utc(date).toDate();
+        var jdate = date.toDate();
 
         // var ds = Vendorslots.find({d: new Date(jdate)});
 
@@ -318,10 +323,10 @@ class BookButton extends Component {
             return false;
         }
     }
-    dateOver(date, slot) {
-        var theTS = Timeslots.findOne({num: slot});
-        datestr = moment.utc(date).format('YYYY-MM-DD');
-        checkstr = datestr + ' ' + theTS.timestart;
+    dateOver(date, slotTimeStart) {
+        // checks if it's too late to book a specific slot by parsing the date + time
+        datestr = date.format('YYYY-MM-DD');
+        checkstr = datestr + ' ' + slotTimeStart;
         if (moment.utc(checkstr, 'YYYY-MM-DD HHmm') < moment.utc().add(2, 'days')) {
             return true;
         }
@@ -332,16 +337,15 @@ class BookButton extends Component {
             {/* TODO: better loading */}
             return <div>Loading Button</div>
         }
-        if (this.dateOver(this.props.date, this.props.num)) {
+        if (this.dateOver(this.props.date, this.props.slotTimeStart)) {
             return (
                 <Button className="btn disabled">Too Late</Button>
             )
         }
 
         if (this.hasFreeSlot(this.props.date, this.props.num)) {
-            let id = this.props.date + ' ' + this.props.num;
             return (
-                <Button onClick={this.props.openModal.bind(this, this.props.num, this.props.date)} className="btn btn-success bookbtn" id={id}>
+                <Button onClick={this.props.openModal.bind(this, this.props.num, this.props.date)} className="btn btn-success bookbtn">
                     Book this slot
                 </Button>
             )
@@ -365,6 +369,9 @@ class BookingModalComponent extends Component {
         }
     }
     render() {
+        if (!this.props.date) {
+            return null;
+        }
         return (
             <Modal show={this.props.visible} onHide={this.props.trigger}>
                 <Modal.Header closeButton>
@@ -372,37 +379,25 @@ class BookingModalComponent extends Component {
                 </Modal.Header>
                 <Modal.Body>
                     <div className="row text-center">
-                        <h4>You have selected the {this.props.msg_day} {this.props.msg_date} {this.getSlotTime(this.props.slot_num)} time slot.</h4><br/>
-                        Please select a session type.
-                    </div>
-                    <div className="row">
-                        <div className="text-center">
-                            Single session: a once-off cleaning session.
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="text-center">
-                            or:
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="text-center">
-                            Weekly Sessions: Billed once a month. Cancel anytime.
-                        </div>
+                        <h4>You have selected the {this.props.date.format("dddd")} {format_date_descriptive_full(this.props.date)} {this.props.msg_slot} time slot.</h4><br/>
+                        Please select a session type.<br /><br />
+                        Single session: a once-off cleaning session.<br />
+                        or:<br />
+                        Weekly Sessions: Billed once a month. Cancel anytime.
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
                     <Link to={{
                         pathname: "/confirmation",
                         query: {
-                            date: this.props.msg_date,
+                            date: this.props.date.format("YYYY-MM-DD"),
                             slot: this.props.slot_num,
                             repeat: false
                         }}} className="btn btn-success">Single Session</Link>
                     <Link to={{
                         pathname: "/confirmation",
                         query: {
-                            date: this.props.msg_date,
+                            date: this.props.date.format("YYYY-MM-DD"),
                             slot: this.props.slot_num,
                             repeat: true
                         }}} className="btn btn-success">Weekly Sessions</Link>
