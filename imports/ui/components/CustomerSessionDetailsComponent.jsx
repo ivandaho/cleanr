@@ -2,7 +2,12 @@ import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { Link } from 'react-router';
 
-import { format_date_descriptive_full  } from '/imports/startup/client/util';
+import {
+    format_date_expand_day,
+    format_date_to_day,
+    format_date_day_descriptive_full,
+    format_date_descriptive_full
+} from '/imports/startup/client/util';
 
 function CustomerSessionDetailsHeaderComponent(props) {
     return (
@@ -13,14 +18,14 @@ function CustomerSessionDetailsHeaderComponent(props) {
                 </div>
     )
 }
-function SessionInfoColumnLeft (props) {
+function SessionInfoColumnLeft(props) {
     return (
         <div className="col-md-6 col-sm-height padded">
             <div className="hdr">
                 Date
             </div>
             <div className="value">
-                {format_date_descriptive_full(moment.utc(props.date))}
+                {format_date_day_descriptive_full(props.date)}
             </div>
             <div className="hdr">
                 Time
@@ -31,7 +36,7 @@ function SessionInfoColumnLeft (props) {
         </div>
     )
 }
-function SessionInfoColumnRight (props) {
+function SessionInfoColumnRight(props) {
     return (
         <div className="col-md-6 col-sm-height">
             <div className="hdr">
@@ -82,7 +87,142 @@ function SessionInfoColumnRight (props) {
         </div>
     )
 }
+function BookingInfoColumnLeft(props) {
+    return (
+        <div className="col-md-6 col-sm-height">
+            <div className="hdr bookingidhdr">
+                Time Slot
+            </div>
+            <div className="value">
+                Every {format_date_expand_day(props.thebooking.day)} {props.thetimeslot.slot}
+            </div>
+            <div className="hdr">
+                Package
+            </div>
+            <div className="value">
+                $_2 maids for 2 hours
+            </div>
+            <div className="hdr">
+                Additional Services
+            </div>
+            <div className="value">
+                {props.thebooking.mc ? "Mattress Cleaning" : null}
+                {props.thebooking.cc ? "Carpet Cleaning" : null}
+            </div>
+        </div>
+    )
+}
+function BookingInfoColumnRight(props) {
+    return (
+        <div className="col-md-6 col-sm-height padded">
+            <div className="hdr">
+                Date Booked
+            </div>
+            <div className="value">
+                {format_date_descriptive_full(props.subdate)}
+            </div>
+            <div className="hdr">
+                Sessions Completed
+            </div>
+            <div className="value">
+                $completed
+            </div>
+            <div className="hdr">
+                Subscription Status
+            </div>
+            <div className="value">
+                {props.substatus}{" "}
+                {props.substatus === "Active" ? (
+                    <Link className="btn btn-sm btn-danger btn-cancel-sub" id="this._id">Unsubscribe</Link>
+                ) : ( null)}
+            </div>
+        </div>
+    )
+}
+
+function RemarksAreaComponent(props) {
+    return (
+        <div className="row section-panel bordered-section">
+            <div className="row">
+                <div className="col-md-12 text-center bighdr">
+                    <span className="remarkshdr">Remarks</span>
+                </div>
+            </div>
+            <div className="row">
+                <div className="col-md-12">
+                    <div className="hdr">
+                        Customer Remarks:
+                    </div>
+                    {props.custremarks.length > 0 ? (
+                        props.custremarks.map(function(eachComment, index) {
+                            return (
+                                <ol key={index}>
+                                    <div className="value">
+                                        <li>
+                                            {eachComment}{" "}
+                                            <button
+                                                className="btn btn-xs btn-warning cedit"
+                                                id="this">Edit
+                                            </button>{" "}
+                                            <button
+                                                className="btn btn-xs btn-danger crm"
+                                                id="this">Remove
+                                            </button>
+                                        </li>
+                                    </div>
+                                </ol>
+                            )
+                        })
+                    ) : (
+                        <div>
+                            None found
+                        </div>
+                    )}
+                    <button type="button" className="btn btn-xs cadd">Add a remark</button>
+                </div>
+                <div className="col-md-4 col-sm-height padded">
+                </div>
+            </div>
+            <div className="row">
+                <div className="col-md-12">
+                    <div className="hdr">
+                        Cleaner Remarks:
+                    </div>
+                    {props.vendremarks.length > 0 ? (
+                        props.vendremarks.map(function(eachComment, index) {
+                            return (
+                                <ol key={index}>
+                                    <div className="value">
+                                        <li>
+                                            {eachComment}
+                                        </li>
+                                    </div>
+                                </ol>
+                            )
+                        })
+                    ) : (
+                        <div>
+                            None found
+                        </div>
+                    )}
+                </div>
+            </div>
+        </div>
+    )
+}
+
 export class CustomerSessionDetailsComponent extends Component {
+    checkSubStatus() {
+        const ss = this.props.thebooking.jobstatus;
+        if (ss === 0) {
+            return "Inactive";
+        } else if (ss === 1) {
+            return "Active";
+        } else if (ss === 2) {
+            return "Single session booking";
+        }
+        return "Inactive";
+    }
     checkcancancel() {
         if (this.props.thesess.sessionstatus !== 0) {
             {/* you can only cancel sessions that are not completed yet */}
@@ -116,15 +256,41 @@ export class CustomerSessionDetailsComponent extends Component {
     }
     render() {
         if (!this.props.ready) {
-            return <div>Loading AccountComponent</div>
+            return (
+                <div>
+                    <CustomerSessionDetailsHeaderComponent />
+                    <section>
+                        <div className="container">
+                            <div className="col-md-12 text-center padded">
+                                <i className="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
+                                <div style={{marginTop: "20px"}}>
+                                    Loading...
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            )
+        }
+        if (this.props.thesess == undefined) {
+            return (
+                <div>
+                    <CustomerSessionDetailsHeaderComponent />
+                    <section>
+                        <div className="container">
+                            <div className="col-md-12 text-center padded">
+                                We couldn't find this session. Either the URL is invalid, or you are unauthorized to view session details for this session.
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            )
         }
         return (
             <div>
                 <CustomerSessionDetailsHeaderComponent />
-                <section id="sess" className="bg-light-gray">
+                <section>
                     <div className="container">
-                        #with sess
-                        #if sess._id
                         <div className="row section-panel bordered-section">
                             <div className="row">
                                 <div className="col-md-12 text-center bighdr">
@@ -144,120 +310,33 @@ export class CustomerSessionDetailsComponent extends Component {
                                 />
                             </div>
                         </div>
-                        #with thebooking this
                         <div className="row section-panel bordered-section">
                             <div className="row">
                                 <div className="col-md-12 text-center bighdr">
                                     Booking Details
-                                    <p><Link to="/customerbooking/_id">_id</Link></p>
+                                    <p>
+                                        <Link to={`/customerbooking/${this.props.thebooking._id}`}>
+                                            {this.props.thebooking._id}
+                                        </Link>
+                                    </p>
                                 </div>
                             </div>
                             <div className="row-same-height">
-                                <div className="col-md-6 col-sm-height">
-                                    <div className="hdr bookingidhdr">
-                                        Time Slot
-                                    </div>
-                                    <div className="value">
-                                        Every this.day getslotbynum this.timeslot
-                                    </div>
-                                    <div className="hdr">
-                                        Package
-                                    </div>
-                                    <div className="value">
-                                        $_2 maids for 2 hours
-                                    </div>
-                                    <div className="hdr">
-                                        Additional Services
-                                    </div>
-                                    <div className="value">
-                                        #if mcMattress Cleaning<br/>/if
-                                        #if ccCarpet Cleaning<br/>/if
-                                    </div>
-                                </div>
-                                <div className="col-md-6 col-sm-height padded">
-                                    <div className="hdr">
-                                        Date Booked
-                                    </div>
-                                    <div className="value">
-                                        dateFormat subdate
-                                    </div>
-                                    <div className="hdr">
-                                        Sessions Completed
-                                    </div>
-                                    <div className="value">
-                                        $completed
-                                    </div>
-                                    <div className="hdr">
-                                        Subscription Status
-                                    </div>
-                                    <div className="value">
-                                        substatus this
-                                        #if cancancel this
-                                        <Link className="btn btn-sm btn-danger btn-cancel-sub" id="this._id">Unsubscribe</Link>
-                                        /if
-                                    </div>
-                                </div>
+                                <BookingInfoColumnLeft
+                                    thebooking={this.props.thebooking}
+                                    thetimeslot={this.props.thetimeslot}
+                                />
+                                <BookingInfoColumnRight
+                                    subdate={this.props.thebooking.subdate}
+                                    substatus={this.checkSubStatus()}
+                                />
+
                             </div>
                         </div>
-                        /with
-                        <div className="row section-panel bordered-section">
-                            <div className="row">
-                                <div className="col-md-12 text-center bighdr">
-                                    <span className="remarkshdr">Remarks</span>
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="col-md-12">
-                                    <div className="hdr">
-                                        Customer Remarks:
-                                    </div>
-                                    <ol>
-                                        #each custremarks
-                                        <div className="value">
-                                            <li>
-                                                this
-                                                #if iscustomer this
-                                                <button type="button" className="btn btn-xs btn-warning cedit" id="this">Edit</button>
-                                                <button type="button" className="btn btn-xs btn-danger crm" id="this">Remove</button>
-                                                /if
-                                            </li>
-                                        </div>
-                                        /each
-                                        #if iscustomer this
-                                        <button type="button" className="btn btn-xs cadd">Add a remark</button>
-                                        /if
-                                    </ol>
-                                </div>
-                                <div className="col-md-4 col-sm-height padded">
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="col-md-12">
-                                    <div className="hdr">
-                                        Cleaner Remarks:
-                                    </div>
-                                    <ol>
-                                        #each vendremarkfound this
-                                        <div className="value">
-                                            <li>
-                                                this
-                                            </li>
-                                        </div>
-                                        /each
-                                    </ol>
-                                </div>
-                            </div>
-                        </div>
-                        else
-                        <div className="col-md-4 col-sm-height text-center padded">
-                            We couldn't find this session. Either the URL is invalid, or you are unauthorized to view session details for this session.
-                        </div>
-                        /if
-                        else
-                        <div className="col-md-4 col-sm-height text-center padded">
-                            We couldn't find this session. Either the URL is invalid, or you are unauthorized to view session details for this session.
-                        </div>
-                        /with
+                        <RemarksAreaComponent
+                            custremarks={this.props.thesess.custremarks}
+                            vendremarks={this.props.thesess.vendremarks}
+                        />
                     </div>
                 </section>
             </div>

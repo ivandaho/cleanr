@@ -13,8 +13,7 @@ Meteor.publish('sessions', function(){
     } else if (Roles.userIsInRole(this.userId, 'customer')) {
         return Sessions.find({custID: this.userId});
     } else {
-        this.stop();
-        return;
+        return [];
     }
 });
 

@@ -37,8 +37,21 @@ export class ScheduleComponent extends Component {
     }
     render() {
         if (!this.props.ready) {
-            {/* TODO: better loading */}
-            return <div>Loading Schedule Page</div>
+            return (
+                <div>
+                <ScheduleHeaderComponent />
+                    <section>
+                        <div className="container">
+                            <div className="col-md-12 text-center padded">
+                                <i className="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
+                                <div style={{marginTop: "20px"}}>
+                                    Loading...
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            )
         }
         return (
             <div>
@@ -63,8 +76,7 @@ export class ScheduleComponent extends Component {
     }
 }
 
-class SchedulePaginationBar extends Component {
-    render() {
+function SchedulePaginationBar(props) {
         return (
             <ul className="pagination">
                 <li className="changeweekbtn active" id="target-1"><a href="#">1</a></li>
@@ -74,7 +86,6 @@ class SchedulePaginationBar extends Component {
                 <li className="changeweekbtn" id="target-5"><a href="#">5</a></li>
             </ul>
         )
-    }
 }
 
 class ScheduleTable extends Component {
@@ -206,26 +217,21 @@ class ScheduleTable extends Component {
         )
     }
 }
-class TableBodyComponent extends Component {
-    constructor(props) {
-        super(props);
-    }
-    render() {
+function TableBodyComponent(props) {
         return (
             <tbody>
-                {this.props.timeslots.map(function(aTimeSlotRow) {
+                {props.timeslots.map(function(aTimeSlotRow) {
                     return (
                         <TimeSlotRowComponent
                             key={aTimeSlotRow.num}
                             slotNum={aTimeSlotRow.num}
                             slotString={aTimeSlotRow.slot}
-                            vendorslots={this.props.vendorslots}
-                            openModal={this.props.openModal} />
+                            vendorslots={props.vendorslots}
+                            openModal={props.openModal} />
                     )
                 }, this) }
             </tbody>
         )
-    }
 }
 class TimeSlotRowComponent extends Component {
     constructor(props) {
@@ -269,23 +275,18 @@ class TimeSlotRowComponent extends Component {
         )
     }
 }
-class EachDayCellComponent extends Component {
-    constructor(props) {
-        super(props);
-    }
-    render() {
+function EachDayCellComponent(props) {
         return (
             <td
-                className={this.props.lastday ? 'tsbtn divided' : 'tsbtn'}>
+                className={props.lastday ? 'tsbtn divided' : 'tsbtn'}>
                 <BookButton
-                    num={this.props.n}
-                    slotTimeStart={this.props.slotTimeStart}
-                    date={this.props.date}
-                    openModal={this.props.openModal}
-                    vendorslots={this.props.vendorslots} />
+                    num={props.n}
+                    slotTimeStart={props.slotTimeStart}
+                    date={props.date}
+                    openModal={props.openModal}
+                    vendorslots={props.vendorslots} />
             </td>
         )
-    }
 }
 class BookButton extends Component {
     constructor(props) {
@@ -311,7 +312,7 @@ class BookButton extends Component {
                                 }); // find for that day
 
         {/* below: potential fix?? this one filters the prop array, but performance hit is substantial */}
-        {/* var ds = this.filterSlotDate(this.props.vendorslots, slot, date); */}
+        {/* var ds = this.filterSlotDate(props.vendorslots, slot, date); */}
         {/* var count = ds.length; */}
 
         var count = ds.count();

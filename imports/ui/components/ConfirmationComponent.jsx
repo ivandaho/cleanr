@@ -1,9 +1,17 @@
 import React, { Component } from 'react';
 import { browserHistory, IndexLink, Link } from 'react-router';
 
-{/* import { Timeslots } from '/imports/api/timeslots/Timeslots'; */}
-import { Userdata } from '/imports/api/userdata/Userdata';
+import { format_date_descriptive_full, format_date_to_day } from "/imports/startup/client/util";
 
+function ConfirmationHeaderComponent(props) {
+    return (
+        <div className="genericbackground">
+            <div className="container headertext">
+                <h1>Confirm your booking.</h1>
+            </div>
+        </div>
+    )
+}
 export class ConfirmationComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -11,18 +19,26 @@ export class ConfirmationComponent extends React.Component {
     }
     render() {
         if (!this.props.ready) {
-            {/* TODO: better loading */}
-            return <div>Loading Confirmation Page</div>
+            return (
+                <div>
+                    <ConfirmationHeaderComponent />
+                    <section>
+                        <div className="container">
+                            <div className="col-md-12 text-center padded">
+                                <i className="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
+                                <div style={{marginTop: "20px"}}>
+                                    Loading...
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            )
         }
         return (
-
             <div>
-                <div className="genericbackground">
-                    <div className="container headertext">
-                        <h1>Confirm your booking.</h1>
-                    </div>
-                </div>
-                <section id="confirm-sec-1" className="bg-light-gray">
+                <ConfirmationHeaderComponent />
+                <section>
                     <div className="container">
                         <div className="row section-panel bordered-section">
                             <div className="row-same-height">
@@ -65,10 +81,14 @@ export class ConfirmationComponent extends React.Component {
                                     </div>
                                 </div>
                                 {/* placeholder again, for space before the next element (confirm button).
-                                works by setting a min-height to offset. It will not be noticable on desktop but on mobile it is */}
+                                works by setting a min-height to offset. It is more noticeable on mobile than desktop */}
                                 <div className="placeholderthing3" />
                                 {/* button currently adds addbtn css rules */}
-                                <button type="button" className="btn btn-success btn-block addbtn" id="proceedPayment">Proceed to Payment</button>
+                                <button
+                                    className="btn btn-success btn-block addbtn"
+                                    id="proceedPayment">
+                                    Proceed to Payment
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -79,77 +99,65 @@ export class ConfirmationComponent extends React.Component {
     }
 }
 
-class BookingInformationComponent extends Component {
-    constructor(props) {
-        super(props);
-    }
-    getDayFromDate(date) {
-        return moment.utc(date, "YYYY-MM-DD").format('dddd');
-    }
-    render() {
-        return (
-            <div className="col-md-6 col-sm-height">
-                {/* info div contains info */}
-                <div className="info">
-                    <p className="sec-heading">Package:<br/></p>
-                    <p className="sec-value">1 maid for 4 hours<br/></p>
+function BookingInformationComponent(props) {
+    return (
+        <div className="col-md-6 col-sm-height">
+            {/* info div contains info */}
+            <div className="info">
+                <p className="sec-heading">Package:<br/></p>
+                <p className="sec-value">1 maid for 4 hours<br/></p>
 
-                    <p className="sec-heading">Scheduling Details:<br/></p>
-                    <p className="sec-value">{this.props.slot}</p>
-                    <p className="sec-value">{this.getDayFromDate(this.props.date)}</p>
-                    {this.props.repeat === "true" ? (
-                        <div>
-                            <p className="sec-heading">First session:<br/></p>
-                            <p className="sec-value">{this.props.date}<br/></p>
-                        </div>
-                    ) : (
-                        <p className="sec-value">{this.props.date}</p>
-                    )}
-                </div>
-                {/* this placeholderthing is to offset some space for the button to appear at the bottom of the column */}
-                {/* check css for details */}
-                <div className="placeholderthing" />
-                <div className="cf-btndiv">
-                    <Link to='/schedule' className="btn btn-warning btn-lg btn-block">Change Booking</Link>
-                </div>
+                <p className="sec-heading">Scheduling Details:<br/></p>
+                <p className="sec-value">{props.slot}</p>
+                <p className="sec-value">{format_date_to_day(props.date)}</p>
+                {props.repeat === "true" ? (
+                    <div>
+                        <p className="sec-heading">First session:<br/></p>
+                        <p className="sec-value">{format_date_descriptive_full(moment.utc(props.date), "YYYY-MM-DD")}<br/></p>
+                    </div>
+                ) : (
+                    <p className="sec-value">{format_date_descriptive_full(moment.utc(props.date), "YYYY-MM-DD")}<br/></p>
+                )}
             </div>
-        )
-    }
+            {/* this placeholderthing is to offset some space for the button to appear at the bottom of the column */}
+            {/* check css for details */}
+            <div className="placeholderthing" />
+            <div className="cf-btndiv">
+                <Link to='/schedule' className="btn btn-warning btn-lg btn-block">Change Booking</Link>
+            </div>
+        </div>
+    )
 }
-class CustomerDetailsComponent extends Component {
-    constructor(props) {
-        super(props);
-    }
-    render() {
-        return (
-            <div className="col-md-6 col-sm-height">
-                <div className="info">
-                    {this.props.userData ? (
-                        <div>
-                            <p className="sec-heading">Customer Details:<br/></p>
-                            <p className="sec-value">{this.props.userData.user_name}</p>
-                            <p className="sec-value">{this.props.userData.user_tel}</p>
-                            <p className="sec-value">{this.props.userData.user_email}</p>
 
-                            <p className="sec-heading">Cleaning Location:<br/></p>
-                            <p className="sec-value">{this.props.userData.user_address[0].street}<br/></p>
-                            <p className="sec-value">{this.props.userData.user_address[0].city}<br/></p>
-                            <p className="sec-value">{this.props.userData.user_address[0].state}<br/></p>
-                            <p className="sec-value">{this.props.userData.user_address[0].zip}<br/></p>
-                        </div>
-                    ) : (
+function CustomerDetailsComponent(props) {
+    return (
+        <div className="col-md-6 col-sm-height">
+            <div className="info">
+                {props.userData ? (
+                    <div>
+                        <p className="sec-heading">Customer Details:<br/></p>
+                        <p className="sec-value">{props.userData.user_name}</p>
+                        <p className="sec-value">{props.userData.user_tel}</p>
+                        <p className="sec-value">{props.userData.user_email}</p>
+
+                        <p className="sec-heading">Cleaning Location:<br/></p>
+                        <p className="sec-value">{props.userData.user_address[0].street}<br/></p>
+                        <p className="sec-value">{props.userData.user_address[0].city}<br/></p>
+                        <p className="sec-value">{props.userData.user_address[0].state}<br/></p>
+                        <p className="sec-value">{props.userData.user_address[0].zip}<br/></p>
+                    </div>
+                ) : (
                     <p className="sec-value">Please log in or complete your information to proceed with your booking</p>
-                    )}
-                </div>
-                {/* this placeholderthing is to offset some space for the button to appear at the bottom of the column */}
-                {/* check css for details */}
-                <div className="placeholderthing" />
-                <div className="cf-btndiv">
-                    <button type="button" className="btn btn-warning btn-lg btn-block changeAddress" id="0">Change Address</button>
-                </div>
+                )}
             </div>
-        )
-    }
+            {/* this placeholderthing is to offset some space for the button to appear at the bottom of the column */}
+            {/* check css for details */}
+            <div className="placeholderthing" />
+            <div className="cf-btndiv">
+                <button type="button" className="btn btn-warning btn-lg btn-block changeAddress" id="0">Change Address</button>
+            </div>
+        </div>
+    )
 }
 class ExtraItemComponent extends Component {
     constructor(props) {

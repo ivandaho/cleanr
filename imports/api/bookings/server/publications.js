@@ -23,8 +23,7 @@ Meteor.publish('bookings', function(){
     } else if (Roles.userIsInRole(this.userId, 'customer')) {
         return Bookings.find({custID: this.userId});
     } else {
-        this.stop();
-        return;
+        return [];
     }
 });
 

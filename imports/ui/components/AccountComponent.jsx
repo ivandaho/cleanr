@@ -266,12 +266,26 @@ function AccountSessionsAndBookings(props) {
 export class AccountComponent extends Component {
     render() {
         if (!this.props.ready) {
-            return <div>Loading AccountComponent</div>
+            return (
+                <div>
+                    <AccountHeaderComponent />
+                    <section>
+                        <div className="container">
+                            <div className="col-md-12 text-center padded">
+                                <i className="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
+                                <div style={{marginTop: "20px"}}>
+                                    Loading...
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            )
         }
         return (
             <div>
                 <AccountHeaderComponent />
-                <section id="custdetails" className="bg-light-gray">
+                <section>
                     <div className="container">
                         <div className="col-centered col-md-10">
                             <AccountPersonalParticulars profile={this.props.userData}/>
