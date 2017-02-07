@@ -182,7 +182,7 @@ class ExtraItemComponent extends Component {
                 {/* addbtn can be used for further customization, for now it is the same except for height:40px */}
                 {this.props.want === "true" ? (
                     <button onClick={this.removeQuery.bind(this, this.props.itemName)} type="button" className="btn btn-default btn-block addbtn">Added</button>
-                ) : ( 
+                ) : (
                     <button onClick={this.addQuery.bind(this, this.props.itemName)} type="button" className="btn btn-success btn-block addbtn">Add</button>
                 )}
             </div>

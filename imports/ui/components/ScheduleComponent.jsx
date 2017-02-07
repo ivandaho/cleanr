@@ -7,7 +7,7 @@ import ScheduleHeaderComponent from '/imports/ui/components/ScheduleHeaderCompon
 import { Vendorslots } from '/imports/api/vendorslots/Vendorslots';
 import { Timeslots } from '/imports/api/timeslots/Timeslots';
 
-import { format_date_generic_short, format_date_descriptive_full } from '/imports/startup/client/util';
+import { format_date_to_day, format_date_generic_short, format_date_descriptive_full } from '/imports/startup/client/util';
 
 
 const daysToGenerate = 35;
@@ -293,7 +293,7 @@ class BookButton extends Component {
     }
     filterSlotDate(set, targetSlot, targetDate) {
         return set.filter(function (entry) {
-            return (entry.s === targetSlot && entry.d.getDate() === targetDate.toDate().getDate());
+            return (entry.s === targetSlot && entry.d.getTime() === targetDate.toDate().getTime());
         });
     }
     hasFreeSlot(date, slot) {
@@ -377,7 +377,7 @@ class BookingModalComponent extends Component {
                 </Modal.Header>
                 <Modal.Body>
                     <div className="row text-center">
-                        <h4>You have selected the {this.props.date.format("dddd")} {format_date_descriptive_full(this.props.date)} {this.props.msg_slot} time slot.</h4><br/>
+                        <h4>You have selected the {this.props.msg_slot} time slot on {format_date_to_day(this.props.date)}, {format_date_descriptive_full(this.props.date)}.</h4><br/>
                         Please select a session type.<br /><br />
                         Single session: a once-off cleaning session.<br />
                         or:<br />

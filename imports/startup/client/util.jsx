@@ -1,8 +1,20 @@
+export const format_date_to_day = function(mdate) {
+    if (moment.isMoment(mdate)) {
+        return mdate.format("dddd");
+    }
+    return moment.utc(mdate).format("dddd");
+}
 export const format_date_generic_short = function(mdate) {
-    return mdate.format("DD-MM");
+    if (moment.isMoment(mdate)) {
+        return mdate.format("DD-MM");
+    }
+    return moment.utc(mdate).format("DD-MM");
 }
 export const format_date_descriptive_full = function(mdate) {
-    return mdate.format("(MMMM Do)");
+    if (moment.isMoment(mdate)) {
+    return mdate.format("MMMM Do YYYY");
+    }
+    return moment.utc(mdate).format("DD-MM");
     {/* return mdate.format("MMMM Do YYYY"); */}
 }
 export const parse_substatus = function(substatus) {

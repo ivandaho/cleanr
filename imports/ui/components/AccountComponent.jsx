@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { IndexLink, Link } from 'react-router';
-import { App } from '/imports/ui/layouts/app';
-import { createContainer } from 'meteor/react-meteor-data';
+import { Link } from 'react-router';
 import { Meteor } from 'meteor/meteor';
 
 import { AccountHeaderComponent } from '/imports/ui/components/AccountHeaderComponent';
